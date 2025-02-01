@@ -3,3 +3,10 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+::selection{
+    background-color: #5ac78b75;
+    color: #000;
+    scroll-behavior: smooth;
+    transition: .2s all ease;
+}

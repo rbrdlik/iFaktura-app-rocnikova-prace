@@ -1,0 +1,110 @@
+@use "./variables";
+@use "./global";
+@use "./font";
+
+body {
+    margin: 0; 
+    height: 100%; 
+}
+
+.side-img{
+    max-height: 100vh;
+    width: 50%;
+    user-select: none;
+}
+
+.side-bar{
+    max-height: 100vh;
+    width: 50%;
+    background-color: variables.$light-grey;
+    -webkit-box-shadow: -4px 0px 4px 0px rgba(0,0,0,0.25);
+    -moz-box-shadow: -4px 0px 4px 0px rgba(0,0,0,0.25);
+    box-shadow: -4px 0px 4px 0px rgba(0,0,0,0.25);
+}
+
+section{
+    display: flex;
+}
+
+.logo-box{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 5vh;
+    margin-bottom: 4vh;
+}
+
+.logo{
+    width: 30%;
+    user-select: none;
+}
+
+.form-box{
+    display: flex;
+    justify-content: center;
+}
+
+.form {
+    width: 60%;
+    border-radius: 15px;
+    padding: 3rem;
+    display: block;
+    -webkit-box-shadow: 0 0 5px 4px rgba(0,0,0,0.25);
+    -moz-box-shadow: 0 0 5px 4px rgba(0,0,0,0.25);
+    box-shadow: 0 0 5px 4px rgba(0,0,0,0.25);
+}
+.form h1{
+    font-size: 1.9rem;
+    font-weight: 500;
+}
+.form button{
+    margin-top: 1.6rem;
+    margin-left: .5rem;
+    width: 93%;
+    border: none;
+    border-radius: 10px;
+    background: variables.$green;
+    padding: 8px;
+    font-size: 1.1rem;
+    color: variables.$white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s ease;
+}
+.form button:hover{
+    background: variables.$dark-green;
+    transition: .2s ease;
+}
+.form button:active{
+    transform: scale(.95);
+}
+.form p{
+    font-size: 1.05rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+.form a{
+    color: variables.$green;
+    transition: .2s ease;
+}
+.form a:hover{
+    color: variables.$dark-green;
+    transition: .2s ease;
+}
+.input {
+    margin-bottom: 1rem;
+    width: 50%;
+    margin-left: .5rem;
+}
+.input input {
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid variables.$grey;
+    background-color: variables.$smoke-white;
+    width: 185%;
+    border-radius: 5px;
+    outline: none;
+}
+.input input:focus{
+    outline: 1px solid variables.$dark-green;
+}
