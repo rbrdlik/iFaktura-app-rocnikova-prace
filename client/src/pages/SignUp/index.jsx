@@ -25,7 +25,7 @@ export default function SignUp(){
                         </div>
                         <div className="input">
                             <h4>Heslo znovu</h4>
-                            <input type="password" placeholder="Zadejte své heslo znovi"/>
+                            <input type="password" placeholder="Zadejte své heslo znovu"/>
                         </div>
                         <button>Zaregistrovat se</button>
                     </form> 

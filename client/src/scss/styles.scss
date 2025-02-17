@@ -1,0 +1,7 @@
+@use "./variables";
+@use "./global";
+@use "./font";
+
+body{
+    background-color: variables.$background-green;
+}
