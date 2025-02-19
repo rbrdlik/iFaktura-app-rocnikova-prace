@@ -2,18 +2,17 @@
 @use "./global";
 @use "./font";
 
-*{
-    user-select: none;
-}
-
 .sidebar{
     background-color: variables.$main-sidebar;
     height: 100vh;
     width: 300px;
+    max-width: 300px;
+    min-width: 300px;
     -webkit-box-shadow: 6px 0px 4px 0px rgba(0,0,0,0.25);
     -moz-box-shadow: 6px 0px 4px 0px rgba(0,0,0,0.25);
     box-shadow: 6px 0px 4px 0px rgba(0,0,0,0.25);
     display: block;
+    user-select: none;
 }
 
 .sidebar-logo{

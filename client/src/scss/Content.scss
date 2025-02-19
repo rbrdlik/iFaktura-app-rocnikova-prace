@@ -1,0 +1,35 @@
+.box{
+    background-color: variables.$white;
+    margin: 60px 15px 15px 15px;
+    width: 100%;
+    border-radius: 15px;
+    flex-direction: column;
+    max-height: 875px;
+}
+.header-text-box{
+    margin-top: -45px;
+    width: 185px;
+}
+.header-text-box h1{
+    background-color: white;
+    padding: 10px 45px;
+    border-radius: 15px;
+    font-size: 1.7rem;
+}
+.content-box{
+    padding: 0 45px;
+    overflow: auto;
+}
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: variables.$light-grey;
+  border-radius: 25px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: variables.$smoke-grey;
+  border-radius: 25px;
+}

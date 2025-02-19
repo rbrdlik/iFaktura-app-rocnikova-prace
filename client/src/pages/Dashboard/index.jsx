@@ -1,9 +1,18 @@
-import SidebarMenu from "../../components/SidebarMenu";
+import { useEffect } from "react";
 
-export default function Dashboard(){
-    return(
-        <>
-            <SidebarMenu />
-        </>
-    );
+import Content from "../../components/Content";
+import "../../scss/styles.scss";
+
+export default function Dashboard() {
+    useEffect(() => {
+       document.title = "Přehled • iFaktura"
+    }, []);
+
+  return (
+    <>
+        <Content headtext="Přehled">
+            Text...
+        </Content>
+    </>
+  );
 }

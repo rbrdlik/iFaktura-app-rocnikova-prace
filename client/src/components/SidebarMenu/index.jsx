@@ -24,7 +24,7 @@ export default function SidebarMenu(){
                 </div>
                 <nav className="sidebar-navbar">
                     <ul id="topBtn">
-                        <li className="active-li"><img src={HouseIcon} alt="" className="icon"/>Domov</li>
+                        <li className="active-li"><img src={HouseIcon} alt="" className="icon"/>Přehled</li>
                     </ul>
                     <div className="sidebar-nav" id="top">
                         <h3>Faktury</h3>
