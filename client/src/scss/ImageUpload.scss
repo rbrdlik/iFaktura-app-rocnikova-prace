@@ -1,0 +1,66 @@
+@use "./variables";
+@use "./global";
+@use "./font";
+
+.input-content{
+    display: block;
+}
+.input-header-text{
+    margin: 5px 0 -15px 15px;
+    font-size: 1.3rem;
+}
+.input-text{
+  margin-left: 15px;
+  font-weight: 600;
+}
+.input-img-content{
+  border: 2px dotted black;
+  margin-left: 15px;
+  width: 350px;
+  height: 150px;
+
+  justify-content: center;
+  align-items: center;
+  display: grid;
+
+  img{
+    padding: 25px 60px;
+    max-width: 350px;
+    max-height: 150px;
+  }
+}
+.upload-btn-box{
+  display: grid;
+  justify-content: center;
+  margin: 25px;
+
+  button{
+    display: flex;
+    border: 2px solid variables.$button-color;
+    padding: 4px 22px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1rem;
+    align-items: center;
+    cursor: pointer;
+    transition: .3s ease;
+    gap: 8px;
+    background-color: variables.$transparent;
+
+    img{
+      width: 20px;
+      height: 20px;
+    }
+  }
+  button:hover{
+    transform: scale(1.05);
+    transition: .3s ease;
+  }
+  button:active{
+    transform: scale(1);
+    transition: .3s ease;
+  }
+}
+.file-upload{
+    display: none;
+}

@@ -1,0 +1,49 @@
+@use "./variables";
+@use "./global";
+@use "./font";
+
+.action-box {
+  position: absolute;
+  right: 0;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  width: 320px;
+  height: 90px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action-buttons {
+  display: flex;
+  bottom: 25px;
+  right: 40px;
+  position: absolute;
+
+  button {
+    margin-left: 15px;
+    padding: 4px 28px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1rem;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  button:hover {
+    transform: scale(1.05);
+    transition: 0.3s ease;
+  }
+  button:active {
+    transform: scale(1);
+    transition: 0.3s ease;
+  }
+  button#empty {
+    border: 2px solid variables.$button-color;
+    background-color: variables.$transparent;
+  }
+  button#fill {
+    border: 2px solid variables.$button-color;
+    background-color: variables.$button-color;
+    color: variables.$white;
+  }
+}

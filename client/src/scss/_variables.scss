@@ -1,16 +1,25 @@
 $white: #fff;
-$smoke-white: #F0F0F0;
+$smoke-white: #f0f0f0;
 $black: #000;
-$light-grey: #F8F8F8;
+$light-grey: #f8f8f8;
 $green: #23c86c;
 $dark-green: #1ca55a;
-$grey: #5E5E5E;
+$grey: #5e5e5e;
 $smoke-grey: #b0b0b0;
-$background-green: #8DCAAC;
+$background-green: #8dcaac;
 $main-sidebar: #161917;
-$second-sidebar: #1B1F1D;
+$second-sidebar: #1b1f1d;
+$input-border: #c5c5c5;
+$input-background: #f5f5f5;
+$red-color: #fc7474;
+$button-color: #4cbb7d;
+
+$transparent: #00000000;
 
 // SVG Icons filter
-$grey-filter: invert(85%) sepia(11%) saturate(16%) hue-rotate(324deg) brightness(82%) contrast(89%);
-$white-filter: invert(89%) sepia(70%) saturate(2%) hue-rotate(112deg) brightness(109%) contrast(101%);
-$green-filter: invert(49%) sepia(100%) saturate(632%) hue-rotate(103deg) brightness(98%) contrast(101%);
+$grey-filter: invert(85%) sepia(11%) saturate(16%) hue-rotate(324deg)
+  brightness(82%) contrast(89%);
+$white-filter: invert(89%) sepia(70%) saturate(2%) hue-rotate(112deg)
+  brightness(109%) contrast(101%);
+$green-filter: invert(49%) sepia(100%) saturate(632%) hue-rotate(103deg)
+  brightness(98%) contrast(101%);

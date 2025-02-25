@@ -1,35 +1,36 @@
-.box{
-    background-color: variables.$white;
-    margin: 60px 15px 15px 15px;
-    width: 100%;
-    border-radius: 15px;
-    flex-direction: column;
-    max-height: 875px;
+@use "./variables";
+@use "./global";
+@use "./font";
+
+.box {
+  background-color: variables.$white;
+  margin: 60px 15px 15px 15px;
+  width: 100%;
+  border-radius: 15px;
+  flex-direction: column;
+  height: calc(97vh - 45px);
 }
-.header-text-box{
-    margin-top: -45px;
-    width: 185px;
-}
-.header-text-box h1{
+
+.header-text-box {
+  margin-top: -45px;
+
+  h1 {
     background-color: white;
     padding: 10px 45px;
     border-radius: 15px;
     font-size: 1.7rem;
-}
-.content-box{
-    padding: 0 45px;
-    overflow: auto;
-}
-::-webkit-scrollbar {
-    width: 8px;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: variables.$light-grey;
-  border-radius: 25px;
+.content-box {
+  padding: 0 45px;
+  overflow: auto;
+  position: relative;
+  height: 100%;
 }
 
-::-webkit-scrollbar-thumb {
-  background: variables.$smoke-grey;
-  border-radius: 25px;
+@media screen and (max-height: 800px) {
+  .box {
+    height: calc(97vh - 50px);
+  }
 }

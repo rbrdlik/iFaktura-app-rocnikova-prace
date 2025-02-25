@@ -1,12 +1,28 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+@use "./variables";
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-::selection{
-    background-color: #5ac78b75;
-    color: #000;
-    scroll-behavior: smooth;
-    transition: .2s all ease;
+::selection {
+  background-color: #5ac78b75;
+  color: #000;
+  scroll-behavior: smooth;
+  transition: 0.2s all ease;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: variables.$light-grey;
+  border-radius: 25px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: variables.$smoke-grey;
+  border-radius: 25px;
 }

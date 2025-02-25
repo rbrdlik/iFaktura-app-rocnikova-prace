@@ -10,8 +10,8 @@ export default function Dashboard() {
 
   return (
     <>
-        <Content headtext="Přehled">
-            Text...
+        <Content headtext="Přehled" page="Přehled" box_width="185">
+
         </Content>
     </>
   );

@@ -2,135 +2,152 @@
 @use "./global";
 @use "./font";
 
-.sidebar{
-    background-color: variables.$main-sidebar;
-    height: 100vh;
-    width: 300px;
-    max-width: 300px;
-    min-width: 300px;
-    -webkit-box-shadow: 6px 0px 4px 0px rgba(0,0,0,0.25);
-    -moz-box-shadow: 6px 0px 4px 0px rgba(0,0,0,0.25);
-    box-shadow: 6px 0px 4px 0px rgba(0,0,0,0.25);
-    display: block;
-    user-select: none;
+.sidebar {
+  background-color: variables.$main-sidebar;
+  height: 100vh;
+  width: 300px;
+  max-width: 300px;
+  min-width: 300px;
+  -webkit-box-shadow: 6px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 6px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 6px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  display: block;
+  user-select: none;
 }
 
-.sidebar-logo{
-    display: grid;
-    justify-content: center;
-    padding: 30px 0 3px 0;
-}
-.active-li{
-    filter: variables.$green-filter;
-    color: variables.$green;
-}
+.sidebar-logo {
+  display: grid;
+  justify-content: center;
+  padding: 30px 0 3px 0;
 
-.sidebar-logo img{
+  img {
     width: 200px;
+  }
 }
-#topBtn{
-    margin-bottom: 25px;
+.active-li {
+  filter: variables.$green-filter;
+  color: variables.$green;
 }
-.sidebar-navbar{
-    padding: 25px;
+
+#topBtn {
+  margin-bottom: 25px;
 }
-.sidebar-navbar ul{
+.sidebar-navbar {
+  padding: 25px;
+
+  ul {
     display: block;
-}
-.sidebar-navbar h3{
+  }
+
+  h3 {
     color: variables.$white;
     font-size: 1.1rem;
-}
-.sidebar-navbar ul li{
+  }
+
+  ul li {
     display: flex;
     color: variables.$smoke-grey;
     font-size: 1.2rem;
     margin: 5px 5px 5px 15px;
     gap: 10px;
     cursor: pointer;
-    transition: .3s ease;
-}
-.sidebar-nav{
-    margin: 25px 0;
-}
-.icon{
-    width: 33px;
-    height: 30px;
-    filter: variables.$grey-filter;
-}
-#top{
-    margin-top: 0;
-}
-.sidebar-navbar ul li:hover{
-    transition: .3s ease;
+    transition: 0.3s ease;
+  }
+
+  ul li:hover {
+    transition: 0.3s ease;
     color: variables.$green;
-    .icon{
-        filter: variables.$green-filter;
+    .icon {
+      filter: variables.$green-filter;
     }
-}
-.sidebar-navbar ul li:active{
+  }
+
+  ul li:active {
     transform: scale(0.95);
     color: variables.$green;
-    .icon{
-        filter: variables.$green-filter;
-        transform: scale(0.95);
+    .icon {
+      filter: variables.$green-filter;
+      transform: scale(0.95);
     }
+  }
 }
-.sidebar-user{
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
-    background-color: variables.$second-sidebar;
-    height: 80px;
-    width: 300px;
-    color: variables.$white;
-    padding: 25px 15px;
-    position: absolute;
-    bottom: 0;
+
+.sidebar-nav {
+  margin: 25px 0;
 }
-.sidebar-user-content{
-    display: flex;
-    align-items: center;
+.icon {
+  width: 33px;
+  height: 30px;
+  filter: variables.$grey-filter;
 }
-.sidebar-user-content #su-img{
+#top {
+  margin-top: 0;
+}
+.sidebar-user {
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  background-color: variables.$second-sidebar;
+  height: 80px;
+  width: 300px;
+  color: variables.$white;
+  padding: 25px 15px;
+  position: absolute;
+  bottom: 0;
+}
+
+.sidebar-user-content {
+  display: flex;
+  align-items: center;
+
+  #su-img {
     border-radius: 50%;
     width: 35px;
     height: 35px;
-}
-.sidebar-user-text p{
-    margin-left: 10px;
-    line-height: 15px;
-}
-.sidebar-user-text p#text2{
-    font-size: .7rem;
-}
-.sidebar-user-btn{
-    margin-left: 25px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    position: absolute;
-    left: 190px;
-}
-.action-btn{
-    cursor: pointer;
-    filter: variables.$white-filter;
-    width: 21px;
-    transition: .3s ease;
-}
-.action-btn:hover{
-    filter: variables.$green-filter;
-    transition: .3s ease;
-}
-#settings:hover{
-    transform: rotate(45deg);
-    transition: .3s ease;
-    filter: variables.$green-filter;
-}
-.action-btn:active{
-    transform: scale(0.9);
-}
-.sidebar-user-text .username{
-    font-size: .9rem;
-    color: variables.$smoke-grey;
+  }
 }
 
+.sidebar-user-text {
+  p {
+    margin-left: 10px;
+    line-height: 15px;
+  }
+
+  p#text2 {
+    font-size: 0.7rem;
+  }
+
+  .username {
+    font-size: 0.9rem;
+    color: variables.$smoke-grey;
+  }
+}
+
+.sidebar-user-btn {
+  margin-left: 25px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: absolute;
+  left: 190px;
+}
+
+.action-btn {
+  cursor: pointer;
+  filter: variables.$white-filter;
+  width: 21px;
+  transition: 0.3s ease;
+  :active {
+    transform: scale(0.9);
+  }
+}
+
+.action-btn:hover {
+  filter: variables.$green-filter;
+  transition: 0.3s ease;
+}
+
+#settings:hover {
+  transform: rotate(45deg);
+  transition: 0.3s ease;
+  filter: variables.$green-filter;
+}

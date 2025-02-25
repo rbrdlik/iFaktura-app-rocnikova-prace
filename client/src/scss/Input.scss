@@ -1,0 +1,190 @@
+@use "./variables";
+@use "./global";
+@use "./font";
+
+.input-box h4 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.input-box {
+  width: 400px;
+  padding: 15px 25px 15px 15px;
+}
+
+.input-box input {
+  max-width: 500px;
+  width: 100%;
+  height: 38px;
+  border-radius: 25px;
+  border: 1px solid variables.$input-border;
+  background-color: variables.$input-background;
+  margin-bottom: 5px;
+  padding: 5px 15px;
+  font-size: 0.95rem;
+}
+
+.input-box input:focus {
+  outline: 1px solid variables.$dark-green;
+}
+.required {
+  color: variables.$red-color;
+}
+.input-img-content-box{
+  display: flex;
+  gap: 50px;
+}
+.select-container select {
+  max-width: 500px;
+  width: 100%;
+  height: 38px;
+  border-radius: 25px;
+  border: 1px solid variables.$input-border;
+  background-color: variables.$input-background;
+  margin-bottom: 5px;
+  padding: 5px 15px;
+  font-size: 0.95rem;
+  appearance: none;
+  cursor: pointer;
+}
+.select-container select:focus {
+  outline: 1px solid variables.$dark-green;
+}
+
+.select-container select::-ms-expand {
+  display: none;
+}
+
+.select-container {
+  position: relative;
+}
+#file-upload-text{
+  display: flex;
+  border: 2px solid variables.$button-color;
+  padding: 4px 22px;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 1rem;
+  align-items: center;
+  cursor: pointer;
+  transition: .3s ease;
+  gap: 8px;
+  background-color: variables.$transparent;
+
+  img{
+    width: 20px;
+    height: 20px;
+  }
+}
+
+#file-upload-text:hover{
+  transform: scale(1.05);
+  transition: .3s ease;
+}
+#file-upload-text:active{
+  transform: scale(1);
+  transition: .3s ease;
+}
+
+.select-container::after {
+  content: '\25BC';
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 0.8rem;
+  color: variables.$dark-green;
+}
+
+.select-container select {
+  max-width: 500px;
+  width: 100%;
+  height: 38px;
+  border-radius: 25px;
+  border: 1px solid variables.$input-border;
+  background-color: variables.$input-background;
+  margin-bottom: 5px;
+  padding: 5px 15px;
+  font-size: 0.95rem;
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-container select:focus {
+  outline: 1px solid variables.$dark-green;
+}
+
+.select-container select::-ms-expand {
+  display: none;
+}
+
+.select-container {
+  position: relative;
+}
+
+#preview-uploaded-image{
+  user-select: none;
+}
+#preview-uploaded-image2{
+  user-select: none;
+}
+
+.select-container::after {
+  content: url("../assets/icons/AngleDown.svg");
+  position: absolute;
+  top: 40%;
+  right: 20px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 0.8rem;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  color: variables.$dark-green;
+}
+#header-text2{
+  margin-top: 70px;
+  font-size: 1.5rem;
+}
+
+.email-input{
+  display: flex;
+  align-items: center;
+
+  button{
+    border: 0;
+    margin-left: 15px;
+    padding: 3px 15px;
+    border-radius: 25px;
+    border: 2px solid variables.$button-color;
+    background-color: variables.$transparent;
+    font-weight: bold;
+    font-size: .9rem;
+    cursor: pointer;
+    transition: .3s ease;
+  }
+  button:hover{
+    transform: scale(1.05);
+    transition: .3s ease;
+  }
+  button:active{
+    transform: scale(1);
+    transition: .3s ease;
+  }
+  h3{
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+}
+
+@media screen and (min-width: 1770px) {
+    .input-box {
+        width: 450px;
+    }
+}
+@media screen and (min-width: 1920px) {
+    .input-box {
+        width: 500px;
+    }
+}

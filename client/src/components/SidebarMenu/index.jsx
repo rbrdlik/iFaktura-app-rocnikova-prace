@@ -15,7 +15,7 @@ import UserPfpImg from "../../assets/images/user.png"
 import "../../scss/SidebarMenu.scss";
 import "../../scss/styles.scss"
 
-export default function SidebarMenu(){
+export default function SidebarMenu({active_page}){
     return(
         <>
             <section className="sidebar">
@@ -24,33 +24,33 @@ export default function SidebarMenu(){
                 </div>
                 <nav className="sidebar-navbar">
                     <ul id="topBtn">
-                        <li className="active-li"><img src={HouseIcon} alt="" className="icon"/>Přehled</li>
+                        <li className={active_page === "Přehled" ? "active-li" : ""}><img src={HouseIcon} alt="" className="icon"/>Přehled</li>
                     </ul>
                     <div className="sidebar-nav" id="top">
                         <h3>Faktury</h3>
                         <ul>
-                            <li><img src={PlusIcon} alt="" className="icon"/>Vytvořit fakturu</li>
-                            <li><img src={FileIcon} alt="" className="icon"/>Vydané faktury</li>
+                            <li className={active_page === "Vytvořit fakturu" ? "active-li" : ""}><img src={PlusIcon} alt="" className="icon"/>Vytvořit fakturu</li>
+                            <li className={active_page === "Vydané faktury" ? "active-li" : ""}><img src={FileIcon} alt="" className="icon"/>Vydané faktury</li>
                         </ul>
                     </div>
                     <div className="sidebar-nav">
                         <h3>Kontakty</h3>
                         <ul>
-                            <li><img src={PlusIcon} alt="" className="icon"/>Vytvořit kontakt</li>
-                            <li><img src={UserGroupIcon} alt="" className="icon"/>Seznam kontaktů</li>
+                            <li className={active_page === "Vytvořit kontakt" ? "active-li" : ""}><img src={PlusIcon} alt="" className="icon"/>Vytvořit kontakt</li>
+                            <li className={active_page === "Seznam kontaktů" ? "active-li" : ""}><img src={UserGroupIcon} alt="" className="icon"/>Seznam kontaktů</li>
                         </ul>
                     </div>
                     <div className="sidebar-nav">
                         <h3>Produkty</h3>
                         <ul>
-                            <li><img src={PlusIcon} alt="" className="icon"/>Vytvořit produkt</li>
-                            <li><img src={ProductIcon} alt="" className="icon"/>Seznam produktů</li>
+                            <li className={active_page === "Vytvořit produkt" ? "active-li" : ""}><img src={PlusIcon} alt="" className="icon"/>Vytvořit produkt</li>
+                            <li className={active_page === "Seznam produktů" ? "active-li" : ""}><img src={ProductIcon} alt="" className="icon"/>Seznam produktů</li>
                         </ul>
                     </div>
                     <div className="sidebar-nav">
                         <h3>Moje údaje</h3>
                         <ul>
-                            <li><img src={UserIcon} alt="" className="icon"/>Moje údaje</li>
+                            <li className={active_page === "Moje údaje" ? "active-li" : ""}><img src={UserIcon} alt="" className="icon"/>Moje údaje</li>
                         </ul>
                     </div>
                 </nav>
