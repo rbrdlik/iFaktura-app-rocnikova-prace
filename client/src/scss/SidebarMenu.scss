@@ -38,6 +38,10 @@
   ul {
     display: block;
   }
+  
+  ul a{
+    text-decoration: none;
+  }
 
   h3 {
     color: variables.$white;
@@ -74,6 +78,10 @@
 
 .sidebar-nav {
   margin: 25px 0;
+
+  ul a{
+    text-decoration: none;
+  }
 }
 .icon {
   width: 33px;

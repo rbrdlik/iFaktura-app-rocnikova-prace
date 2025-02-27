@@ -41,7 +41,7 @@ export default function CreateDetails(){
                 </div>
                 <div className="inputs">
                     <Input text="Ulice a číslo popisné" required={true}>
-                        <input type="text" disabled/>
+                        <input type="text" />
                     </Input>
                     <Input text="Město" required={true}>
                         <input type="text" />

@@ -2,13 +2,9 @@
 @use "./global";
 @use "./font";
 
-.input-box h4 {
-    font-size: 1rem;
-    font-weight: 600;
-}
 
 .input-box {
-  width: 300px;
+  width: 400px;
   padding: 15px 25px 15px 15px;
   display: flex;
   flex-direction: column;
@@ -27,6 +23,10 @@
   input:focus {
     outline: 1px solid variables.$dark-green;
   }
+  h4 {
+    font-size: 1rem;
+    font-weight: 600;
+}
 }
 .required {
   color: variables.$red-color;
