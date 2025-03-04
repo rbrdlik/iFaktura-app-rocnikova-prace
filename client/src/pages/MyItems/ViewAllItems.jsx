@@ -28,9 +28,10 @@ export default function ViewAllItems() {
             <th id="header">Název položky</th>
             <th>Sleva</th>
             <th>Jednotka</th>
-            <th>Cena s DPH</th>
-            <th>Cena bez DPH</th>
-            <th>DPH (%)</th>
+            {platceDph ? <th>Cena s DPH</th> : ""}
+            {platceDph ? <th>Cena bez DPH</th> : ""}
+            {platceDph ? <th>DPH (%)</th> : ""}
+            {platceDph ?  "" : <th>Cena</th>}
             <th id="edit-btn"></th>
           </tr>
           <tr>
@@ -43,9 +44,10 @@ export default function ViewAllItems() {
             </td>
             <td>10 Kč</td>
             <td>ks</td>
-            <td>100,00 Kč</td>
-            <td>200,00 Kč</td>
-            <td>300,00 Kč</td>
+            {platceDph ? <td>100,00 Kč</td> : ""}
+            {platceDph ? <td>200,00 Kč</td> : ""}
+            {platceDph ? <td>300,00 Kč</td> : ""}
+            {platceDph ?  "" : <td>300,00 Kč</td>}
             <td id="edit-btn">
               <img src={fileedit} alt="" id="img" title="Upravit" />
               <img src={trashcan} alt="" id="img" title="Smazat" />
@@ -61,27 +63,10 @@ export default function ViewAllItems() {
             </td>
             <td>10 Kč</td>
             <td>ks</td>
-            <td>100,00 Kč</td>
-            <td>200,00 Kč</td>
-            <td>300,00 Kč</td>
-            <td id="edit-btn">
-              <img src={fileedit} alt="" id="img" title="Upravit" />
-              <img src={trashcan} alt="" id="img" title="Smazat" />
-            </td>
-          </tr>
-          <tr>
-            <label className="checkbox" id="checkbox-th">
-              <input type="checkbox" />
-              <span className="checkmark"></span>
-            </label>
-            <td id="header">
-              <Link to={""}>Položka 1</Link>
-            </td>
-            <td>10 Kč</td>
-            <td>ks</td>
-            <td>100,00 Kč</td>
-            <td>200,00 Kč</td>
-            <td>300,00 Kč</td>
+            {platceDph ? <td>100,00 Kč</td> : ""}
+            {platceDph ? <td>200,00 Kč</td> : ""}
+            {platceDph ? <td>300,00 Kč</td> : ""}
+            {platceDph ?  "" : <td>300,00 Kč</td>}
             <td id="edit-btn">
               <img src={fileedit} alt="" id="img" title="Upravit" />
               <img src={trashcan} alt="" id="img" title="Smazat" />
