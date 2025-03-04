@@ -2,6 +2,23 @@
 @use "./global";
 @use "./font";
 
+@mixin button-style($border-color) {
+  border: 2px solid $border-color;
+  background-color: variables.$transparent;
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+  border-radius: 25px;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(1);
+  }
+}
 
 .input-box {
   width: 400px;
@@ -19,174 +36,115 @@
     margin-bottom: 5px;
     padding: 5px 15px;
     font-size: 0.95rem;
+
+    &:focus {
+      outline: 1px solid variables.$dark-green;
+    }
   }
-  input:focus {
-    outline: 1px solid variables.$dark-green;
-  }
+
   h4 {
     font-size: 1rem;
     font-weight: 600;
+  }
 }
-}
+
 .required {
   color: variables.$red-color;
 }
-.input-img-content-box{
+
+.input-img-content-box {
   display: flex;
   gap: 50px;
   flex-flow: wrap;
 }
-.select-container select {
-  max-width: 500px;
-  width: 100%;
-  height: 38px;
-  border-radius: 25px;
-  border: 1px solid variables.$input-border;
-  background-color: variables.$input-background;
-  margin-bottom: 5px;
-  padding: 5px 15px;
-  font-size: 0.95rem;
-  appearance: none;
-  cursor: pointer;
-}
-.select-container select:focus {
-  outline: 1px solid variables.$dark-green;
-}
-
-.select-container select::-ms-expand {
-  display: none;
-}
 
 .select-container {
   position: relative;
-}
-#file-upload-text{
-  display: flex;
-  border: 2px solid variables.$button-color;
-  padding: 4px 22px;
-  border-radius: 25px;
-  font-weight: bold;
-  font-size: 1rem;
-  align-items: center;
-  cursor: pointer;
-  transition: .3s ease;
-  gap: 8px;
-  background-color: variables.$transparent;
 
-  img{
+  select {
+    max-width: 500px;
+    width: 100%;
+    height: 38px;
+    border-radius: 25px;
+    border: 1px solid variables.$input-border;
+    background-color: variables.$input-background;
+    margin-bottom: 5px;
+    padding: 5px 15px;
+    font-size: 0.95rem;
+    appearance: none;
+    cursor: pointer;
+
+    &:focus {
+      outline: 1px solid variables.$dark-green;
+    }
+
+    &::-ms-expand {
+      display: none;
+    }
+  }
+
+  &::after {
+    content: url("../assets/icons/AngleDown.svg");
+    position: absolute;
+    top: 40%;
+    right: 20px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 0.8rem;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    color: variables.$dark-green;
+  }
+}
+
+#file-upload-text {
+  display: flex;
+  align-items: center;
+  padding: 4px 22px;
+  gap: 8px;
+  @include button-style(variables.$button-color);
+
+  img {
     width: 20px;
     height: 20px;
   }
 }
 
-#file-upload-text:hover{
-  transform: scale(1.05);
-  transition: .3s ease;
-}
-#file-upload-text:active{
-  transform: scale(1);
-  transition: .3s ease;
-}
-
-.select-container::after {
-  content: '\25BC';
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-  pointer-events: none;
-  font-size: 0.8rem;
-  color: variables.$dark-green;
-}
-
-.select-container select {
-  max-width: 500px;
-  width: 100%;
-  height: 38px;
-  border-radius: 25px;
-  border: 1px solid variables.$input-border;
-  background-color: variables.$input-background;
-  margin-bottom: 5px;
-  padding: 5px 15px;
-  font-size: 0.95rem;
-  appearance: none;
-  cursor: pointer;
-}
-
-.select-container select:focus {
-  outline: 1px solid variables.$dark-green;
-}
-
-.select-container select::-ms-expand {
-  display: none;
-}
-
-.select-container {
-  position: relative;
-}
-
-#preview-uploaded-image{
-  user-select: none;
-}
-#preview-uploaded-image2{
+#preview-uploaded-image,
+#preview-uploaded-image2 {
   user-select: none;
 }
 
-.select-container::after {
-  content: url("../assets/icons/AngleDown.svg");
-  position: absolute;
-  top: 40%;
-  right: 20px;
-  transform: translateY(-50%);
-  pointer-events: none;
-  font-size: 0.8rem;
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  color: variables.$dark-green;
-}
-#header-text2{
+#header-text2 {
   margin-top: 70px;
   font-size: 1.5rem;
 }
 
-.email-input{
+.email-input {
   display: flex;
   align-items: center;
 
-  button{
-    border: 0;
+  button {
     margin-left: 15px;
     padding: 3px 15px;
-    border-radius: 25px;
-    border: 2px solid variables.$button-color;
-    background-color: variables.$transparent;
-    font-weight: bold;
-    font-size: .9rem;
-    cursor: pointer;
-    transition: .3s ease;
+    @include button-style(variables.$button-color);
   }
-  button:hover{
-    transform: scale(1.05);
-    transition: .3s ease;
-  }
-  button:active{
-    transform: scale(1);
-    transition: .3s ease;
-  }
-  h3{
+
+  h3 {
     font-size: 1.1rem;
     font-weight: 600;
   }
 }
 
 @media screen and (min-width: 1770px) {
-    .input-box {
-        width: 450px;
-    }
+  .input-box {
+    width: 450px;
+  }
 }
+
 @media screen and (min-width: 1920px) {
-    .input-box {
-        width: 500px;
-    }
+  .input-box {
+    width: 500px;
+  }
 }

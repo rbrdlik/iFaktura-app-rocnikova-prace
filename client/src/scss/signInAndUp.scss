@@ -2,9 +2,35 @@
 @use "./global";
 @use "./font";
 
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin box-shadow(
+  $x: 0,
+  $y: 0,
+  $blur: 5px,
+  $spread: 4px,
+  $color: rgba(0, 0, 0, 0.25)
+) {
+  -webkit-box-shadow: $x $y $blur $spread $color;
+  -moz-box-shadow: $x $y $blur $spread $color;
+  box-shadow: $x $y $blur $spread $color;
+}
+
+@mixin transition($time: 0.2s) {
+  transition: $time ease;
+}
+
 body {
   margin: 0;
   height: 100%;
+}
+
+section {
+  display: flex;
 }
 
 .side-img {
@@ -17,21 +43,13 @@ body {
   max-height: 100vh;
   width: 50%;
   background-color: variables.$light-grey;
-  -webkit-box-shadow: -4px 0px 4px 0px rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: -4px 0px 4px 0px rgba(0, 0, 0, 0.25);
-  box-shadow: -4px 0px 4px 0px rgba(0, 0, 0, 0.25);
-}
-
-section {
-  display: flex;
+  @include box-shadow(-4px, 0px, 4px, 0px);
 }
 
 .logo-box {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 8vh;
-  margin-bottom: 4vh;
+  @include flex-center;
+  margin: 8vh 0 4vh;
 }
 
 .logo {
@@ -40,8 +58,7 @@ section {
 }
 
 .form-box {
-  display: flex;
-  justify-content: center;
+  @include flex-center;
 }
 
 .form {
@@ -49,62 +66,68 @@ section {
   border-radius: 15px;
   padding: 3rem;
   display: block;
-  -webkit-box-shadow: 0 0 5px 4px rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 0 0 5px 4px rgba(0, 0, 0, 0.25);
-  box-shadow: 0 0 5px 4px rgba(0, 0, 0, 0.25);
+  @include box-shadow;
+
+  h1 {
+    font-size: 1.9rem;
+    font-weight: 500;
+  }
+
+  button {
+    margin-top: 1.6rem;
+    margin-left: 0.5rem;
+    width: 93%;
+    border: none;
+    border-radius: 10px;
+    background: variables.$green;
+    padding: 8px;
+    font-size: 1.1rem;
+    color: variables.$white;
+    font-weight: 600;
+    cursor: pointer;
+    @include transition;
+
+    &:hover {
+      background: variables.$dark-green;
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  p {
+    font-size: 1.05rem;
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  a {
+    color: variables.$green;
+    @include transition;
+
+    &:hover {
+      color: variables.$dark-green;
+    }
+  }
 }
-.form h1 {
-  font-size: 1.9rem;
-  font-weight: 500;
-}
-.form button {
-  margin-top: 1.6rem;
-  margin-left: 0.5rem;
-  width: 93%;
-  border: none;
-  border-radius: 10px;
-  background: variables.$green;
-  padding: 8px;
-  font-size: 1.1rem;
-  color: variables.$white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-.form button:hover {
-  background: variables.$dark-green;
-  transition: 0.2s ease;
-}
-.form button:active {
-  transform: scale(0.95);
-}
-.form p {
-  font-size: 1.05rem;
-  margin-top: 2rem;
-  text-align: center;
-}
-.form a {
-  color: variables.$green;
-  transition: 0.2s ease;
-}
-.form a:hover {
-  color: variables.$dark-green;
-  transition: 0.2s ease;
-}
+
 .input {
   margin-bottom: 1rem;
   width: 50%;
   margin-left: 0.5rem;
-}
-.input input {
-  padding: 5px;
-  font-size: 16px;
-  border: 1px solid variables.$grey;
-  background-color: variables.$smoke-white;
-  width: 185%;
-  border-radius: 5px;
-  outline: none;
-}
-.input input:focus {
-  outline: 1px solid variables.$dark-green;
+
+  input {
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid variables.$grey;
+    background-color: variables.$smoke-white;
+    width: 185%;
+    border-radius: 5px;
+    outline: none;
+
+    &:focus {
+      outline: 1px solid variables.$dark-green;
+    }
+  }
 }

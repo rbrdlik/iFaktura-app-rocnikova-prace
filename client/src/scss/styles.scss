@@ -7,7 +7,7 @@ body {
   overflow-y: hidden;
 }
 
-//
+// GLOBAL INPUT STYLES
 .inputs{
   display: flex;
   width: 100%;
@@ -77,5 +77,46 @@ input:checked + .slider:before {
     font-size: .9rem;
     font-weight: 500;
     margin-left: 10px;
+  }
+}
+
+// INFO BOX (Na stránách CreateItem, UpdateItem, ViewItem)
+.info-box{
+  position: absolute;
+  width: 550px;
+  height: 180px;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  background-color: variables.$smoke-white;
+  padding: 20px 20px;
+  right: 0;
+  margin-top: 40px;
+  display: flex;
+
+  .text-right{
+    margin-left: 150px;
+    line-height: 2rem;
+    font-size: 1.3rem;
+  }
+  .text-right p{
+    font-weight: 400;
+  }
+  .text-right h1{
+    font-size: 1.6rem;
+    margin-top: 1rem;
+  }
+
+  .text-left{
+    margin-left: 40px;
+    line-height: 2rem;
+    font-size: 1.3rem;
+  }
+  .text-left p{
+    font-weight: 600;
+  }
+  .text-left h1{
+    font-size: 1.6rem;
+    margin-top: 1rem;
+    font-weight: 800;
   }
 }

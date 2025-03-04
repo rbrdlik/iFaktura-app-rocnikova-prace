@@ -1,0 +1,247 @@
+@use "./variables";
+@use "./global";
+@use "./font";
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    background-color: variables.$table-backround-color;
+    text-align: right;
+  }
+  td {
+    text-align: right;
+  }
+  th,
+  td {
+    width: 12.5%;
+  }
+  tr {
+    padding: 0 15px;
+    border-bottom: 1px solid variables.$table-backround-color;
+  }
+
+  #checkbox-th {
+    width: 4%;
+    margin-left: 5px;
+  }
+  #header {
+    width: 26%;
+    text-align: left;
+  }
+  #header a {
+    color: variables.$green;
+  }
+  #edit-btn {
+    width: 15%;
+  }
+
+  #img {
+    filter: variables.$green-filter;
+    margin: 0 5px;
+    width: 26px;
+    height: 26px;
+    padding: 2px;
+    position: relative;
+    top: 4px;
+    right: 5px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    user-select: none;
+  }
+  #img:hover {
+    transform: scale(1.1);
+    transition: 0.2s ease;
+  }
+  #img:active {
+    transform: scale(1);
+  }
+
+  .checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .checkbox {
+    display: inline-block;
+    position: relative;
+    width: 24px;
+    height: 24px;
+    top: 4px;
+    left: 5px;
+    cursor: pointer;
+  }
+
+  .checkmark {
+    margin: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+  .checkbox:hover .checkmark {
+    border-color: #999;
+  }
+
+  .checkbox input:checked + .checkmark {
+    background-color: variables.$green;
+    border-color: variables.$green;
+  }
+
+  .checkbox input:checked + .checkmark::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 7.5px;
+    width: 4px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+}
+.table-action {
+  margin-top: 20px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+
+  div {
+    width: 33.33%;
+    display: flex;
+  }
+  #table-action-left {
+    justify-content: left;
+  }
+  #table-action-middle {
+    justify-content: center;
+    gap: 15px;
+  }
+  #table-action-middle p {
+    background-color: variables.$green;
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: 700;
+    color: variables.$white;
+    cursor: pointer;
+  }
+  #table-action-middle button {
+    background-color: variables.$table-backround-color;
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: 700;
+    color: variables.$black;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+  #table-action-middle button:hover {
+    transform: scale(1.1);
+    transition: 0.2s ease;
+  }
+  #table-action-middle button:active {
+    transform: scale(1);
+  }
+  #table-action-middle button img {
+    width: 10px;
+    position: relative;
+    top: 5px;
+    user-select: none;
+  }
+  #table-action-right {
+    justify-content: right;
+    gap: 15px;
+    align-items: center;
+  }
+  #table-action-text {
+    font-size: 0.9rem;
+  }
+}
+.searchBar-box {
+  width: 50%;
+}
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 340px;
+  width: 100%;
+  height: 38px;
+  border-radius: 25px;
+  border: 1px solid variables.$input-border;
+  background-color: variables.$input-background;
+  margin-bottom: 5px;
+  padding: 5px 15px;
+  font-size: 0.95rem;
+
+  img {
+    width: 20px;
+    user-select: none;
+    filter: variables.$green-filter;
+  }
+  input {
+    background-color: variables.$transparent;
+    border: none;
+    width: 250px;
+  }
+  input:focus {
+    outline: none;
+  }
+  &:has(input:focus) {
+    border: 1px solid grey;
+  }
+}
+
+.table-navbar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+
+  .table-navbar-icons {
+    display: flex;
+    margin-top: -12px;
+    justify-content: right;
+    align-items: center;
+    width: 50%;
+  }
+  .table-navbar-icons img {
+    filter: variables.$green-filter;
+    margin: 0 5px;
+    width: 32px;
+    height: 32px;
+    padding: 2px;
+    position: relative;
+    top: 4px;
+    right: 5px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    user-select: none;
+  }
+  .table-navbar-icons img:hover {
+    transition: 0.2s ease;
+    transform: scale(1.1);
+  }
+  .table-navbar-icons img:active {
+    transform: scale(1);
+  }
+}
+.vertical-line {
+  width: 1px;
+  height: 36px;
+  margin-bottom: -5px;
+  border: none;
+  background-color: variables.$table-backround-color;
+  display: inline-block;
+}

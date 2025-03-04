@@ -2,69 +2,79 @@
 @use "./global";
 @use "./font";
 
-.input-content{
-    display: block;
+@mixin button-style {
+  display: flex;
+  border: 2px solid variables.$button-color;
+  padding: 4px 22px;
+  border-radius: 25px;
+  font-weight: bold;
+  font-size: 1rem;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+  background-color: variables.$transparent;
+  transition: 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(1);
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
 }
-.input-header-text{
-    margin: 5px 0 -15px 15px;
-    font-size: 1.3rem;
+
+.input-content {
+  display: block;
 }
-.input-text{
+
+.input-header-text {
+  margin: 5px 0 -15px 15px;
+  font-size: 1.3rem;
+}
+
+.input-text {
   margin-left: 15px;
   font-weight: 600;
 }
-.input-img-content{
+
+.input-img-content {
   border: 2px dotted black;
   margin-left: 15px;
   width: 350px;
   height: 150px;
-  transition: .2s ease-in-out;
+  display: grid;
   justify-content: center;
   align-items: center;
-  display: grid;
+  transition: 0.2s ease-in-out;
 
-  img{
+  img {
     padding: 25px 60px;
     max-width: 350px;
     max-height: 150px;
   }
+
+  &.dragging {
+    background-color: variables.$smoke-white;
+    border-color: variables.$blue-color;
+  }
 }
-.input-img-content.dragging {
-  background-color: variables.$smoke-white;
-  border-color: variables.$blue-color;
-}
-.upload-btn-box{
+
+.upload-btn-box {
   display: grid;
   justify-content: center;
   margin: 25px;
 
-  button{
-    display: flex;
-    border: 2px solid variables.$button-color;
-    padding: 4px 22px;
-    border-radius: 25px;
-    font-weight: bold;
-    font-size: 1rem;
-    align-items: center;
-    cursor: pointer;
-    transition: .3s ease;
-    gap: 8px;
-    background-color: variables.$transparent;
-
-    img{
-      width: 20px;
-      height: 20px;
-    }
-  }
-  button:hover{
-    transform: scale(1.05);
-    transition: .3s ease;
-  }
-  button:active{
-    transform: scale(1);
-    transition: .3s ease;
+  button {
+    @include button-style;
   }
 }
-.file-upload{
-    display: none;
+
+.file-upload {
+  display: none;
 }

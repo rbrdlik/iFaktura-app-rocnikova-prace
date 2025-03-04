@@ -1,0 +1,56 @@
+@use "./variables";
+@use "./global";
+@use "./font";
+
+@mixin transition($scale: 1.1) {
+  transition: .2s ease;
+
+  &:hover {
+    transform: scale($scale);
+  }
+
+  &:active {
+    transform: scale(1);
+  }
+}
+
+.number-input-box {
+  width: 175px;
+  padding: 15px 25px 15px 15px;
+  display: flex;
+  flex-direction: column;
+
+  h4 {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .number-input {
+    height: 38px;
+    border-radius: 25px;
+    border: 1px solid variables.$input-border;
+    background-color: variables.$input-background;
+    margin-bottom: 5px;
+    padding: 5px 15px;
+    font-size: 0.95rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    input {
+      border: none;
+      background-color: variables.$input-background;
+      font-size: 1.1rem;
+      text-align: center;
+      font-weight: 600;
+      width: 50px;
+    }
+
+    img {
+      width: 12px;
+      cursor: pointer;
+      user-select: none;
+      @include transition(1.1);
+    }
+  }
+}

@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 
+// Import components
 import Content from "../../components/Content";
+
+// Import styles
 import "../../scss/styles.scss";
 
 export default function Dashboard() {

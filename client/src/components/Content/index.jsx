@@ -1,4 +1,7 @@
+// Import components
 import SidebarMenu from "../SidebarMenu";
+
+// Import styles
 import "../../scss/Content.scss"
 
 export default function Content({children, headtext, page, box_width}) {

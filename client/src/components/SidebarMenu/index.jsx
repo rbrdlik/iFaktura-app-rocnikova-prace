@@ -32,7 +32,7 @@ export default function SidebarMenu({active_page}){
                     <div className="sidebar-nav" id="top">
                         <h3>Faktury</h3>
                         <ul>
-                            <Link to={"#"}><li className={active_page === "Vytvořit fakturu" ? "active-li" : ""}><img src={PlusIcon} alt="" className="icon"/>Vytvořit fakturu</li></Link>
+                            <Link to={"#"}><li className={active_page === "Vydat fakturu" ? "active-li" : ""}><img src={PlusIcon} alt="" className="icon"/>Vydat fakturu</li></Link>
                             <Link to={"#"}><li className={active_page === "Vydané faktury" ? "active-li" : ""}><img src={FileIcon} alt="" className="icon"/>Vydané faktury</li></Link>
                         </ul>
                     </div>
@@ -44,10 +44,10 @@ export default function SidebarMenu({active_page}){
                         </ul>
                     </div>
                     <div className="sidebar-nav">
-                        <h3>Produkty</h3>
+                        <h3>Položky</h3>
                         <ul>
-                            <Link to={"#"}><li className={active_page === "Vytvořit produkt" ? "active-li" : ""}><img src={PlusIcon} alt="" className="icon"/>Vytvořit produkt</li></Link>
-                            <Link to={"#"}><li className={active_page === "Seznam produktů" ? "active-li" : ""}><img src={ProductIcon} alt="" className="icon"/>Seznam produktů</li></Link>
+                            <Link to={"/createItem"}><li className={active_page === "Vytvořit položku" ? "active-li" : ""}><img src={PlusIcon} alt="" className="icon"/>Vytvořit položku</li></Link>
+                            <Link to={"/items"}><li className={active_page === "Seznam položek" ? "active-li" : ""}><img src={ProductIcon} alt="" className="icon"/>Seznam položek</li></Link>
                         </ul>
                     </div>
                     <div className="sidebar-nav">
