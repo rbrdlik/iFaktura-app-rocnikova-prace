@@ -39,8 +39,8 @@ export default function SidebarMenu({active_page}){
                     <div className="sidebar-nav">
                         <h3>Kontakty</h3>
                         <ul>
-                            <Link to={"#"}><li className={active_page === "Vytvořit kontakt" ? "active-li" : ""}><img src={PlusIcon} alt="" className="icon"/>Vytvořit kontakt</li></Link>
-                            <Link to={"#"}><li className={active_page === "Seznam kontaktů" ? "active-li" : ""}><img src={UserGroupIcon} alt="" className="icon"/>Seznam kontaktů</li></Link>
+                            <Link to={"/createContact"}><li className={active_page === "Vytvořit kontakt" ? "active-li" : ""}><img src={PlusIcon} alt="" className="icon"/>Vytvořit kontakt</li></Link>
+                            <Link to={"/contacts"}><li className={active_page === "Seznam kontaktů" ? "active-li" : ""}><img src={UserGroupIcon} alt="" className="icon"/>Seznam kontaktů</li></Link>
                         </ul>
                     </div>
                     <div className="sidebar-nav">

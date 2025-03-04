@@ -11,6 +11,11 @@ import UpdateItem from "./MyItems/UpdateItem";
 import ViewItem from "./MyItems/ViewItem";
 import ViewAllItems from "./MyItems/ViewAllItems";
 
+import CreateContact from "./MyContacts/CreateContact";
+import UpdateContact from "./MyContacts/UpdateContact";
+import ViewContact from "./MyContacts/ViewContact";
+import ViewAllContacts from "./MyContacts/ViewAllContacts";
+
 export default function AppRoutes() {
 
   // Testovaci prepinac
@@ -29,6 +34,11 @@ export default function AppRoutes() {
         <Route path="/updateItem" element={<UpdateItem />} />
         <Route path="/items" element={<ViewAllItems />} />
         <Route path="/item" element={<ViewItem />} />
+
+        <Route path="/createContact" element={<CreateContact />} />
+        <Route path="/updateContact" element={<UpdateContact />} />
+        <Route path="/contacts" element={<ViewAllContacts />} />
+        <Route path="/contact" element={<ViewContact />} />
       </Routes>
     </BrowserRouter>
   );

@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import Content from "../../components/Content";
 import Input from "../../components/Input";
 import Buttons from "../../components/Buttons";
-import NumberInput from "../../components/NumberInput";
 
 // Import styles
 import "../../scss/styles.scss";

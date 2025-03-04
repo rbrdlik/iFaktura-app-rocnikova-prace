@@ -21,7 +21,7 @@ export default function Table({ children }) {
           </div>
         </div>
         <div className="table-navbar-icons">
-          <img src={fileplus} alt="" title="Vytvořit novou položku" />
+          <img src={fileplus} alt="" title="Vytvořit nové" />
           <img src={trashcan} alt="" title="Smazat vybrané" />
           <hr class="vertical-line"></hr>
         </div>
