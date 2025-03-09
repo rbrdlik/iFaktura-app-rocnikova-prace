@@ -26,7 +26,11 @@ export default function Table({ children }) {
           <hr class="vertical-line"></hr>
         </div>
       </header>
-      <table className="table">{children}</table>
+      <section className="table-container">
+        <table className="table">
+          {children}
+        </table>
+      </section>
 
       <section className="table-action">
         <div id="table-action-left">

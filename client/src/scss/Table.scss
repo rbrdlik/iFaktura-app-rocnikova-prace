@@ -2,8 +2,14 @@
 @use "./global";
 @use "./font";
 
+.table-container{
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
 .table {
   width: 100%;
+  min-width: 962px;
   border-collapse: collapse;
 
   th {

@@ -53,9 +53,9 @@ export default function NumberInput({text, required, numberValue, changedValue})
       <div className="number-input-box">
         <h4>{text} {required ? <span className="required">*</span> : ""}</h4>
         <div className="number-input">
-          <img src={plus} alt="" onClick={increaseNumber} />
+        <img src={minus} alt="" onClick={decreaseNumber} />
           <input type="text" value={value} onChange={handleChange} />
-          <img src={minus} alt="" onClick={decreaseNumber} />
+          <img src={plus} alt="" onClick={increaseNumber} />
         </div>
       </div>
     </>

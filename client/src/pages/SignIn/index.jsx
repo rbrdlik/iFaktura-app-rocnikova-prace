@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import SignInAndUp from "../../components/signInAndUp";
 
@@ -5,6 +6,10 @@ import SignInAndUp from "../../components/signInAndUp";
 import "../../scss/signInAndUp.scss";
 
 export default function SignIn(){
+      useEffect(() => {
+        document.title = "Přihlášení • iFaktura";
+      }, []);
+    
     return(
         <>
             <SignInAndUp>
@@ -21,7 +26,7 @@ export default function SignIn(){
                         </div>
                         <button>Přihlásit se</button>
                     </form> 
-                    <p>Ještě nemáte účet? <Link to={"/sign-up"}>Zaregistrovat se</Link></p>
+                    <p>Ještě nemáte účet? <Link to={"/signUp"}>Zaregistrovat se</Link></p>
                 </div>
             </SignInAndUp>
         </>

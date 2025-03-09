@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import SignInAndUp from "../../components/signInAndUp";
 
@@ -5,6 +6,10 @@ import SignInAndUp from "../../components/signInAndUp";
 import "../../scss/signInAndUp.scss";
 
 export default function SignUp(){
+      useEffect(() => {
+        document.title = "Registrace • iFaktura";
+      }, []);
+    
     return(
         <>
             <SignInAndUp>
@@ -12,8 +17,12 @@ export default function SignUp(){
                     <h1>Zaregistrovat se</h1>
                     <form>
                         <div className="input">
-                            <h4>Uživatelské jméno</h4>
-                            <input type="text" placeholder="Vytvořte si uživatelské jméno"/>
+                            <h4>Jméno</h4>
+                            <input type="text" placeholder="Zadejte své jméno"/>
+                        </div>
+                        <div className="input">
+                            <h4>Příjmení</h4>
+                            <input type="text" placeholder="Zadejte své příjmení"/>
                         </div>
                         <div className="input">
                             <h4>Email</h4>
@@ -23,13 +32,10 @@ export default function SignUp(){
                             <h4>Heslo</h4>
                             <input type="password" placeholder="Zadejte své heslo"/>
                         </div>
-                        <div className="input">
-                            <h4>Heslo znovu</h4>
-                            <input type="password" placeholder="Zadejte své heslo znovu"/>
-                        </div>
+                        <p style={{marginTop: "-15px", textAlign: "left", color: "red", marginLeft: "10px"}}>..</p>
                         <button>Zaregistrovat se</button>
                     </form> 
-                    <p>Již máte účet? <Link to={"/sign-in"}>Přihlásit se</Link></p>
+                    <p>Již máte účet? <Link to={"/signIn"}>Přihlásit se</Link></p>
                 </div>
             </SignInAndUp>
         </>
