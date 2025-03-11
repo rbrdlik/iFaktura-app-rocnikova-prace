@@ -47,9 +47,7 @@ exports.register = async (req, res) => {
 
     const userExist = await User.findOne({ email });
     if (userExist)
-      return res
-        .status(400)
-        .send({ message: "Tento email je již zaregistrován." });
+      return res.status(400).send({ message: "Tento email je již zaregistrován." });
 
     const hashedPassword = await bcrypt.hash(password, 10);
 

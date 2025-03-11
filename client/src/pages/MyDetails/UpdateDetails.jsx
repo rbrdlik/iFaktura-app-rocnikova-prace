@@ -17,9 +17,6 @@ export default function UpdateDetails() {
     document.title = "Moje údaje • iFaktura";
   }, []);
 
-  console.log("Image1 " + image1);
-  console.log("Image2 " + image2);
-
   return (
     <>
       <Content headtext="Moje údaje" page="Moje údaje" box_width="225">

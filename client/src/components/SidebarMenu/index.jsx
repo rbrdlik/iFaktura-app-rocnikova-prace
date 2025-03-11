@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import { useAuth } from "../../context/AuthProvider";
 
 // Import assets
 import logoWhite from "../../assets/logo/iFakturaLogoWhite.png";
@@ -19,6 +19,15 @@ import "../../scss/SidebarMenu.scss";
 import "../../scss/styles.scss"
 
 export default function SidebarMenu({active_page}){
+    const { logout } = useAuth();
+
+    /**
+     * Funkce z `AuthProvider`, která odhlásí uživatele.
+     */
+    const logoutUser = () => {
+        logout();
+    }
+
     return(
         <>
             <section className="sidebar">
@@ -66,7 +75,7 @@ export default function SidebarMenu({active_page}){
                         </div>
                         <div className="sidebar-user-btn">
                             <Link to={"#"}><img src={SettingsIcon} alt="" className="action-btn" id="settings"/></Link>
-                            <Link to={"#"}><img src={LogoutIcon} alt="" className="action-btn"/></Link>
+                            <Link to={"/signIn"}><img src={LogoutIcon} alt="" className="action-btn" onClick={logoutUser}/></Link>
                         </div>
                     </div>
                 </div>

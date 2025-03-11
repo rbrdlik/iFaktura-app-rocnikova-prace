@@ -11,7 +11,7 @@ export default function NumberInput({text, required, numberValue, changedValue})
   const [value, setValue] = useState(numberValue);
 
   /**
-   * Aktualizujeme hodnotu a voláme "onChange", aby se hodnota dostala ven
+   * Aktualizujeme hodnotu a voláme `onChange`, aby se hodnota dostala ven
    */
   const updateValue = (newValue) => {
     setValue(newValue);
@@ -38,7 +38,7 @@ export default function NumberInput({text, required, numberValue, changedValue})
 
   /**
    * Ruční měnění hodnoty přes input (pro případ zadávání nějakého většího čísla).
-   * Kontrola zda je zadaný input číslo pomocí regulárního výrazu "/^\d*$/" (/^ = začátek řetězce; \d* = libovolné číslo 0-9 a může se opakovat nekonečno krát; $/ = konec řetězce)
+   * Kontrola zda je zadaný input číslo pomocí regulárního výrazu `/^\d*$/` (`/^` = začátek řetězce; `\d*` = libovolné číslo 0-9 a může se opakovat nekonečno krát; `$/` = konec řetězce)
    * Poté převádí input na číslo, aby se s tím dalo dále pracovat
    */
   const handleChange = (e) => {

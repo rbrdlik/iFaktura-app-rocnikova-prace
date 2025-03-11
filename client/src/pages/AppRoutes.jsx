@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ProtectedRoute from "../components/ProtectedRoute";
+ 
 import SignIn from "./SignIn";
 import SignUp from "./signUp";
 import Dashboard from "./Dashboard";
@@ -19,26 +21,29 @@ import ViewAllContacts from "./MyContacts/ViewAllContacts";
 export default function AppRoutes() {
 
   // Testovaci prepinac
-  let details = 0;
+  let details = 1;
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/signIn" element={<SignIn />} />
         <Route path="/signUp" element={<SignUp />} />
-        <Route path="/dashboard" element={<Dashboard />} />
 
-        <Route path="/details" element={details == 1 ? <CreateDetails /> : <UpdateDetails />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
 
-        <Route path="/createItem" element={<CreateItem />} />
-        <Route path="/updateItem" element={<UpdateItem />} />
-        <Route path="/items" element={<ViewAllItems />} />
-        <Route path="/item" element={<ViewItem />} />
+          <Route path="/details" element={details == 1 ? <CreateDetails /> : <UpdateDetails />} />
 
-        <Route path="/createContact" element={<CreateContact />} />
-        <Route path="/updateContact" element={<UpdateContact />} />
-        <Route path="/contacts" element={<ViewAllContacts />} />
-        <Route path="/contact" element={<ViewContact />} />
+          <Route path="/createItem" element={<CreateItem />} />
+          <Route path="/updateItem" element={<UpdateItem />} />
+          <Route path="/items" element={<ViewAllItems />} />
+          <Route path="/item" element={<ViewItem />} />
+
+          <Route path="/createContact" element={<CreateContact />} />
+          <Route path="/updateContact" element={<UpdateContact />} />
+          <Route path="/contacts" element={<ViewAllContacts />} />
+          <Route path="/contact" element={<ViewContact />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

@@ -17,12 +17,9 @@ export default function CreateDetails() {
     document.title = "Moje údaje • iFaktura";
   }, []);
 
-  console.log("Image1 " + image1);
-  console.log("Image2 " + image2);
-
   return (
     <>
-      <Content headtext="Moje údaje" page="Moje údaje" box_width="225">
+      <Content headtext="Nastavte si své údaje" page="Moje údaje" box_width="350" sidebarMenu={false}>
         <h1 className="input-header-text">Základní údaje</h1>
         <div className="inputs">
           <Input text="Jméno a příjmení / Název firmy" required={true}>
@@ -59,12 +56,6 @@ export default function CreateDetails() {
           </Input>
           <Input text="Webové stránky" required={false}>
             <input type="text" />
-          </Input>
-          <Input text="E-mail" required={true}>
-            <div className="email-input">
-              <h3>nejakyemail@email.cz</h3>
-              <button>Změnit email</button>
-            </div>
           </Input>
         </div>
 

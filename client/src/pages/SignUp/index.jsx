@@ -1,14 +1,38 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+// Import models
+import { registerUser } from "../../models/user";
+
+// Import components
 import SignInAndUp from "../../components/signInAndUp";
 
-// Import style
+// Import styles
 import "../../scss/signInAndUp.scss";
 
 export default function SignUp(){
-      useEffect(() => {
-        document.title = "Registrace • iFaktura";
-      }, []);
+    const [formData, setFormData] = useState();
+    const [info, setInfo] = useState();
+    const navigate = useNavigate();
+
+    const sendData = async () => {
+        const res = await registerUser(formData);
+        if(res.status === 201) return navigate("/details");
+        setInfo(res.message);
+    }
+
+    const handleInput = (e) => {
+        setFormData({...formData, [e.target.name]: e.target.value})
+    }
+
+    const handleButton = (e) => {
+        e.preventDefault();
+        sendData();
+    }
+
+    useEffect(() => {
+      document.title = "Registrace • iFaktura";
+    }, []);
     
     return(
         <>
@@ -18,22 +42,22 @@ export default function SignUp(){
                     <form>
                         <div className="input">
                             <h4>Jméno</h4>
-                            <input type="text" placeholder="Zadejte své jméno"/>
+                            <input type="text" name="first_name" placeholder="Zadejte své jméno" required onChange={handleInput}/>
                         </div>
                         <div className="input">
                             <h4>Příjmení</h4>
-                            <input type="text" placeholder="Zadejte své příjmení"/>
+                            <input type="text" name="last_name" placeholder="Zadejte své příjmení" required onChange={handleInput}/>
                         </div>
                         <div className="input">
                             <h4>Email</h4>
-                            <input type="email" placeholder="Zadejte svůj email"/>
+                            <input type="email" name="email" placeholder="Zadejte svůj email" required onChange={handleInput}/>
                         </div>
                         <div className="input">
                             <h4>Heslo</h4>
-                            <input type="password" placeholder="Zadejte své heslo"/>
+                            <input type="password" name="password" placeholder="Zadejte své heslo" required onChange={handleInput}/>
                         </div>
-                        <p style={{marginTop: "-15px", textAlign: "left", color: "red", marginLeft: "10px"}}>..</p>
-                        <button>Zaregistrovat se</button>
+                        <p style={{marginTop: "-15px", textAlign: "left", color: "red", marginLeft: "10px"}}>{info}</p>
+                        <button onClick={handleButton}>Zaregistrovat se</button>
                     </form> 
                     <p>Již máte účet? <Link to={"/signIn"}>Přihlásit se</Link></p>
                 </div>
