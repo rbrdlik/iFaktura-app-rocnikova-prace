@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
+import Swal from "sweetalert2";
 
 // Import assets
 import logoWhite from "../../assets/logo/iFakturaLogoWhite.png";
@@ -14,19 +15,41 @@ import HouseIcon from "../../assets/icons/House.svg"
 
 import UserPfpImg from "../../assets/images/user.png"
 
+// Import alert
+import { mixinAlert } from "../../utils/sweetAlerts"
+
 // Import style
 import "../../scss/SidebarMenu.scss";
 import "../../scss/styles.scss"
 
 export default function SidebarMenu({active_page}){
     const { logout } = useAuth();
+    const navigate = useNavigate();
 
     /**
-     * Funkce z `AuthProvider`, která odhlásí uživatele.
+     * Nejprve se zeptá uživatele pomocí SweetAlert zda chce být odhlášen.
+     * Pokud ano, zavoláme funkci `logout()` z `AuthProvideru`.
      */
-    const logoutUser = () => {
-        logout();
-    }
+    const logoutConfirm = () => {
+        const Alert = Swal.mixin({
+          buttonsStyling: true,
+        });
+        Alert.fire({
+          title: "Opravdu se chcete odhlásit?",
+          showCancelButton: true,
+          confirmButtonText: "Ano, odhlásit se.",
+          confirmButtonColor: "#28a745",
+          cancelButtonText: "Zůstat přihlášen.",
+          cancelButtonColor: "#dc3545",
+          reverseButtons: true,
+        }).then((result) => {
+            if(result.isConfirmed){
+                logout();
+                navigate("/signIn");
+                mixinAlert("info", "Byl(a) jste odhlášen(a).")
+            }
+        });
+      }
 
     return(
         <>
@@ -75,7 +98,7 @@ export default function SidebarMenu({active_page}){
                         </div>
                         <div className="sidebar-user-btn">
                             <Link to={"#"}><img src={SettingsIcon} alt="" className="action-btn" id="settings"/></Link>
-                            <Link to={"/signIn"}><img src={LogoutIcon} alt="" className="action-btn" onClick={logoutUser}/></Link>
+                            <Link><img src={LogoutIcon} alt="" className="action-btn" onClick={logoutConfirm}/></Link>
                         </div>
                     </div>
                 </div>

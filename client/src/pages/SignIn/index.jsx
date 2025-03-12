@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 
+// Import alerts
+import { mixinAlert } from "../../utils/sweetAlerts"
+
 // Import models
 import { loginUser } from "../../models/user";
 
@@ -22,6 +25,7 @@ export default function SignIn(){
         if(res.status === 200){
             login(res.token)
             navigate("/dashboard");
+            mixinAlert("success", "Přihlášení proběhlo úspěšně.")
         }
         setInfo(res.message);
     }

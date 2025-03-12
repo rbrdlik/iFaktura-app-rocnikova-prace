@@ -8,6 +8,7 @@ const AuthContext = createContext();
  */
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Získáme token z `localStorage`, pokud token existuje, nastaví uživatele jako přihlášeného.
@@ -15,6 +16,7 @@ export default function AuthProvider({ children }) {
     if (token) {
       setUser({ token });
     }
+    setIsLoading(false);
   }, []);
 
   /**
@@ -38,7 +40,7 @@ export default function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

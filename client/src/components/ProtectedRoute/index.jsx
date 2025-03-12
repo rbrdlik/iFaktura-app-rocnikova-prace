@@ -7,7 +7,9 @@ import { useAuth } from "../../context/AuthProvider";
  * Například, pokud není uživatel přihlášen nemůže se dostat do /dashboard, tak v `AppRoutes` "obalíme" routu touto `ProtectedRoute` komponentou a ta ho podle toho zda je uživatel přihlášen přesměruje na `/dashboard`, nebo pokud není tak na `/signIn`.
  */
 export default function ProtectedRoute() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
+
+  if(isLoading) return <p>Loading...</p>;
 
   return user ? <Outlet /> : <Navigate to={"/signIn"} replace />; // replace - nahradí aktuální stránku v historii prohlížeče. To znamená, že uživatel se nemůže vrátit zpět tlačítkem zpět v prohlížeči.
 }

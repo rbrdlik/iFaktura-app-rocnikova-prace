@@ -1,0 +1,20 @@
+import Swal from "sweetalert2";
+
+/**
+ * Informační alert v pravém horním rohu.
+ * @param {Object} icon - Ikona, která se v alertu zobrazí (`success`, `error`, atd..).
+ * @param {Object} title - Text v alertu.
+ */
+export function mixinAlert(icon, title) {
+  const Alert = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    timer: 4000,
+    showConfirmButton: false,
+    timerProgressBar: true,
+  });
+  Alert.fire({
+    icon: icon,
+    title: title,
+  });
+}

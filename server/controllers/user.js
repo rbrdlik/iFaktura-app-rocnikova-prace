@@ -6,8 +6,8 @@ const jwt = require("jsonwebtoken");
  * Funkce pro přihlášení uživatele.
  * Zkontroluje zda je zadaný email a heslo, poté zkontroluje správnost emailu a hesla. 
  * Pokud vše sedí, uživatel je přihlášen a je mu vygenerován JWT Token
- * Method: POST
- * URL : http://localhost:3000/user/login
+ * Method: `POST`
+ * URL : `http://localhost:3000/user/login`
  */
 exports.login = async (req, res) => {
   try {
@@ -36,8 +36,8 @@ exports.login = async (req, res) => {
  * Funkce pro registraci nového uživatele.
  * Zkontroluje, zda jsou všechna pole správně vyplněna a zda uživatel s daným emailem již neexistuje.
  * Vytvoří nového uživatele a vygeneruje JWT token.
- * Method: POST
- * URL: http://localhost:3000/user/register
+ * Method: `POST`
+ * URL: `http://localhost:3000/user/register`
  */
 exports.register = async (req, res) => {
   try {

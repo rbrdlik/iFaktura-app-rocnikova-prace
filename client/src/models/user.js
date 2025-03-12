@@ -21,7 +21,8 @@ export const registerUser = async (formData) => {
     return{
         status: req.status,
         message: data.message,
-        payload: data.payload
+        payload: data.payload,
+        token: data.token
     }
 }
 
@@ -48,6 +49,7 @@ export const loginUser = async (formData) => {
     return{
         status: req.status,
         message: data.message,
-        payload: data.payload
+        payload: data.payload,
+        token: data.token
     }
 }
