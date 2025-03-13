@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthProvider";
 
 // Import models
 import { registerUser } from "../../models/user";
 
 // Import components
 import SignInAndUp from "../../components/signInAndUp";
+
+// Import alert 
+import { mixinAlert } from "../../utils/sweetAlerts";
 
 // Import styles
 import "../../scss/signInAndUp.scss";
@@ -14,9 +18,12 @@ export default function SignUp(){
     const [formData, setFormData] = useState();
     const [info, setInfo] = useState();
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const sendData = async () => {
         const res = await registerUser(formData);
+        login(res.token);
+        mixinAlert("success", "Úspěšně registrován.")
         if(res.status === 201) return navigate("/details");
         setInfo(res.message);
     }

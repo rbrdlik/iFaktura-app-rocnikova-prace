@@ -53,3 +53,30 @@ export const loginUser = async (formData) => {
         token: data.token
     }
 }
+
+/**
+ * Vezme data uživatele.
+ * Získá token z `localStorage`, pokud token neexistuje, vrátí `null`.
+ * Pokud token existuje, pošle request na server a ten vrátí data uživatele.
+ */
+export const getUser = async () => {
+    const token = localStorage.getItem("token");
+
+    if(!token) return null;
+
+    const req = await fetch("http://localhost:3000/user", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        },
+        method: "GET"
+    });
+    const data = await req.json();
+    
+    return{
+        status: req.status,
+        message: data.message,
+        payload: data.payload
+    }
+}

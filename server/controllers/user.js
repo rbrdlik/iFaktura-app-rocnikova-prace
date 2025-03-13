@@ -71,3 +71,26 @@ exports.register = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+/**
+ * Funkce k získání informací specifického uživatele.
+ * Method: `GET`
+ * URL: `http://localhost:3000/user`
+ */
+exports.getUser = async (req, res) => {
+  try{
+    const user = await User.findById(req.user.userId).select("-password"); // Najdeme uživatele podle jeho `_id` a odebereme jeho heslo abychom ho neposlali na frontend.
+    
+    if(!user){
+      return res.status(404).json({ message: "Uživatel nenalezen" })
+    }
+
+    res.status(200).send({
+      message: "User found",
+      payload: user
+    });
+
+  } catch(err){
+    res.status(500).json({ erorr: err.message })
+  }
+}
