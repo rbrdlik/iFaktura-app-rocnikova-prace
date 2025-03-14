@@ -10,8 +10,12 @@ import ImageUpload from "../../components/ImageUpload";
 import "../../scss/styles.scss";
 
 export default function UpdateDetails() {
-  const [image1, setImage1] = useState(null);
-  const [image2, setImage2] = useState(null);
+  const [image, setImage] = useState(null);
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+  };
 
   useEffect(() => {
     document.title = "Moje údaje • iFaktura";
@@ -26,10 +30,10 @@ export default function UpdateDetails() {
             <input type="text" />
           </Input>
           <Input text="IČO" required={false}>
-            <input type="text" />
+            {isChecked ? <input type="text" disabled/> : <input type="text" />}
             <div className="switch-text">
               <label class="switch">
-                <input type="checkbox" />
+                <input type="checkbox" onChange={handleCheckboxChange}/>
                 <span class="slider round"></span>
               </label>
               <p>Nemám IČO</p>
@@ -85,16 +89,10 @@ export default function UpdateDetails() {
             header={"Logo na faktuře"}
             imgSize={"200x200"}
             imgId={"1"}
-            setImage={setImage1}
-          />
-          <ImageUpload
-            header={"Logo na faktuře"}
-            imgSize={"200x200"}
-            imgId={"2"}
-            setImage={setImage2}
+            setImage={setImage}
           />
         </div>
-
+        
         <Buttons>
           <button id="empty">Zrušit</button>
           <button id="fill">Upravit</button>

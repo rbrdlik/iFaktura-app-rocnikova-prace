@@ -23,9 +23,9 @@ export default function SignIn(){
     const sendData = async () => {
         const res = await loginUser(formData);
         if(res.status === 200){
-            login(res.token)
+            await login(res.token)
+            mixinAlert("success", "Přihlášení proběhlo úspěšně.");
             navigate("/dashboard");
-            mixinAlert("success", "Přihlášení proběhlo úspěšně.")
         }
         setInfo(res.message);
     }

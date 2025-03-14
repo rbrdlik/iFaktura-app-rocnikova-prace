@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { getUser } from "../models/user";
 
 const AuthContext = createContext();
 
@@ -11,12 +12,17 @@ export default function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Získáme token z `localStorage`, pokud token existuje, nastaví uživatele jako přihlášeného.
-    const token = localStorage.getItem("token");
-    if (token) {
-      setUser({ token });
+    const fetchUser = async () => {
+      // Získáme token z `localStorage`, pokud token existuje, nastaví uživatele jako přihlášeného.
+      const token = localStorage.getItem("token");
+      if (token) {
+        const userData = await getUser();
+        setUser(userData);
+      }
+      setIsLoading(false);
     }
-    setIsLoading(false);
+
+    fetchUser();
   }, []);
 
   /**
@@ -25,9 +31,10 @@ export default function AuthProvider({ children }) {
    *
    * @param {string} token - JWT token získaný po přihlášení.
    */
-  const login = (token) => {
+  const login = async (token) => {
     localStorage.setItem("token", token);
-    setUser({ token });
+    const userData = await getUser();
+    setUser(userData);
   };
 
   /**

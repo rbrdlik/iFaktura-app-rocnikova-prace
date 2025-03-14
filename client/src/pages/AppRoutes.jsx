@@ -1,11 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState, useEffect } from "react";
 import ProtectedRoute from "../components/Routes/ProtectedRoute/";
 import DetailsRoute from "../components/Routes/DetailsRoute";
+import { useAuth } from "../context/AuthProvider";
  
 import SignIn from "./SignIn";
-import SignUp from "./signUp";
+import SignUp from "./SignUp";
 import Dashboard from "./Dashboard";
+
+import LoadingPage from "../components/LoadingPage";
 
 import CreateDetails from "./MyDetails/CreateDetails";
 import UpdateDetails from "./MyDetails/UpdateDetails";
@@ -20,26 +22,13 @@ import UpdateContact from "./MyContacts/UpdateContact";
 import ViewContact from "./MyContacts/ViewContact";
 import ViewAllContacts from "./MyContacts/ViewAllContacts";
 
-import { getUser } from "../models/user";
-
 export default function AppRoutes() {
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const getUserData = async () => {
-      const userData = await getUser();
-      setUser(userData);
-      setIsLoading(false);
-    };
-
-    getUserData();
-  }, []);
+  const { user, isLoading } = useAuth();
 
   if(isLoading){
-    return <p>Loading...</p>
+    return <LoadingPage />
   }
-  
+
   return (
     <BrowserRouter>
       <Routes>

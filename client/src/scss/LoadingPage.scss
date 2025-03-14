@@ -1,0 +1,40 @@
+@use "./variables";
+@use "./global";
+@use "./font";
+
+.loading {
+  background-color: variables.$white;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  display: grid;
+
+  .logoBox {
+    text-align: center;
+
+    .spinnerBox {
+      display: flex;
+      justify-content: center;
+    }
+
+    .logo {
+      width: 200px;
+    }
+
+    .spinner {
+      height: 50px;
+      width: 50px;
+      border: 5px solid variables.$table-backround-color;
+      border-bottom: 5px solid variables.$dark-green;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

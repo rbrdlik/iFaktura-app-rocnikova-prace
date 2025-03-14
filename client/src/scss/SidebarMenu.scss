@@ -127,6 +127,10 @@
   .username {
     font-size: 0.9rem;
     color: variables.$smoke-grey;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 

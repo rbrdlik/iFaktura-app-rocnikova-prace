@@ -94,3 +94,40 @@ exports.getUser = async (req, res) => {
     res.status(500).json({ erorr: err.message })
   }
 }
+
+/**
+ * Funkce k upravení informací specifického uživatele
+ * Method: `PUT`
+ * URL: `http://localhost:3000/user/update/:id`
+ */
+exports.updateUser = async (req, res) => {
+  try{
+    const data = {
+      profilePicture: req.body.profilePicture,
+      detailsName: req.body.detailsName,
+      ico: req.body.ico,
+      hasIco: req.body.hasIco,
+      street: req.body.street,
+      city: req.body.city,
+      zipCode: req.body.zipCode,
+      phone: req.body.phone,
+      website: req.body.website,
+      dph: req.body.dph,
+      dic: req.body.dic,
+      invoiceLogo: req.body.invoiceLogo,
+      signature: req.body.signature,
+    }
+    const result = await User.findByIdAndUpdate(req.params.id, data);
+    if(result){
+      return res.status(200).send({
+        message: "User updated",
+        payload: result,
+      })
+    }
+    res.status(400).send({
+      message: "Wrong input!",
+    })
+  } catch(err){
+    res.status(500).json({error: err.message})
+  }
+}

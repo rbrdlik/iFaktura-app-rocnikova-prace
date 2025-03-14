@@ -1,6 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../../../context/AuthProvider";
 
+// Import component
+import LoadingPage from "../../LoadingPage";
+
 /**
  * Tato komponenta slouží k ochraně rout podle toho zda je uživatel přihlášen či nikoliv.
  * Pokud je uživatel přihlášený (proměnná `user` v `AuthContext` obsahuje token uživatele), umožní mu přístup k dané stránce
@@ -9,7 +12,7 @@ import { useAuth } from "../../../context/AuthProvider";
 export default function ProtectedRoute() {
   const { user, isLoading } = useAuth();
 
-  if(isLoading) return <p>Loading...</p>;
+  if(isLoading) return <LoadingPage />;
 
   return user ? <Outlet /> : <Navigate to={"/signIn"} replace />; // replace - nahradí aktuální stránku v historii prohlížeče. To znamená, že uživatel se nemůže vrátit zpět tlačítkem zpět v prohlížeči.
 }
