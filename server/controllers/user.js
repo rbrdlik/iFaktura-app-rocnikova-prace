@@ -58,13 +58,9 @@ exports.register = async (req, res) => {
       password: hashedPassword,
     });
 
-    const token = jwt.sign(
-      { user_id: user._id, email },
-      process.env.TOKEN_KEY,
-      {
-        expiresIn: "2h",
-      }
-    );
+    const token = jwt.sign({ userId: user._id, email }, process.env.TOKEN_KEY, {
+      expiresIn: "2h",
+    });
 
     res.status(201).json({ token, user: { first_name, last_name, email } });
   } catch (err) {
@@ -98,7 +94,7 @@ exports.getUser = async (req, res) => {
 /**
  * Funkce k upravení informací specifického uživatele
  * Method: `PUT`
- * URL: `http://localhost:3000/user/update/:id`
+ * URL: `http://localhost:3000/user/:id`
  */
 exports.updateUser = async (req, res) => {
   try{

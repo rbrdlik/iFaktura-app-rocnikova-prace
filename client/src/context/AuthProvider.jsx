@@ -12,18 +12,18 @@ export default function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      // Získáme token z `localStorage`, pokud token existuje, nastaví uživatele jako přihlášeného.
-      const token = localStorage.getItem("token");
-      if (token) {
-        const userData = await getUser();
-        setUser(userData);
-      }
-      setIsLoading(false);
-    }
-
     fetchUser();
   }, []);
+
+  const fetchUser = async () => {
+    // Získáme token z `localStorage`, pokud token existuje, nastaví uživatele jako přihlášeného.
+    const token = localStorage.getItem("token");
+    if (token) {
+      const userData = await getUser();
+      setUser(userData.payload);
+    }
+    setIsLoading(false);
+  }
 
   /**
    * Funkce pro přihlášení uživatele.
@@ -33,8 +33,7 @@ export default function AuthProvider({ children }) {
    */
   const login = async (token) => {
     localStorage.setItem("token", token);
-    const userData = await getUser();
-    setUser(userData);
+    await fetchUser();
   };
 
   /**
@@ -47,7 +46,7 @@ export default function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+    <AuthContext.Provider value={{ user, login, logout, isLoading, fetchUser }}>
       {children}
     </AuthContext.Provider>
   );

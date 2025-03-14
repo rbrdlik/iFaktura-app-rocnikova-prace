@@ -28,7 +28,6 @@ const userSchema = mongoose.Schema({
 
     // Personalizace 
     invoiceLogo: { type: String, default: null},
-    signature: { type: String, default: null},
 
     // Ostatní
     createdAt: { type: Date, default: Date.now}

@@ -37,7 +37,7 @@ export default function AppRoutes() {
 
         <Route element={<ProtectedRoute />}>
           {/* Kontrolujeme zda má uživatel zadané své údaje, pokud ano přesměrujeme uživatele na `UpdateDetails` aby si své údaje mohl upravit, pokud ne musí si je vytvořit na `CreateDetails`*/}
-          <Route path="/details" element={!user?.payload?.detailsName ? <CreateDetails /> : <UpdateDetails />} />
+          <Route path="/details" element={!user?.detailsName ? <CreateDetails /> : <UpdateDetails />} />
 
           <Route element={<DetailsRoute user={user}/>}>
             <Route path="/dashboard" element={<Dashboard />} />

@@ -6,5 +6,5 @@ import { Navigate, Outlet } from "react-router-dom";
  * @param {Object} user -- Získáváme data uživatele z `AppRoutes`.
  */
 export default function DetailsRoute({user}){
-    return !user?.payload?.detailsName ? <Navigate to={"/details"} /> : <Outlet />;
+    return !user?.detailsName ? <Navigate to={"/details"} /> : <Outlet />;
 }

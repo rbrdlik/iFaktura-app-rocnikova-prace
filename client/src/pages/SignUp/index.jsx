@@ -22,9 +22,9 @@ export default function SignUp(){
 
     const sendData = async () => {
         const res = await registerUser(formData);
-        await login(res.token);
         if(res.status === 201){
-            mixinAlert("success", "Úspěšně registrován.")
+            login(res.token);
+            mixinAlert("success", "Úspěšně registrován. Nyní se prosím přihlašte.")
             return navigate("/details");
         }
         setInfo(res.message);
