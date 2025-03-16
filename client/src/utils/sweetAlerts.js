@@ -10,6 +10,7 @@ export function mixinAlert(icon, title) {
     toast: true,
     position: "top-end",
     timer: 4000,
+    color: "black",
     showConfirmButton: false,
     timerProgressBar: true,
   });

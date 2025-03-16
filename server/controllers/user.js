@@ -99,6 +99,9 @@ exports.getUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   try{
     const data = {
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
       profilePicture: req.body.profilePicture,
       detailsName: req.body.detailsName,
       ico: req.body.ico,

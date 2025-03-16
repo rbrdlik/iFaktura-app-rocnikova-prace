@@ -1,8 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthProvider";
 import Swal from "sweetalert2";
-import { getUser } from "../../models/user";
 
 // Import assets
 import logoWhite from "../../assets/logo/iFakturaLogoWhite.png";
@@ -25,9 +23,9 @@ import "../../scss/SidebarMenu.scss";
 import "../../scss/styles.scss"
 
 export default function SidebarMenu({active_page}){
-    const [user, setUser] = useState();
-    const { logout } = useAuth();
+    const { user, logout } = useAuth();
     const navigate = useNavigate();
+
 
     /**
      * Nejprve se zeptá uživatele pomocí SweetAlert zda chce být odhlášen.
@@ -40,9 +38,10 @@ export default function SidebarMenu({active_page}){
         Alert.fire({
           title: "Opravdu se chcete odhlásit?",
           showCancelButton: true,
-          confirmButtonText: "Ano, odhlásit se.",
+          confirmButtonText: "Ano, odhlásit se",
+          color: "black",
           confirmButtonColor: "#28a745",
-          cancelButtonText: "Zůstat přihlášen.",
+          cancelButtonText: "Zůstat přihlášen",
           cancelButtonColor: "#dc3545",
           reverseButtons: true,
         }).then((result) => {
@@ -53,15 +52,6 @@ export default function SidebarMenu({active_page}){
             }
         });
       }
-
-      useEffect(() => {
-        const getUserData = async () => {
-            const userData = await getUser();
-            setUser(userData);
-        }
-
-        getUserData();
-      }, []);
 
     return(
         <>
@@ -105,11 +95,11 @@ export default function SidebarMenu({active_page}){
                     <div className="sidebar-user-content">
                         <img src={UserPfpImg} alt="" id="su-img"/>
                         <div className="sidebar-user-text">
-                            <p><b>{user?.payload?.first_name} {user?.payload?.last_name}</b></p>
-                            <p className="username">{user?.payload?.email}</p>
+                            <p><b>{user.first_name} {user.last_name}</b></p>
+                            <p className="username">{user.email}</p>
                         </div> 
                         <div className="sidebar-user-btn">
-                            <Link to={"#"}><img src={SettingsIcon} alt="" className="action-btn" id="settings"/></Link>
+                            <Link to={"/settings"}><img src={SettingsIcon} alt="" className={active_page === "Nastavení" ? "action-btn active-settings" : "action-btn"} id="settings"/></Link>
                             <Link><img src={LogoutIcon} alt="" className="action-btn" onClick={logoutConfirm}/></Link>
                         </div>
                     </div>

@@ -120,3 +120,126 @@ input:checked + .slider:before {
     font-weight: 800;
   }
 }
+
+// SETTINGS STRÁNKA
+.myAccount{
+  margin-top: 25px;
+
+  h1{
+    font-size: 1.7rem;
+  }
+  .myAccountBox{
+    background-color: variables.$table-backround-color;
+    width: 100%;
+    max-width: 800px;
+    min-width: 350px;
+    margin-right: 80px;
+    padding: 30px;
+    display: flex;
+    border-radius: 15px;
+  }
+  .myAccountImageBox{
+    position: relative;
+    cursor: pointer;
+    top: -10px;
+    user-select: none;
+
+    #circleSmallImage{
+      position: absolute;
+      z-index: 2;
+      width: 40px;
+      background-color: variables.$green;
+      border: 2px solid variables.$black;
+      padding: 10px;
+      border-radius: 15px;
+      bottom: 18px;
+      right: -105px;
+    }
+
+    #img{
+      width: 100px;
+      border-radius: 50%;
+      border: 2px solid variables.$black;
+      position: absolute;
+      z-index: 1;
+    }
+  }
+  .myAccountBoxText{
+    position: relative;
+    left: 130px;
+    line-height: 40px;
+  }
+}
+.accSettings{
+  margin-top: 25px;
+
+  h1{
+    font-size: 1.7rem;
+  }
+
+  .accSettingsBox{
+    width: 100%;
+    max-width: 800px;
+    min-width: 350px;
+    border-top: 2px solid variables.$table-backround-color;
+    border-bottom: 2px solid variables.$table-backround-color;
+
+    .accSetting{
+      display: flex;
+      align-items: center;
+      width: 100%;
+      margin: 10px 0;
+
+      .leftSide{
+        width: 50%;
+        display: grid;
+        justify-content: left;
+        
+        h2{
+          margin-bottom: -15px;
+          font-weight: 600;
+        }
+      }
+
+      .rightSide{
+        width: 50%;
+        display: flex;
+        justify-content: right;
+      }
+    }
+  }
+}
+.btn {
+  padding: 4px 28px;
+  border-radius: 25px;
+  max-width: 175px;
+  width: 100%;
+  font-weight: bold;
+  font-size: 1rem;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+.btn:hover {
+  transform: scale(1.05);
+  transition: 0.3s ease;
+}
+.btn:active {
+  transform: scale(1);
+  transition: 0.3s ease;
+}
+.btn#empty {
+  border: 2px solid variables.$button-color;
+  background-color: variables.$transparent;
+}
+.btn#fill {
+  border: 2px solid variables.$button-color;
+  background-color: variables.$button-color;
+  color: variables.$white;
+}
+.btn#red {
+  margin-top: 15px;
+  border: 2px solid variables.$red-color;
+  background-color: transparent;
+  color: variables.$red-color;
+}

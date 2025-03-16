@@ -169,7 +169,7 @@ export default function UpdateDetails() {
           <Input text="E-mail" required={true}>
             <div className="email-input">
               <h3>{user.email}</h3>
-              <button>Změnit email</button>
+              <Link to={"/settings"}><button>Změnit email</button></Link>
             </div>
           </Input>
         </div>

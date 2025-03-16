@@ -6,6 +6,9 @@ import uploadIcon from "../../assets/icons/Upload.svg";
 // Import styles
 import "../../scss/ImageUpload.scss";
 
+// Import alert
+import { mixinAlert } from "../../utils/sweetAlerts";
+
 export default function ImageUpload({ header, imgSize, imgId, setImage }) {
   const [imageUrl, setImageUrl] = useState("");
   const [isDragging, setIsDragging] = useState(false);
@@ -21,7 +24,7 @@ export default function ImageUpload({ header, imgSize, imgId, setImage }) {
       const imgUrl = URL.createObjectURL(file);
       setImageUrl(imgUrl);
     } else {
-      alert("Nahrajte prosím obrázek");
+      mixinAlert("error", "Nahrajte prosím obrázek.")
     }
   };
 

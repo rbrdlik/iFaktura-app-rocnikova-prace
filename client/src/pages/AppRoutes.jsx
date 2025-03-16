@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "../components/Routes/ProtectedRoute/";
 import DetailsRoute from "../components/Routes/DetailsRoute";
 import { useAuth } from "../context/AuthProvider";
+import { Navigate } from "react-router-dom";
  
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
@@ -22,6 +23,10 @@ import UpdateContact from "./MyContacts/UpdateContact";
 import ViewContact from "./MyContacts/ViewContact";
 import ViewAllContacts from "./MyContacts/ViewAllContacts";
 
+import Settings from "./Settings";
+
+import NotFound from "../components/NotFound";
+
 export default function AppRoutes() {
   const { user, isLoading } = useAuth();
 
@@ -40,6 +45,7 @@ export default function AppRoutes() {
           <Route path="/details" element={!user?.detailsName ? <CreateDetails /> : <UpdateDetails />} />
 
           <Route element={<DetailsRoute user={user}/>}>
+            <Route path="/" element={<Navigate to={"/dashboard"}/>}/>
             <Route path="/dashboard" element={<Dashboard />} />
 
             <Route path="/createItem" element={<CreateItem />} />
@@ -51,8 +57,12 @@ export default function AppRoutes() {
             <Route path="/updateContact" element={<UpdateContact />} />
             <Route path="/contacts" element={<ViewAllContacts />} />
             <Route path="/contact" element={<ViewContact />} />
-          </Route>
+
+            <Route path="/settings" element={<Settings />} />
+          </Route> 
         </Route>
+
+        <Route path="*" element={<NotFound />}/>
       </Routes>
     </BrowserRouter>
   );
