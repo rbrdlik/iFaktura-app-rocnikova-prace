@@ -102,6 +102,7 @@ exports.updateUser = async (req, res) => {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       email: req.body.email,
+      password: req.body.password,
       profilePicture: req.body.profilePicture,
       detailsName: req.body.detailsName,
       ico: req.body.ico,
@@ -120,6 +121,65 @@ exports.updateUser = async (req, res) => {
     if(result){
       return res.status(200).send({
         message: "User updated",
+        payload: result,
+      })
+    }
+    res.status(400).send({
+      message: "Wrong input!",
+    })
+  } catch(err){
+    res.status(500).json({error: err.message})
+  }
+}
+
+/**
+ * Funkce k ověření správnosti hesla
+ * Method: `POST`
+ * URL: `http://localhost:3000/user/verifyPassword`
+ */
+exports.verifyPassword = async (req, res) => {
+  try{
+    const { password } = req.body;
+    const user = await User.findById(req.user.userId);
+
+    if(!user || !(await bcrypt.compare(password, user.password))) return res.status(401).json({ message: "Špatné heslo."});
+
+    res.status(200).json({message: "Heslo je správné."});
+  } catch(err){
+    res.status(500).json({ error: err.message });
+  }
+}
+
+/**
+ * Funkce ke smazání uživatele
+ * Method: `DELETE`
+ * URL: `http://localhost:3000/user/:id`
+ */
+exports.deleteUser = async (req, res) => {
+  try{
+    const data = {
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+      password: req.body.password,
+      profilePicture: req.body.profilePicture,
+      detailsName: req.body.detailsName,
+      ico: req.body.ico,
+      hasIco: req.body.hasIco,
+      street: req.body.street,
+      city: req.body.city,
+      zipCode: req.body.zipCode,
+      phone: req.body.phone,
+      website: req.body.website,
+      dph: req.body.dph,
+      dic: req.body.dic,
+      invoiceLogo: req.body.invoiceLogo,
+      signature: req.body.signature,
+    }
+    const result = await User.findByIdAndDelete(req.params.id, data);
+    if(result){
+      return res.status(200).send({
+        message: "User deleted",
         payload: result,
       })
     }

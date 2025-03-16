@@ -167,7 +167,7 @@ export default function CreateDetails() {
           </Input>
           {selectOption === "Plátce DPH" ? (
             <Input text="DIČ" required={false}>
-              <input type="text" name="dic" onChange={handleInput} />
+              <input type="text" name="dic" required onChange={handleInput}/>
             </Input>
           ) : (
             ""

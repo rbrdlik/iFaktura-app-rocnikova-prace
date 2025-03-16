@@ -189,6 +189,7 @@ export default function UpdateDetails() {
               <input
                 type="text"
                 name="dic"
+                required
                 onChange={handleInput}
                 defaultValue={user.dic}
               />

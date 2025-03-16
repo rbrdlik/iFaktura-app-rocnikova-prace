@@ -111,3 +111,61 @@ export const updateUser = async (id, formData) => {
         payload: data.payload
     }
 }
+
+/**
+ * Zkontroluje správnost hesla
+ * Získá token z `localStorage`, pokud token neexistuje, vrátí `null`.
+ * Pokud token existuje, pošle request na server a ten porovná zadané heslo s uloženým heslem.
+ * @param {Object} password -- Uživatelem zadané heslo k ověření
+ * @returns 
+ */
+export const verifyUserPassword = async (password) => {
+    const token = localStorage.getItem("token");
+
+    if(!token) return null;
+
+    const req = await fetch("http://localhost:3000/user/verifyPassword", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({ password: password})
+    });
+    const data = await req.json();
+
+    return{
+        status: req.status,
+        message: data.message,
+        payload: data.payload
+    }
+}
+
+/**
+ * Smaže uživatele
+ * Získá token z `localStorage`, pokud token neexistuje, vrátí `null`.
+ * Pokud token existuje, pošle request na server a ten smaže data uživatele
+ * @param {Object} id - ID uživatele, kterému chceme upravit data
+ */
+export const deleteUser = async (id) => {
+    const token = localStorage.getItem("token");
+
+    if(!token) return null;
+
+    const req = await fetch(`http://localhost:3000/user/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        },
+        method: "DELETE",
+    });
+    const data = await req.json();
+    
+    return{
+        status: req.status,
+        message: data.message,
+        payload: data.payload
+    }
+}
