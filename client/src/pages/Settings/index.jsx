@@ -98,8 +98,12 @@ export default function Settings() {
         const email = document.getElementById("swal-input1").value;
         const password = document.getElementById("swal-input2").value;
 
-        const emailRegex =
-          /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+
+        if(email === user.email){
+          Swal.showValidationMessage("Zadaný email je stejný jako váš současný.");
+          return false;
+        }
 
         if (!emailRegex.test(email)) {
           Swal.showValidationMessage("Zadejte platný e-mail.");

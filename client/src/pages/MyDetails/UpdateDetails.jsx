@@ -26,7 +26,6 @@ export default function UpdateDetails() {
   const [formData, setFormData] = useState();
 
   const sendData = async () => {
-    console.log(formData)
     const res = await updateUser(user._id, formData);
     if (res.status === 200) {
       await fetchUser();
@@ -38,27 +37,27 @@ export default function UpdateDetails() {
     const newChecked = e.target.checked;
     setIsChecked(newChecked);
 
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      hasIco: !newChecked
-    }))
+      hasIco: !newChecked,
+    }));
   };
 
   const handleSelectChange = (e) => {
     const newOption = e.target.value;
     setSelectOption(newOption);
 
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      dph: newOption
-    }))
+      dph: newOption,
+    }));
   };
 
   const handleInput = (e) => {
-    setFormData(prev => ({
-      ...prev, 
-      [e.target.name]: e.target.value
-    }))
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleButton = (e) => {
@@ -95,21 +94,29 @@ export default function UpdateDetails() {
               defaultValue={user.detailsName}
             />
           </Input>
-          <Input text="IČO" required={false}>
+          <Input text="IČO" required={isChecked ? false : true}>
             {isChecked ? (
               <input type="text" disabled />
             ) : (
-              <input
-                type="text"
-                name="ico"
-                required
-                onChange={handleInput}
-                defaultValue={user.ico}
-              />
+                                                                                                                      <input
+                                                                                                                        type="text"
+                                                                                                                        name="ico"
+                                                                                                                        required
+                                                                                                                        onChange={handleInput}
+                                                                                                                        defaultValue={user.ico}
+                                                                                                                      />
             )}
             <div className="switch-text">
               <label class="switch">
-                {isChecked ? <input type="checkbox" onChange={handleCheckboxChange} defaultChecked/> : <input type="checkbox" onChange={handleCheckboxChange} />}
+                {isChecked ? (
+                  <input
+                    type="checkbox"
+                    onChange={handleCheckboxChange}
+                    defaultChecked
+                  />
+                ) : (
+                  <input type="checkbox" onChange={handleCheckboxChange} />
+                )}
                 <span class="slider round"></span>
               </label>
               <p>Nemám IČO</p>
@@ -169,8 +176,23 @@ export default function UpdateDetails() {
           <Input text="E-mail" required={true}>
             <div className="email-input">
               <h3>{user.email}</h3>
-              <Link to={"/settings"}><button>Změnit email</button></Link>
+              <Link to={"/settings"}>
+                <button>Změnit email</button>
+              </Link>
             </div>
+          </Input>
+        </div>
+
+        <h1 className="input-header-text">Platební údaje</h1>
+        <div className="inputs">
+          <Input text="Číslo bankovního účtu" required={false}>
+            <input type="tel" name="accountNumber" onChange={handleInput} defaultValue={user.accountNumber}/>
+          </Input>
+          <Input text="IBAN" required={false}>
+            <input type="text" name="iban" onChange={handleInput} defaultValue={user.iban}/>
+          </Input>
+          <Input text="SWIFT" required={false}>
+            <input type="text" name="swift" onChange={handleInput} defaultValue={user.swift}/>
           </Input>
         </div>
 
@@ -185,7 +207,7 @@ export default function UpdateDetails() {
             </div>
           </Input>
           {selectOption === "Plátce DPH" ? (
-            <Input text="DIČ" required={false}>
+            <Input text="DIČ" required={true}>
               <input
                 type="text"
                 name="dic"

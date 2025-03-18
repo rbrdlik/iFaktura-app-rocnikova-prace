@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
  * @param {Object} icon - Ikona, která se v alertu zobrazí (`success`, `error`, atd..).
  * @param {Object} title - Text v alertu.
  */
-export function mixinAlert(icon, title) {
+export const mixinAlert = (icon, title) => {
   const Alert = Swal.mixin({
     toast: true,
     position: "top-end",

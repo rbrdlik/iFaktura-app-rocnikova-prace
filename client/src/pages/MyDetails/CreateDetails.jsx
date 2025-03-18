@@ -117,7 +117,7 @@ export default function CreateDetails() {
               onChange={handleInput}
             />
           </Input>
-          <Input text="IČO" required={false}>
+          <Input text="IČO" required={isChecked ? false : true}>
             {isChecked ? (
               <input type="text" disabled />
             ) : (
@@ -155,6 +155,19 @@ export default function CreateDetails() {
           </Input>
         </div>
 
+        <h1 className="input-header-text">Platební údaje</h1>
+        <div className="inputs">
+          <Input text="Číslo bankovního účtu" required={false}>
+            <input type="tel" name="accountNumber" onChange={handleInput} />
+          </Input>
+          <Input text="IBAN" required={false}>
+            <input type="text" name="iban" onChange={handleInput} />
+          </Input>
+          <Input text="SWIFT" required={false}>
+            <input type="text" name="swift" onChange={handleInput} />
+          </Input>
+        </div>
+
         <h1 className="input-header-text">Daňové údaje</h1>
         <div className="inputs">
           <Input text="DPH" required={true}>
@@ -166,7 +179,7 @@ export default function CreateDetails() {
             </div>
           </Input>
           {selectOption === "Plátce DPH" ? (
-            <Input text="DIČ" required={false}>
+            <Input text="DIČ" required={true}>
               <input type="text" name="dic" required onChange={handleInput}/>
             </Input>
           ) : (

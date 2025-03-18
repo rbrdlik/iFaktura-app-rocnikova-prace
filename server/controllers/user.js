@@ -114,9 +114,12 @@ exports.updateUser = async (req, res) => {
       website: req.body.website,
       dph: req.body.dph,
       dic: req.body.dic,
+      accountNumber: req.body.accountNumber,
+      iban: req.body.iban,
+      swift: req.body.swift,
       invoiceLogo: req.body.invoiceLogo,
-      signature: req.body.signature,
     }
+    
     const result = await User.findByIdAndUpdate(req.params.id, data);
     if(result){
       return res.status(200).send({

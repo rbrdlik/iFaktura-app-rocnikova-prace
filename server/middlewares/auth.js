@@ -10,10 +10,7 @@ const verifyToken = (req, res, next) => {
   // Získání tokenu z hlavičky požadavku "authorization"
   const token = req.headers["authorization"];
   if (!token)
-    return res
-      .status(403)
-      .json({ message: "A token is required for authentication" });
-
+    return res.status(403).json({ message: "A token is required for authentication" });
   try {
     // Rozdělení tokenu, protože v hlavičce je ve formátu "Bearer <token>", ale chceme jen tu druhou část
     const decoded = jwt.verify(token.split(" ")[1], process.env.TOKEN_KEY);

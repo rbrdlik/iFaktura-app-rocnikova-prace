@@ -22,6 +22,11 @@ const userSchema = mongoose.Schema({
     phone: { type: String, default: null},
     website: { type: String, default: null},
 
+    // Platební údaje 
+    accountNumber: { type: String, default: null},
+    iban: { type: String, default: null},
+    swift: { type: String, default: null},
+
     // Daňové údaje
     dph: { type: String, enum: ["Neplátce DPH", "Plátce DPH"], default: "Neplátce DPH" },
     dic: { type: String, default: null},

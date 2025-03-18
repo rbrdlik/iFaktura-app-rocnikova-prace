@@ -34,13 +34,13 @@ section {
 }
 
 .side-img {
-  max-height: 100vh;
+  height: 100vh;
   width: 50%;
   user-select: none;
 }
 
 .side-bar {
-  max-height: 100vh;
+  height: 100vh;
   width: 50%;
   background-color: variables.$light-grey;
   @include box-shadow(-4px, 0px, 4px, 0px);
@@ -62,9 +62,9 @@ section {
 }
 
 .form {
-  width: 60%;
+  width: 55%;
   border-radius: 15px;
-  padding: 3rem;
+  padding: 2rem;
   display: block;
   @include box-shadow;
 
@@ -129,5 +129,41 @@ section {
     &:focus {
       outline: 1px solid variables.$dark-green;
     }
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .form{
+    width: 70%;
+  }
+  .logo{
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .form{
+    width: 75%;
+    max-height: 75vh;
+    overflow-x: auto;
+  }
+  .logo{
+    width: 45%;
+  }
+}
+
+@media screen and (max-width: 865px) {
+  .side-img{
+    display: none;
+  }
+  .side-bar{
+    width: 100%;
+    background-image: url("../assets/images/LoginRegisterImage.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .form{
+    background-color: variables.$white;
+    width: 85%;
   }
 }
