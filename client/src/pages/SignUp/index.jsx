@@ -31,7 +31,10 @@ export default function SignUp(){
     }
 
     const handleInput = (e) => {
-        setFormData({...formData, [e.target.name]: e.target.value})
+        setFormData((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value,
+        }));
     }
 
     const handleButton = (e) => {

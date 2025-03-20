@@ -80,8 +80,8 @@ export default function SidebarMenu({active_page}){
                     <div className="sidebar-nav">
                         <h3>Položky</h3>
                         <ul>
-                            <Link to={"/createItem"}><li className={active_page === "Vytvořit položku" ? "active-li" : ""}><img src={PlusIcon} alt="" className="icon"/>Vytvořit položku</li></Link>
-                            <Link to={"/items"}><li className={active_page === "Seznam položek" ? "active-li" : ""}><img src={ProductIcon} alt="" className="icon"/>Seznam položek</li></Link>
+                            <Link to={"/createProduct"}><li className={active_page === "Vytvořit položku" ? "active-li" : ""}><img src={PlusIcon} alt="" className="icon"/>Vytvořit položku</li></Link>
+                            <Link to={"/products"}><li className={active_page === "Seznam položek" ? "active-li" : ""}><img src={ProductIcon} alt="" className="icon"/>Seznam položek</li></Link>
                         </ul>
                     </div>
                     <div className="sidebar-nav">

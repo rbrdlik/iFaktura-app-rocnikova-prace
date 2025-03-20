@@ -78,7 +78,7 @@ export default function CreateDetails() {
     e.preventDefault();
 
     // Najdeme všechny inputy, které mají atribut "required" a zkontrolujeme, jestli jsou všechny vyplněné
-    const requiredInputs = document.querySelectorAll("input[required]");
+    const requiredInputs = document.querySelectorAll("input[required], select[required]");
     const emptyFields = Array.from(requiredInputs).filter(
       (input) => !input.value.trim()
     );

@@ -84,7 +84,7 @@ input:checked + .slider:before {
 .info-box{
   position: absolute;
   width: 550px;
-  height: 180px;
+  max-height: 180px;
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
   background-color: variables.$smoke-white;

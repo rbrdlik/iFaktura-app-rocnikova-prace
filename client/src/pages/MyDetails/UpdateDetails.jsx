@@ -63,7 +63,7 @@ export default function UpdateDetails() {
   const handleButton = (e) => {
     e.preventDefault();
 
-    const requiredInputs = document.querySelectorAll("input[required]");
+    const requiredInputs = document.querySelectorAll("input[required], select[required]");
     const emptyFields = Array.from(requiredInputs).filter(
       (input) => !input.value.trim()
     );

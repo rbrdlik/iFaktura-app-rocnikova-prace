@@ -13,10 +13,10 @@ import LoadingPage from "../components/LoadingPage";
 import CreateDetails from "./MyDetails/CreateDetails";
 import UpdateDetails from "./MyDetails/UpdateDetails";
 
-import CreateItem from "./MyItems/CreateItem";
-import UpdateItem from "./MyItems/UpdateItem";
-import ViewItem from "./MyItems/ViewItem";
-import ViewAllItems from "./MyItems/ViewAllItems";
+import CreateProduct from "./MyProducts/CreateProduct";
+import UpdateProduct from "./MyProducts/UpdateProduct";
+import ViewProduct from "./MyProducts/ViewProduct";
+import ViewAllProducts from "./MyProducts/ViewAllProducts";
 
 import CreateContact from "./MyContacts/CreateContact";
 import UpdateContact from "./MyContacts/UpdateContact";
@@ -48,10 +48,10 @@ export default function AppRoutes() {
             <Route path="/" element={<Navigate to={"/dashboard"}/>}/>
             <Route path="/dashboard" element={<Dashboard />} />
 
-            <Route path="/createItem" element={<CreateItem />} />
-            <Route path="/updateItem" element={<UpdateItem />} />
-            <Route path="/items" element={<ViewAllItems />} />
-            <Route path="/item" element={<ViewItem />} />
+            <Route path="/createProduct" element={<CreateProduct />} />
+            <Route path="/updateProduct" element={<UpdateProduct />} />
+            <Route path="/products" element={<ViewAllProducts />} />
+            <Route path="/product" element={<ViewProduct />} />
 
             <Route path="/createContact" element={<CreateContact />} />
             <Route path="/updateContact" element={<UpdateContact />} />

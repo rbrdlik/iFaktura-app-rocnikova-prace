@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Import assets
 import minus from "../../assets/icons/Minus.svg";
@@ -10,13 +10,14 @@ import "../../scss/NumberInput.scss";
 export default function NumberInput({text, required, numberValue, changedValue}) {
   const [value, setValue] = useState(numberValue);
 
+
   /**
    * Aktualizujeme hodnotu a voláme `onChange`, aby se hodnota dostala ven
    */
   const updateValue = (newValue) => {
     setValue(newValue);
     if (changedValue) {
-      onChange(newValue);
+      changedValue(newValue);
     }
   };
 
@@ -24,15 +25,15 @@ export default function NumberInput({text, required, numberValue, changedValue})
    * Zvyšujeme aktuální hodnotu (value) po kliknutí na Plus
    */
   const increaseNumber = () => {
-    setValue(value + 1);
+    updateValue(value + 1);
   };
 
   /**
    * Snižujeme aktuální hodnotu (value) po kliknutí na Minus
    */
   const decreaseNumber = () => {
-    if (value > 0) {
-      setValue(value - 1);
+    if (value > 1) {
+      updateValue(value - 1);
     }
   };
 
@@ -54,7 +55,7 @@ export default function NumberInput({text, required, numberValue, changedValue})
         <h4>{text} {required ? <span className="required">*</span> : ""}</h4>
         <div className="number-input">
         <img src={minus} alt="" onClick={decreaseNumber} />
-          <input type="text" value={value} onChange={handleChange} />
+          <input type="text" value={value} onChange={handleChange} defaultValue={numberValue}/>
           <img src={plus} alt="" onClick={increaseNumber} />
         </div>
       </div>
