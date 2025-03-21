@@ -98,13 +98,13 @@ export default function UpdateDetails() {
             {isChecked ? (
               <input type="text" disabled />
             ) : (
-                                                                                                                      <input
-                                                                                                                        type="text"
-                                                                                                                        name="ico"
-                                                                                                                        required
-                                                                                                                        onChange={handleInput}
-                                                                                                                        defaultValue={user.ico}
-                                                                                                                      />
+              <input
+                type="text"
+                name="ico"
+                required
+                onChange={handleInput}
+                defaultValue={user.ico}
+              />
             )}
             <div className="switch-text">
               <label class="switch">

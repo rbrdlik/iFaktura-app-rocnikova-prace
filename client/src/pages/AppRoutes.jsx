@@ -49,14 +49,14 @@ export default function AppRoutes() {
             <Route path="/dashboard" element={<Dashboard />} />
 
             <Route path="/createProduct" element={<CreateProduct />} />
-            <Route path="/updateProduct" element={<UpdateProduct />} />
+            <Route path="/updateProduct/:id" element={<UpdateProduct />} />
             <Route path="/products" element={<ViewAllProducts />} />
-            <Route path="/product" element={<ViewProduct />} />
+            <Route path="/product/:id" element={<ViewProduct />} />
 
             <Route path="/createContact" element={<CreateContact />} />
-            <Route path="/updateContact" element={<UpdateContact />} />
+            <Route path="/updateContact/:id" element={<UpdateContact />} />
             <Route path="/contacts" element={<ViewAllContacts />} />
-            <Route path="/contact" element={<ViewContact />} />
+            <Route path="/contact/:id" element={<ViewContact />} />
 
             <Route path="/settings" element={<Settings />} />
           </Route> 

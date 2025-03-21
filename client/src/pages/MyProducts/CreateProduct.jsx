@@ -104,7 +104,7 @@ export default function CreateItem() {
       >
         <h1 className="input-header-text">Základní údaje položky</h1>
         <div className="inputs">
-          <NumberInput text={"Množství"} required={true} numberValue={1} changedValue={setAmountNumber} />
+          <NumberInput text={"Množství"} required={true} numberValue={1} changedValue={setAmountNumber} onChange={handleInput} />
           <Input text="Jednotka" required={true} width={180}>
             <div className="select-container">
               <select name="unit" onChange={handleInput} required>
@@ -156,7 +156,10 @@ export default function CreateItem() {
             <Input text="Zadaná cena je:" required={true} width={180}>
               <div className="select-container">
                 <select name="dphType" onChange={handleInput} required>
-                  <option selected>Bez DPH</option>
+                  <option value="" disabled selected>
+                    Vybrat...
+                  </option>
+                  <option>Bez DPH</option>
                   <option>S DPH</option>
                 </select>
               </div>
