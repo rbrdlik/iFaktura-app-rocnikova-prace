@@ -30,6 +30,10 @@ export default function UpdateItem() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    /**
+     * Načteme specifickou položku, pokud neexistuje, nastavíme `setIsLoading` na null, tím uživatele přesměrujeme na `NotFound` stránku. 
+     * Pokud ano, uložíme jeho data do proměnných
+     */
     const load = async () => {
       const data = await getProductById(id);
       if (data.status === 500 || data.status === 404) return setIsLoading(null);
@@ -53,6 +57,9 @@ export default function UpdateItem() {
     }));
   }, [amountNumber]);
 
+  /**
+   * Tato funkce odesílá upravená data na server 
+   */
   const sendData = async () => {
     const res = await updateProduct(id, formData);
     if(res.status === 200){
@@ -62,14 +69,20 @@ export default function UpdateItem() {
     setInfo(res.message);
   }
 
+  /**
+   * Upravujeme formData po upravení nějakého inputu
+   */
   const handleInput = (e) => {
-    console.log(amountNumber)
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value
     }));
   }
 
+  /**
+   * Po kliknutí na button, kontrolujeme zda mají všechny povinné inputy nějakou `value`, pokud ano, zavoláme `sendData()`. 
+   * Pokud ne, odešleme error alert
+   */
   const handleButton = (e) => {
     e.preventDefault();
     
@@ -86,6 +99,10 @@ export default function UpdateItem() {
     sendData();
   }
 
+  /**
+   * Tato funkce slouží k výpočtu celkových cenových částek, včetně a bez DPH, s ohledem na množství, cenu za jednotku, slevu a typ DPH (včetně nebo bez DPH). 
+   * Funkce vrací objekt, který obsahuje cenu bez DPH, částku DPH, částku slevy a celkovou cenu s DPH.
+   */
   const calculateTotals = () => {
     const quantity = parseFloat(amountNumber) || 1;
     const pricePerUnit = parseFloat(formData?.price) || 0;
@@ -117,7 +134,7 @@ export default function UpdateItem() {
   
   const totals = calculateTotals();
   
-  const platceDph = user.dph === "Plátce DPH" ? true : false;
+  const platceDph = user.dph === "Plátce DPH" ? true : false; // Zjištujeme zda má uživatel nastaveno že je plátcem DPH
 
   if(isLoading === null){
     return <NotFound />
@@ -221,13 +238,13 @@ export default function UpdateItem() {
         <div className="info-box">
           <div className="text-left">
             {platceDph ? <p>Celkem bez DPH</p> : ""}
-            {totals.dphAmount !== null && <p>DPH {formData?.dph}</p>}
+            {totals.dphAmount !== null && platceDph && <p>DPH {formData?.dph}</p>}
             {totals.discountAmount !== null && <p>Sleva {formData?.discount} {formData?.discountType}</p>}
             <h1>{platceDph ? "Celkem s DPH" : "Cena celkem"}</h1>
           </div>
           <div className="text-right">
             {platceDph ? <p>{totals.priceWithoutDph} Kč</p> : ""}
-            {totals.dphAmount !== null && <p>+{totals.dphAmount} Kč</p>}
+            {totals.dphAmount !== null && platceDph && <p>+{totals.dphAmount} Kč</p>}
             {totals.discountAmount !== null && <p>-{totals.discountAmount} Kč</p>}
             <h1>{totals.totalWithDph} Kč</h1>
           </div>

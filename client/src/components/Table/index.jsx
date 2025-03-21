@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Import assets
 import angleLeft from "../../assets/icons/AngleLeft.svg";
@@ -11,6 +12,11 @@ import fileplus from "../../assets/icons/FileCirclePlus.svg";
 import "../../scss/Table.scss";
 
 export default function Table({ children }) {
+  const navigate = useNavigate();
+
+  const navigateToCreate = () => {
+    return navigate("/createProduct");
+  }
   return (
     <>
       <header className="table-navbar">
@@ -21,8 +27,7 @@ export default function Table({ children }) {
           </div>
         </div>
         <div className="table-navbar-icons">
-          <img src={fileplus} alt="" title="Vytvořit nové" />
-          <img src={trashcan} alt="" title="Smazat vybrané" />
+          <img src={fileplus} alt="" title="Vytvořit nové" onClick={navigateToCreate}/>
           <hr class="vertical-line"></hr>
         </div>
       </header>

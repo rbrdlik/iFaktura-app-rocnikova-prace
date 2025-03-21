@@ -23,7 +23,6 @@ export default function Settings() {
   const { user, fetchUser, logout } = useAuth();
 
   const sendData = async (updatedData) => {
-    console.log(updatedData);
     const res = await updateUser(user._id, updatedData);
     if (res.status === 200) {
       await fetchUser();

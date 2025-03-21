@@ -14,7 +14,7 @@ export default function Content({children, headtext, page, box_width, sidebarMen
       {sidebarMenu ? <SidebarMenu active_page={page}/> : ""}
         <section className="box">
           <span className="header-text-box" style={width}>
-            <h1>{headtext}</h1>
+            <h1 style={{maxWidth: `${box_width}px`, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>{headtext}</h1>
           </span>
           <div className="content-box">
             {children}

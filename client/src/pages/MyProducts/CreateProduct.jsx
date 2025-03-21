@@ -28,6 +28,9 @@ export default function CreateItem() {
     document.title = "Vytvořit položku • iFaktura";
   }, []);
 
+  /**
+   * Tato funkce odesílá `formData` na server, který vytvoří novou položku.
+   */
   const sendData = async () => {
     const res = await createProduct(formData);
     if(res.status === 201){
@@ -37,6 +40,9 @@ export default function CreateItem() {
     setInfo(res.message);
   }
 
+  /**
+   * Upravujeme formData po upravení nějakého inputu
+   */
   const handleInput = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -46,6 +52,10 @@ export default function CreateItem() {
     }));
   }
 
+  /**
+   * Po kliknutí na button, kontrolujeme zda mají všechny povinné inputy nějakou `value`, pokud ano, zavoláme `sendData()`. 
+   * Pokud ne, odešleme error alert
+   */
   const handleButton = (e) => {
     e.preventDefault();
 
@@ -62,6 +72,10 @@ export default function CreateItem() {
     sendData();
   };
 
+  /**
+   * Tato funkce slouží k výpočtu celkových cenových částek, včetně a bez DPH, s ohledem na množství, cenu za jednotku, slevu a typ DPH (včetně nebo bez DPH). 
+   * Funkce vrací objekt, který obsahuje cenu bez DPH, částku DPH, částku slevy a celkovou cenu s DPH.
+   */
   const calculateTotals = () => {
     const quantity = parseFloat(amountNumber) || 1;
     const pricePerUnit = parseFloat(formData?.price) || 0;
@@ -93,7 +107,7 @@ export default function CreateItem() {
   
   const totals = calculateTotals();
   
-  const platceDph = user.dph === "Plátce DPH" ? true : false;
+  const platceDph = user.dph === "Plátce DPH" ? true : false; // Zjištujeme zda má uživatel nastaveno že je plátcem DPH
 
   return (
     <>
