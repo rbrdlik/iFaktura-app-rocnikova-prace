@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
 import Swal from "sweetalert2";
 
@@ -100,7 +100,7 @@ export default function ViewAllItems() {
   return (
     <>
       <Content headtext="Seznam položek" page="Seznam položek" box_width="295">
-        <Table setSearch={setSearchValue} products={filteredProducts} setIndexOfFirstItem={setIndexOfFirstItem} setIndexOfLastItem={setIndexOfLastItem}>
+        <Table setSearch={setSearchValue} items={filteredProducts} setIndexOfFirstItem={setIndexOfFirstItem} setIndexOfLastItem={setIndexOfLastItem} linkToCreate={"createProduct"}>
           <tr>
             <th id="header">Název položky</th>
             <th>Sleva</th>

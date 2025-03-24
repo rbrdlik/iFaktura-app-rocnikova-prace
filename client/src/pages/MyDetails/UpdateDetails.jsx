@@ -31,6 +31,9 @@ export default function UpdateDetails() {
       await fetchUser();
       mixinAlert("success", "Vaše údaje byly uloženy.");
     }
+    if(res.status === 500){
+      mixinAlert("error", "Špatně zadané informace.")
+    }
   };
 
   const handleCheckboxChange = (e) => {
@@ -186,7 +189,7 @@ export default function UpdateDetails() {
         <h1 className="input-header-text">Platební údaje</h1>
         <div className="inputs">
           <Input text="Číslo bankovního účtu" required={false}>
-            <input type="tel" name="accountNumber" onChange={handleInput} defaultValue={user.accountNumber}/>
+            <input type="text" name="accountNumber" onChange={handleInput} defaultValue={user.accountNumber}/>
           </Input>
           <Input text="IBAN" required={false}>
             <input type="text" name="iban" onChange={handleInput} defaultValue={user.iban}/>

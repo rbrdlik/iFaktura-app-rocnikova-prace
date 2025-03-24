@@ -20,7 +20,6 @@ import { mixinAlert } from "../../utils/sweetAlerts";
 export default function CreateItem() {
   const { user } = useAuth();
   const [formData, setFormData] = useState()
-  const [info, setInfo] = useState();
   const [amountNumber, setAmountNumber] = useState(1);
   const navigate = useNavigate();
 
@@ -37,7 +36,9 @@ export default function CreateItem() {
       mixinAlert("success", "Produkt byl vytvořen.")
       return navigate("/products");
     } 
-    setInfo(res.message);
+    if(res.status === 500){
+      mixinAlert("error", "Někde nastala chyba.")
+    }
   }
 
   /**
@@ -143,7 +144,6 @@ export default function CreateItem() {
             <input type="text" name="productName" onChange={handleInput} required/>
           </Input>
         </div>
-        <p>{info}</p>
 
         <h1 className="input-header-text">Cena {platceDph ? "& DPH" : ""}</h1>
         <div className="inputs">

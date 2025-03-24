@@ -25,7 +25,6 @@ export default function UpdateItem() {
   const [product, setProduct] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [formData, setFormData] = useState();
-  const [info, setInfo] = useState();
   const [amountNumber, setAmountNumber] = useState(1);
   const navigate = useNavigate();
 
@@ -66,7 +65,9 @@ export default function UpdateItem() {
       mixinAlert("success", "Změny byly uloženy.")
       return navigate(`/product/${res.payload._id}`);
     }
-    setInfo(res.message);
+    if(res.status === 500){
+      mixinAlert("error", "Někde nastala chyba.")
+    }
   }
 
   /**

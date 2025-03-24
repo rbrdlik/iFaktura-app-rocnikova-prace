@@ -10,13 +10,13 @@ import fileplus from "../../assets/icons/FileCirclePlus.svg";
 // Import styles
 import "../../scss/Table.scss";
 
-export default function Table({ children, setSearch, products, setIndexOfLastItem, setIndexOfFirstItem }) {
+export default function Table({ children, setSearch, items, setIndexOfLastItem, setIndexOfFirstItem, linkToCreate }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(25);
   const navigate = useNavigate();
 
   const navigateToCreate = () => {
-    return navigate("/createProduct");
+    return navigate(`/${linkToCreate}`);
   }
 
   const handleSearch = (e) => {
@@ -28,7 +28,7 @@ export default function Table({ children, setSearch, products, setIndexOfLastIte
     setCurrentPage(1);
   }
 
-  const totalPages = Math.ceil(products.length / itemsPerPage);
+  const totalPages = Math.ceil(items.length / itemsPerPage);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   setIndexOfLastItem(indexOfLastItem)
