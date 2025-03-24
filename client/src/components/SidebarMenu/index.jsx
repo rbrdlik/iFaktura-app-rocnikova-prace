@@ -66,8 +66,8 @@ export default function SidebarMenu({active_page}){
                     <div className="sidebar-nav" id="top">
                         <h3>Faktury</h3>
                         <ul>
-                            <Link to={"#"}><li className={active_page === "Vydat fakturu" ? "active-li" : ""}><img src={PlusIcon} alt="" className="icon"/>Vydat fakturu</li></Link>
-                            <Link to={"#"}><li className={active_page === "Vydané faktury" ? "active-li" : ""}><img src={FileIcon} alt="" className="icon"/>Vydané faktury</li></Link>
+                            <Link to={"/createInvoice"}><li className={active_page === "Vydat fakturu" ? "active-li" : ""}><img src={PlusIcon} alt="" className="icon"/>Vydat fakturu</li></Link>
+                            <Link to={"/invoices"}><li className={active_page === "Vydané faktury" ? "active-li" : ""}><img src={FileIcon} alt="" className="icon"/>Vydané faktury</li></Link>
                         </ul>
                     </div>
                     <div className="sidebar-nav">

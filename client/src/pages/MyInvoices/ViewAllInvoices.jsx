@@ -12,16 +12,16 @@ import fileedit from "../../assets/icons/FileEdit.svg";
 // Import styles
 import "../../scss/styles.scss";
 
-export default function ViewAllContacts() {
+export default function ViewAllInvoices() {
   useEffect(() => {
-    document.title = "Seznam kontaktů • iFaktura";
+    document.title = "Vydané faktury • iFaktura";
   }, []);
 
   const platceDph = false;
 
   return (
     <>
-      <Content headtext="Seznam kontaktů" page="Seznam kontaktů" box_width="302">
+      <Content headtext="Vydané faktury" page="Vydané faktury" box_width="280">
         <Table>
           <tr>
             <th id="header">Jméno / Firma</th>

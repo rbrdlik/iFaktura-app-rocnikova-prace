@@ -23,6 +23,11 @@ import UpdateContact from "./MyContacts/UpdateContact";
 import ViewContact from "./MyContacts/ViewContact";
 import ViewAllContacts from "./MyContacts/ViewAllContacts";
 
+import CreateInvoice from "./MyInvoices/CreateInvoice";
+import UpdateInvoice from "./MyInvoices/UpdateInvoice";
+import ViewInvoice from "./MyInvoices/ViewInvoice";
+import ViewAllInvoices from "./MyInvoices/ViewAllInvoices";
+
 import Settings from "./Settings";
 
 import NotFound from "../components/NotFound";
@@ -57,6 +62,11 @@ export default function AppRoutes() {
             <Route path="/updateContact/:id" element={<UpdateContact />} />
             <Route path="/contacts" element={<ViewAllContacts />} />
             <Route path="/contact/:id" element={<ViewContact />} />
+
+            <Route path="/createInvoice" element={<CreateInvoice />} />
+            <Route path="/updateInvoice/:id" element={<UpdateInvoice />} />
+            <Route path="/invoices" element={<ViewAllInvoices />} />
+            <Route path="/invoice/:id" element={<ViewInvoice />} />
 
             <Route path="/settings" element={<Settings />} />
           </Route> 

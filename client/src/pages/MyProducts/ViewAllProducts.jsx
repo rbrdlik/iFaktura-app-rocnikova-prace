@@ -24,8 +24,11 @@ import { mixinAlert } from "../../utils/sweetAlerts";
 
 export default function ViewAllItems() {
   const { user } = useAuth();
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchValue, setSearchValue] = useState("");
+  const [indexOfFirstItem, setIndexOfFirstItem] = useState();
+  const [indexOfLastItem, setIndexOfLastItem] = useState();
   
   useEffect(() => {
     /**
@@ -78,6 +81,12 @@ export default function ViewAllItems() {
     })
   }
 
+  /**
+   * Tento kód provádí filtrování produktů podle hledaného výrazu (`searchValue`).
+   * Použije se metoda `.filter()`, která prochází pole products a vybere jen ty produkty, které odpovídají hledání.
+   */
+  const filteredProducts = searchValue ? products.filter((product) => product.productName.toLowerCase().includes(searchValue.toLowerCase())) : products;
+
   const platceDph = user.dph === "Plátce DPH" ? true : false; // Zjištujeme zda má uživatel nastaveno že je plátcem DPH
 
   if(isLoading === null){
@@ -91,7 +100,7 @@ export default function ViewAllItems() {
   return (
     <>
       <Content headtext="Seznam položek" page="Seznam položek" box_width="295">
-        <Table>
+        <Table setSearch={setSearchValue} products={filteredProducts} setIndexOfFirstItem={setIndexOfFirstItem} setIndexOfLastItem={setIndexOfLastItem}>
           <tr>
             <th id="header">Název položky</th>
             <th>Sleva</th>
@@ -103,7 +112,7 @@ export default function ViewAllItems() {
             <th id="edit-btn"></th>
           </tr>
 
-          {products.map((product) => (
+          {filteredProducts.slice(indexOfFirstItem, indexOfLastItem).map((product) => (
             <tr key={product._id}>
               <td id="header">
                 <Link to={`/product/${product._id}`}>{product.productName}</Link>
@@ -112,7 +121,7 @@ export default function ViewAllItems() {
                 {product.discount ? `${product.discount} ${product.discountType === "%" ? "%" : "Kč"}` : "-"}
               </td>
               <td>{product.unit}</td>
-              {platceDph ? <td>{(product.price * 1.21).toFixed(2)} Kč</td> : ""}
+              {platceDph ? <td>{(product.price * ((product.dph ? parseFloat(product.dph) / 100 : 0)+1)).toFixed(2)} Kč</td> : ""}
               {platceDph ? <td>{product.price.toFixed(2)} Kč</td> : ""}
               {platceDph ? <td>{product.dph}</td> : ""}
               {platceDph ? "" : <td>{product.price.toFixed(2)} Kč</td>}
@@ -125,7 +134,7 @@ export default function ViewAllItems() {
               </td>
             </tr>
           ))}
-
+          {filteredProducts.length === 0 ? <p style={{color: "grey", marginTop: "15px", marginLeft: "20px"}}>Nebyly nalezeny žádné položky...</p> : ""}
         </Table>
       </Content>
     </>
