@@ -241,8 +241,7 @@ export default function Settings() {
 
           if (value) {
             const res = await verifyUserPassword(value.password);
-            if (res.status !== 200) return mixinAlert("error", "Zadané heslo není správné!");
-            
+            if(res.status !== 200) return mixinAlert("error", "Zadané heslo není správné!");
             mixinAlert("info", "Váš účet byl smazán")
             await deleteUser(user._id);
             await logout();
@@ -265,7 +264,7 @@ export default function Settings() {
   }, []);
 
   return (
-    <Content headtext="Nastavení" page="Nastavení" box_width="210">
+    <Content headtext="Nastavení" page="Nastavení" box_width="215">
       <div className="myAccount">
         <h1>Můj účet</h1>
         <div className="myAccountBox">

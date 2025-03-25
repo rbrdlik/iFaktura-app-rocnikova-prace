@@ -122,7 +122,7 @@ export default function ViewAllContacts() {
               </td>
             </tr>
           ))}
-          {filteredContacts.length === 0 ? <p style={{color: "grey", marginTop: "15px", marginLeft: "20px"}}>Nebyly nalezeny žádné položky...</p> : ""}
+          {filteredContacts.length === 0 ? <p style={{color: "grey", marginTop: "5px", marginLeft: "20px"}}>Nebyly nalezeny žádné položky...</p> : ""}
         </Table>
       </Content>
     </>
