@@ -14,7 +14,7 @@ import fileedit from "../../assets/icons/FileEdit.svg";
 import plus from "../../assets/icons/Plus.svg";
 
 export default function UpdateInvoice() {
-  const platceDph = true;
+  const platceDph = false;
 
   return (
     <>
@@ -102,21 +102,21 @@ export default function UpdateInvoice() {
           <section className="table-container" style={{ width: "100%" }}>
             <table className="table">
               <tr style={{ marginBottom: "5px" }}>
-                <th style={{ width: "9%", textAlign: "center" }}>Množství</th>
-                <th style={{ width: "13%", textAlign: "center" }}>Jednotka</th>
+                <th style={{ width: "9%", textAlign: "center" }}>Množství <span className="red">*</span></th>
+                <th style={{ width: "13%", textAlign: "center" }}>Jednotka <span className="red">*</span></th>
                 <th style={{ width: "20%", textAlign: "center" }}>
-                  Název položky
+                  Název položky <span className="red">*</span>
                 </th>
-                <th style={{ width: "9%", textAlign: "center" }}>Cena</th>
+                <th style={{ width: "9%", textAlign: "center" }}>Cena <span className="red">*</span></th>
                 {platceDph ? (
                   <th style={{ width: "13%", textAlign: "center" }}>
-                    Zadaná cena je
+                    Zadaná cena je <span className="red">*</span>
                   </th>
                 ) : (
                   ""
                 )}
                 {platceDph ? (
-                  <th style={{ width: "13%", textAlign: "center" }}>DPH (%)</th>
+                  <th style={{ width: "13%", textAlign: "center" }}>DPH (%) <span className="red">*</span></th>
                 ) : (
                   ""
                 )}
@@ -131,7 +131,7 @@ export default function UpdateInvoice() {
                   <input type="number" id="invoiceProductInput" min={1} />
                 </td>
                 <td style={{ width: "9%" }}>
-                  <div className="select-container">
+                  <div className="select-container" id="selectTableOption">
                     <select name="unit" required>
                       <option value="" disabled selected>
                         Vybrat...
@@ -158,7 +158,7 @@ export default function UpdateInvoice() {
                 </td>
                 {platceDph ? (
                   <td style={{ width: "13%" }}>
-                    <div className="select-container">
+                    <div className="select-container" id="selectTableOption">
                       <select name="dphType" required>
                         <option value="" disabled selected>
                           Vybrat...
@@ -173,7 +173,7 @@ export default function UpdateInvoice() {
                 )}
                 {platceDph ? (
                   <td style={{ width: "13%" }}>
-                    <div className="select-container">
+                    <div className="select-container" id="selectTableOption">
                       <select name="dph" required>
                         <option value="" disabled selected>
                           Vybrat...
@@ -191,7 +191,7 @@ export default function UpdateInvoice() {
                   <input type="number" id="invoiceProductInput" min={1} />
                 </td>
                 <td style={{ width: "13%" }}>
-                  <div className="select-container">
+                  <div className="select-container" id="selectTableOption">
                     <select name="discountType">
                       <option value="" disabled selected>
                         Vybrat...
@@ -220,10 +220,17 @@ export default function UpdateInvoice() {
               <img src={plus} alt="" />
               Další řádek
             </button>
-            <button>
-              <img src={plus} alt="" />
-              Přidat položku ze seznamu
-            </button>
+            <div>
+              <select id="select-product">
+                <option value="" disabled selected>
+                  Vybrat položku ze seznamu...
+                </option>
+                <option>Položka 1</option>
+                <option>Položka 2</option>
+                <option>Položka 1</option>
+                <option>Položka 2</option>
+              </select>
+            </div>
           </div>
         </div>
 

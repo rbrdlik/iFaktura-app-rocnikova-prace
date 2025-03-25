@@ -26,3 +26,17 @@
   background: variables.$smoke-grey;
   border-radius: 25px;
 }
+
+body {
+  opacity: 0;
+  animation: fadeIn .2s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+} 
