@@ -312,6 +312,15 @@ input:checked + .slider:before {
     }
   }
 }
+.linkText{
+  color: variables.$green;
+  transition: 0.2s ease;
+  
+  &:hover {
+    color: variables.$dark-green;
+    transition: 0.2s ease;
+  }
+}
 #select-product {
   width: 230px;
   cursor: pointer;
@@ -342,4 +351,36 @@ input:checked + .slider:before {
 .table th, td {
   padding-right: 2px;
   padding-left: 2px;
+}
+
+.status-text{
+  font-size: .8rem;
+  font-weight: 500;
+  padding: 0 10px;
+  border-radius: 25px;
+  user-select: none;
+}
+#overdue{
+  background-color: variables.$overdue;
+}
+#paid{
+  background-color: variables.$green;
+}
+#unpaid{
+  background-color: variables.$unpaid;
+}
+#invoiceHeader{
+  width: 15%;
+  text-align: left;
+  padding-left: 20px;
+}
+#invoiceDescText{
+  max-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.status-text-invoice{
+  width: 95px;
+  text-align: center;
 }

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 // Import components
@@ -14,6 +15,10 @@ import fileedit from "../../assets/icons/FileEdit.svg";
 import plus from "../../assets/icons/Plus.svg";
 
 export default function UpdateInvoice() {
+  useEffect(() => {
+    document.title = "Upravit fakturu • iFaktura";
+  }, []);
+
   const platceDph = false;
 
   return (
@@ -48,15 +53,19 @@ export default function UpdateInvoice() {
 
         <h1 className="input-header-text">Datum</h1>
         <div className="inputs">
-          <Input text="Datum vystavení" required={false}>
+          <Input text="Datum vystavení" required={true}>
             <input type="date" />
           </Input>
-          <Input text="Datum splatnosti" required={false}>
+          <Input text="Datum splatnosti" required={true}>
             <input type="date" />
           </Input>
-          <Input text="Datum zdaněného plnění (DUZP)" required={true}>
-            <input type="date" />
-          </Input>
+          {platceDph ? (
+            <Input text="Datum zdaněného plnění (DUZP)" required={true}>
+              <input type="date" />
+            </Input>
+          ) : (
+            ""
+          )}
         </div>
 
         <h1 className="input-header-text">Platební údaje</h1>
@@ -102,21 +111,29 @@ export default function UpdateInvoice() {
           <section className="table-container" style={{ width: "100%" }}>
             <table className="table">
               <tr style={{ marginBottom: "5px" }}>
-                <th style={{ width: "9%", textAlign: "center" }}>Množství <span className="red">*</span></th>
-                <th style={{ width: "13%", textAlign: "center" }}>Jednotka <span className="red">*</span></th>
+                <th style={{ width: "9%", textAlign: "center" }}>
+                  Množství <span className="red">*</span>
+                </th>
+                <th style={{ width: "13%", textAlign: "center" }}>
+                  Jednotka <span className="red">*</span>
+                </th>
                 <th style={{ width: "20%", textAlign: "center" }}>
                   Název položky <span className="red">*</span>
                 </th>
-                <th style={{ width: "9%", textAlign: "center" }}>Cena <span className="red">*</span></th>
+                <th style={{ width: "9%", textAlign: "center" }}>
+                  Cena <span className="red">*</span>
+                </th>
                 {platceDph ? (
                   <th style={{ width: "13%", textAlign: "center" }}>
-                    Zadaná cena je <span className="red">*</span>
+                    Cena je <span className="red">*</span>
                   </th>
                 ) : (
                   ""
                 )}
                 {platceDph ? (
-                  <th style={{ width: "13%", textAlign: "center" }}>DPH (%) <span className="red">*</span></th>
+                  <th style={{ width: "13%", textAlign: "center" }}>
+                    DPH (%) <span className="red">*</span>
+                  </th>
                 ) : (
                   ""
                 )}
