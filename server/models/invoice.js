@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const invoiceSchema = mongoose.Schema({
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
     contact_id: { type: mongoose.Schema.Types.ObjectId, ref: "Contact", required: true},
-    contactName: { type: String, required: true},
     invoice_id: { type: String, required: true},
     orderNumber: { type: String, default: null},
     description: { type: String, required: true},

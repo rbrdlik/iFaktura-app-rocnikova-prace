@@ -160,7 +160,7 @@ export default function ViewAllInvoices() {
                 </td>
                 <td>
                   <Link to={`/contact/${invoice.contact_id}`} className="linkText">
-                    {invoice.contactName}
+                    .
                   </Link>
                 </td>
                 <td>{convertDate(invoice.dateOfIssuing)}</td>

@@ -64,13 +64,10 @@ exports.createInvoice = async (req, res) => {
     }
 
     const newInvoiceId = `${currentYear}${String(newInvoiceNumber).padStart(6, "0")}`;
-    const contact = await Contact.findById(req.body.contact_id);
-    const contact_name = contact.detailsName;
 
     const data = new Invoice({
       user_id: req.body.user_id,
       contact_id: req.body.contact_id,
-      contactName: contact_name,
       invoice_id: newInvoiceId,
       orderNumber: req.body.orderNumber,
       description: req.body.description,
