@@ -359,6 +359,7 @@ input:checked + .slider:before {
   padding: 0 10px;
   border-radius: 25px;
   user-select: none;
+  color: variables.$white;
 }
 #overdue{
   background-color: variables.$overdue;
