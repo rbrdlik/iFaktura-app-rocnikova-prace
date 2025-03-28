@@ -76,7 +76,6 @@ export default function ViewContact() {
           navigate("/contacts");
           return;
         }
-        setInfo(data.message);
       }
     });
   };

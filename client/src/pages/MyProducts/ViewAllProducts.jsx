@@ -76,7 +76,6 @@ export default function ViewAllItems() {
           window.location.reload(); // Znovu načteme stránku aby se změny projevily a tabulka se znovu vypsala
           return;
         }
-        setInfo(data.message);
       }
     })
   }

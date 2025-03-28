@@ -111,7 +111,6 @@ export default function ViewItem() {
           navigate("/products")
           return;
         }
-        setInfo(data.message);
       }
     });
   };

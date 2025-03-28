@@ -87,7 +87,6 @@ export default function ViewAllInvoices() {
           window.location.reload(); // Znovu načteme stránku aby se změny projevily a tabulka se znovu vypsala
           return;
         }
-        setInfo(data.message);
       }
     });
   };
@@ -168,7 +167,7 @@ export default function ViewAllInvoices() {
                   </Link>
                 </td>
                 <td>
-                  {Date.now() > Date.parse(invoice.dueDate) ? <span className="status-text" id="overdue">Po splatnosti</span> : (invoice.paid ? <span className="status-text" id="paid">Uhrazeno</span> : <span className="status-text" id="unpaid">Neuhrazeno</span>)}
+                  {invoice.paid ? <span className="status-text" id="paid">Uhrazeno</span> : (Date.now() > Date.parse(invoice.dueDate) ? <span className="status-text" id="overdue">Po splatnosti</span> : <span className="status-text" id="unpaid">Neuhrazeno</span>)}
                 </td>
                 <td>
                   {contactNames?.[invoice.contact_id] ? (
