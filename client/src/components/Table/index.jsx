@@ -10,7 +10,7 @@ import fileplus from "../../assets/icons/FileCirclePlus.svg";
 // Import styles
 import "../../scss/Table.scss";
 
-export default function Table({ children, setSearch, items, setIndexOfLastItem, setIndexOfFirstItem, linkToCreate }) {
+export default function Table({ children, setSearch, items, setIndexOfLastItem, setIndexOfFirstItem, linkToCreate, searchBy }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(25);
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export default function Table({ children, setSearch, items, setIndexOfLastItem, 
         <div className="searchBar-box">
           <div className="searchBar">
             <img src={search} alt="" />
-            <input type="text" placeholder="Hledat podle názvu..." onChange={handleSearch}/>
+            <input type="text" placeholder={`Hledat podle ${searchBy}...`} onChange={handleSearch}/>
           </div>
         </div>
         <div className="table-navbar-icons">

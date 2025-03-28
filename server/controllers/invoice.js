@@ -1,5 +1,4 @@
 const Invoice = require("../models/invoice");
-const Contact = require("../models/contact")
 
 /**
  * Funkce k získání všech faktur přihlášeného uživatele pomocí id
@@ -53,7 +52,7 @@ exports.getUserInvoiceById = async (req, res) => {
  */
 exports.createInvoice = async (req, res) => {
   try {
-    const userId = req.user.userId;
+    const userId = req.body.user_id;
     const currentYear = new Date().getFullYear();
     const lastInvoiceData = await Invoice.findOne({ user_id: userId, invoice_id: { $regex: `^${currentYear}`}}).sort({ invoice_id: -1});
     let newInvoiceNumber = 1; 

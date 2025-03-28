@@ -161,7 +161,7 @@ export default function Settings() {
         const newPasswordAgain = document.getElementById("swal-input3").value;
 
         if (!oldPassword || !newPassword) {
-          Swal.showValidationMessage("Vyplně prosím obě pole.");
+          Swal.showValidationMessage("Vyplně prosím všechna pole.");
           return false;
         }
 

@@ -19,6 +19,7 @@ import "../../scss/styles.scss";
 
 // Import models
 import { deleteInvoice, getAllInvoices } from "../../models/invoice";
+import { getContactById } from "../../models/contact";
 
 // Import alert
 import { mixinAlert } from "../../utils/sweetAlerts";
@@ -29,6 +30,7 @@ export default function ViewAllInvoices() {
   const [searchValue, setSearchValue] = useState("");
   const [indexOfFirstItem, setIndexOfFirstItem] = useState();
   const [indexOfLastItem, setIndexOfLastItem] = useState();
+  const [contactNames, setContactNames] = useState();
 
   useEffect(() => {
     /**
@@ -41,6 +43,15 @@ export default function ViewAllInvoices() {
       if (res.status === 200) {
         setInvoices(res.payload);
         setIsLoading(false);
+
+        const contactData = {};
+        for (const invoice of res.payload) {
+          const contact = await getContactById(invoice.contact_id);
+          if(contact.status === 200){
+            contactData[invoice.contact_id] = contact.payload.detailsName;
+          }
+        }
+        setContactNames(contactData);
       }
     };
 
@@ -135,6 +146,7 @@ export default function ViewAllInvoices() {
           setIndexOfFirstItem={setIndexOfFirstItem}
           setIndexOfLastItem={setIndexOfLastItem}
           linkToCreate={"createInvoice"}
+          searchBy={"čísla faktury"}
         >
           <tr>
             <th id="invoiceHeader">Číslo faktury</th>
@@ -159,9 +171,13 @@ export default function ViewAllInvoices() {
                   {Date.now() > Date.parse(invoice.dueDate) ? <span className="status-text" id="overdue">Po splatnosti</span> : (invoice.paid ? <span className="status-text" id="paid">Uhrazeno</span> : <span className="status-text" id="unpaid">Neuhrazeno</span>)}
                 </td>
                 <td>
-                  <Link to={`/contact/${invoice.contact_id}`} className="linkText">
-                    .
-                  </Link>
+                  {contactNames?.[invoice.contact_id] ? (
+                    <Link to={`/contact/${invoice.contact_id}`} className="linkText">
+                      {contactNames?.[invoice.contact_id] || ""}
+                    </Link>
+                  ) : (
+                    "-"
+                  )}
                 </td>
                 <td>{convertDate(invoice.dateOfIssuing)}</td>
                 <td>{convertDate(invoice.dueDate)}</td>

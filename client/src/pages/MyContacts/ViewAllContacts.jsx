@@ -96,7 +96,7 @@ export default function ViewAllContacts() {
   return (
     <>
       <Content headtext="Seznam kontaktů" page="Seznam kontaktů" box_width="302">
-        <Table setSearch={setSearchValue} items={filteredContacts} setIndexOfFirstItem={setIndexOfFirstItem} setIndexOfLastItem={setIndexOfLastItem} linkToCreate={"createContact"}>
+        <Table setSearch={setSearchValue} items={filteredContacts} setIndexOfFirstItem={setIndexOfFirstItem} setIndexOfLastItem={setIndexOfLastItem} linkToCreate={"createContact"} searchBy={"jméno/firma"}>
           <tr>
             <th id="header">Jméno / Firma</th>
             <th>IČO</th>

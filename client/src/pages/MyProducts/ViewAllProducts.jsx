@@ -100,7 +100,7 @@ export default function ViewAllItems() {
   return (
     <>
       <Content headtext="Seznam položek" page="Seznam položek" box_width="295">
-        <Table setSearch={setSearchValue} items={filteredProducts} setIndexOfFirstItem={setIndexOfFirstItem} setIndexOfLastItem={setIndexOfLastItem} linkToCreate={"createProduct"}>
+        <Table setSearch={setSearchValue} items={filteredProducts} setIndexOfFirstItem={setIndexOfFirstItem} setIndexOfLastItem={setIndexOfLastItem} linkToCreate={"createProduct"} searchBy={"názvu"}>
           <tr>
             <th id="header">Název položky</th>
             <th>Sleva</th>
