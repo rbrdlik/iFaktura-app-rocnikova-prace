@@ -162,7 +162,6 @@ export default function UpdateDetails() {
             <input
               type="text"
               name="phone"
-              required
               onChange={handleInput}
               defaultValue={user.phone}
             />
@@ -171,7 +170,6 @@ export default function UpdateDetails() {
             <input
               type="text"
               name="website"
-              required
               onChange={handleInput}
               defaultValue={user.website}
             />

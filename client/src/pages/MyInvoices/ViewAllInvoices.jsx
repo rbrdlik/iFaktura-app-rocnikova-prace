@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useAuth } from "../../context/AuthProvider";
 
 // Import components
 import Content from "../../components/Content";
@@ -21,10 +22,12 @@ import "../../scss/styles.scss";
 import { deleteInvoice, getAllInvoices } from "../../models/invoice";
 import { getContactById } from "../../models/contact";
 
-// Import alert
+// Import utils
 import { mixinAlert } from "../../utils/sweetAlerts";
+import { generatePDF } from "../../utils/pdfGenerator";
 
 export default function ViewAllInvoices() {
+  const { user } = useAuth();
   const [invoices, setInvoices] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchValue, setSearchValue] = useState("");
@@ -114,7 +117,7 @@ export default function ViewAllInvoices() {
       let totalWithDph = totalPriceWithoutDph + dphAmount - discountAmount
       if (totalWithDph < 0) totalWithDph = 0;
 
-      return sum + totalWithDph;
+      return user.dph === "Plátce DPH" ? sum + totalWithDph : sum + totalPriceWithoutDph - discountAmount;
     }, 0);
 
     return `${total.toFixed(2)} Kč`;
@@ -182,8 +185,8 @@ export default function ViewAllInvoices() {
                 <td>{convertDate(invoice.dueDate)}</td>
                 <td>{calculateInvoiceTotal(invoice.products)}</td>
                 <td id="edit-btn">
-                  <img src={pdficon} alt="" id="img" title="Upravit" />
-                  <img src={sendicon} alt="" id="img" title="Smazat" />
+                  <img src={pdficon} alt="" id="img" title="Stáhnout v PDF" onClick={async () => generatePDF(user, await getContactById(invoice.contact_id), invoice, calculateInvoiceTotal(invoice.products))} />
+                  <img src={sendicon} alt="" id="img" title="Odeslat emailem" />
                   <Link to={`/updateInvoice/${invoice._id}`}>
                     <img src={fileedit} alt="" id="img" title="Upravit" />
                   </Link>

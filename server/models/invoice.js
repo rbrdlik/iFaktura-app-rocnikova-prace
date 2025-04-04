@@ -8,7 +8,7 @@ const invoiceSchema = mongoose.Schema({
     description: { type: String, required: true},
     dateOfIssuing: { type: Date, required: true},
     dueDate: { type: Date, required: true},
-    dozp: { type: Date, default: null},
+    duzp: { type: Date, default: null},
     paymentMethod: {type: String, enum: ["Bankovni prevod", "PayPal"], required: true},
     paid: {type: Boolean, required: true},
     statementSymbol: {type: Number, default: null},
