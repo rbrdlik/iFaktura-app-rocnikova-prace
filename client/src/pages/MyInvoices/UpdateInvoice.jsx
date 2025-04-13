@@ -101,7 +101,7 @@ export default function UpdateInvoice() {
   const addItem = () => {
     setItems([
       ...items,
-      defaultItem
+      { ...defaultItem }
     ]);
   };
 

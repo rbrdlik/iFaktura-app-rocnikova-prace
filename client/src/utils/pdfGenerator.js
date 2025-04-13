@@ -116,11 +116,11 @@ export const generatePDF = (user, contact, invoice, totalPrice) => {
     doc.setLineWidth(0.3);
     doc.rect(12, 99, 135, 28, 'S');
 
-    textSize8(doc, invoiceData.paymentMethod === "Bankovni prevod" ? "Bankovní účet" : "PayPal", 14, 105, "bold")
+    textSize8(doc, invoiceData.paymentMethod === "Bankovní převod" ? "Bankovní účet" : invoiceData.paymentMethod === "PayPal" ? "PayPal" : "Dobírkou", 14, 105, "bold")
 
-    textSize8(doc, invoiceData.paymentMethod === "Bankovni prevod" ? userData.accountNumber : `E-Mail: ${userData.email}`, 14, 112, "bold")
-    textSize8(doc, invoiceData.paymentMethod === "Bankovni prevod" ? `IBAN: ${userData.iban}` : "", 14, 116, "bold")
-    textSize8(doc, invoiceData.paymentMethod === "Bankovni prevod" ? `SWIFT: ${userData.swift}` : "", 14, 120, "bold")
+    textSize8(doc, invoiceData.paymentMethod === "Bankovní převod" ? userData.accountNumber : invoiceData.paymentMethod === "PayPal" ? `E-Mail: ${userData.email}` : "Dobírka – částka bude hrazena při doručení.", 14, 112, "bold")
+    textSize8(doc, invoiceData.paymentMethod === "Bankovní převod" ? `IBAN: ${userData.iban}` : "", 14, 116, "bold")
+    textSize8(doc, invoiceData.paymentMethod === "Bankovní převod" ? `SWIFT: ${userData.swift}` : "", 14, 120, "bold")
 
     textSize8(doc, "Symbol", 90, 105, "bold")
 

@@ -83,7 +83,7 @@ export default function CreateInvoice() {
   const addItem = () => {
     setItems([
       ...items,
-      defaultItem
+      { ...defaultItem }
     ]);
   };
 
