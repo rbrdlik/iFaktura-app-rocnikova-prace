@@ -100,9 +100,9 @@ export default function ViewAllItems() {
             <th id="header">Název položky</th>
             <th>Sleva</th>
             <th>Jednotka</th>
-            {platceDph ? <th>Cena s DPH</th> : ""}
-            {platceDph ? <th>Cena bez DPH</th> : ""}
-            {platceDph ? <th>DPH (%)</th> : ""}
+            {platceDph && <th>Cena s DPH</th>}
+            {platceDph && <th>Cena bez DPH</th>}
+            {platceDph && <th>DPH (%)</th>}
             {platceDph ?  "" : <th>Cena</th>}
             <th id="edit-btn"></th>
           </tr>
@@ -117,8 +117,8 @@ export default function ViewAllItems() {
               </td>
               <td>{product.unit}</td>
               {platceDph ? <td>{(product.price * ((product.dph ? parseFloat(product.dph) / 100 : 0)+1)).toFixed(2)} Kč</td> : ""}
-              {platceDph ? <td>{product.price.toFixed(2)} Kč</td> : ""}
-              {platceDph ? <td>{product.dph}</td> : ""}
+              {platceDph && <td>{product.price.toFixed(2)} Kč</td>}
+              {platceDph && <td>{product.dph}</td>}
               {platceDph ? "" : <td>{product.price.toFixed(2)} Kč</td>}
               <td id="edit-btn">
                 <Link to={`/updateProduct/${product._id}`}>
@@ -129,7 +129,7 @@ export default function ViewAllItems() {
               </td>
             </tr>
           ))}
-          {filteredProducts.length === 0 ? <p style={{color: "grey", marginTop: "5px", marginLeft: "20px"}}>Nebyly nalezeny žádné položky...</p> : ""}
+          {filteredProducts.length === 0 && <p style={{color: "grey", marginTop: "5px", marginLeft: "20px"}}>Nebyly nalezeny žádné položky...</p>}
         </Table>
       </Content>
     </>

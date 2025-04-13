@@ -137,7 +137,7 @@ export default function UpdateItem() {
           </Input>
         </div>
 
-        <h1 className="input-header-text">Cena {platceDph ? "& DPH" : ""}</h1>
+        <h1 className="input-header-text">Cena {platceDph && "& DPH"}</h1>
         <div className="inputs">
           <Input text="Cena položky" required={true} width={350}>
             <input type="text" name="price" onChange={handleInput} defaultValue={product.price} required/>
@@ -195,13 +195,13 @@ export default function UpdateItem() {
 
         <div className="info-box">
           <div className="text-left">
-            {platceDph ? <p>Celkem bez DPH</p> : ""}
+            {platceDph && <p>Celkem bez DPH</p>}
             {totals.dphAmount !== null && platceDph && <p>DPH {formData?.dph}</p>}
             {totals.discountAmount !== null && <p>Sleva {formData?.discount} {formData?.discountType}</p>}
             <h1>{platceDph ? "Celkem s DPH" : "Cena celkem"}</h1>
           </div>
           <div className="text-right">
-            {platceDph ? <p>{totals.priceWithoutDph} Kč</p> : ""}
+            {platceDph && <p>{totals.priceWithoutDph} Kč</p>}
             {totals.dphAmount !== null && platceDph && <p>+{totals.dphAmount} Kč</p>}
             {totals.discountAmount !== null && <p>-{totals.discountAmount} Kč</p>}
             <h1>{totals.totalWithDph} Kč</h1>

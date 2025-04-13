@@ -130,11 +130,11 @@ export const generatePDF = (user, contact, invoice, totalPrice) => {
     // Datumy
     textSize8(doc, "Datum vystavení:", 150, 109, "normal")
     textSize8(doc, "Datum splatnosti:", 150, 113, "normal")
-    textSize8(doc, invoiceData.duzp ? "DUZP:" : "", 150, 117, "normal")
+    textSize8(doc, invoiceData.duzp && "DUZP:", 150, 117, "normal")
 
     textSize8(doc, convertDate(invoiceData.dateOfIssuing), 178, 109, "bold")
     textSize8(doc, convertDate(invoiceData.dueDate), 178, 113, "bold")
-    textSize8(doc, invoiceData.duzp ? convertDate(invoiceData.duzp) : "", 178, 117, "bold")
+    textSize8(doc, invoiceData.duzp && convertDate(invoiceData.duzp), 178, 117, "bold")
 
     // Tabulka
     let head = [];

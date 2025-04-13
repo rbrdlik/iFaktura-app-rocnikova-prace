@@ -161,9 +161,11 @@ export default function ViewInvoice() {
           <Input text="Datum splatnosti" required={false}>
             <b>{convertDate(invoice.dueDate)}</b>
           </Input>
-          <Input text="Datum zdaněného plnění (DUZP)" required={true}>
-            <b>{convertDate(invoice.duzp)}</b>
-          </Input>
+          {platceDph && (
+            <Input text="Datum zdaněného plnění (DUZP)" required={true}>
+              <b>{convertDate(invoice.duzp)}</b>
+            </Input>
+          )}
         </div>
 
         <h1 className="input-header-text">Platební údaje</h1>
@@ -225,7 +227,7 @@ export default function ViewInvoice() {
                 ) : (
                   ""
                 )}
-                {platceDph ? <th style={{ width: "10%" }}>DPH (%)</th> : ""}
+                {platceDph && <th style={{ width: "10%" }}>DPH (%)</th>}
                 <th style={{ width: "9%" }}>Sleva</th>
                 <th style={{ width: "10%" }}>Typ slevy</th>
                 <th style={{ width: "25%", textAlign: "right" }}>Celkem</th>
@@ -239,8 +241,8 @@ export default function ViewInvoice() {
                     <td style={{ width: "9%" }}>{product.unit}</td>
                     <td style={{ width: "15%" }}>{product.productName}</td>
                     <td style={{ width: "9%" }}>{product.price}</td>
-                    {platceDph ? <td style={{ width: "13%" }}>{product.dph ? product.dph : "-"}</td> : ""}
-                    {platceDph ? <td style={{ width: "10%" }}>{product.dphType ? product.dphType : "-"}</td> : ""}
+                    {platceDph && <td style={{ width: "13%" }}>{product.dph ? product.dph : "-"}</td>}
+                    {platceDph && <td style={{ width: "10%" }}>{product.dphType ? product.dphType : "-"}</td>}
                     <td style={{ width: "9%" }}>{product.discount ? product.discount : "-"}</td>
                     <td style={{ width: "10%" }}>{product.discountType ? product.discountType  : "-"}</td>
                     <td style={{ width: "25%" }}>
