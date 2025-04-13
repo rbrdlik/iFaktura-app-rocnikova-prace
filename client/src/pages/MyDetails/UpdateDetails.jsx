@@ -207,7 +207,7 @@ export default function UpdateDetails() {
               </select>
             </div>
           </Input>
-          {selectOption === "Plátce DPH" ? (
+          {selectOption === "Plátce DPH" && (
             <Input text="DIČ" required={true}>
               <input
                 type="text"
@@ -217,8 +217,6 @@ export default function UpdateDetails() {
                 defaultValue={user.dic}
               />
             </Input>
-          ) : (
-            ""
           )}
         </div>
 

@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 /**
  * Funkce pro přihlášení uživatele.
- * Zkontroluje zda je zadaný email a heslo, poté zkontroluje správnost emailu a hesla. 
+ * Zkontroluje zda je zadaný email a heslo, poté zkontroluje správnost emailu a hesla.
  * Pokud vše sedí, uživatel je přihlášen a je mu vygenerován JWT Token
  * Method: `POST`
  * URL : `http://localhost:3000/user/login`
@@ -19,7 +19,9 @@ exports.login = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ message: "Špatně zadaný email nebo heslo." });
+      return res
+        .status(401)
+        .json({ message: "Špatně zadaný email nebo heslo." });
     }
 
     const token = jwt.sign({ userId: user._id, email }, process.env.TOKEN_KEY, {
@@ -47,7 +49,9 @@ exports.register = async (req, res) => {
 
     const userExist = await User.findOne({ email });
     if (userExist)
-      return res.status(400).send({ message: "Tento email je již zaregistrován." });
+      return res
+        .status(400)
+        .send({ message: "Tento email je již zaregistrován." });
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -74,22 +78,21 @@ exports.register = async (req, res) => {
  * URL: `http://localhost:3000/user`
  */
 exports.getUser = async (req, res) => {
-  try{
+  try {
     const user = await User.findById(req.user.userId).select("-password"); // Najdeme uživatele podle jeho `_id` a odebereme jeho heslo abychom ho neposlali na frontend.
-    
-    if(!user){
-      return res.status(404).json({ message: "Uživatel nenalezen" })
+
+    if (!user) {
+      return res.status(404).json({ message: "Uživatel nenalezen" });
     }
 
     res.status(200).send({
       message: "User found",
-      payload: user
+      payload: user,
     });
-
-  } catch(err){
-    res.status(500).json({ erorr: err.message })
+  } catch (err) {
+    res.status(500).json({ erorr: err.message });
   }
-}
+};
 
 /**
  * Funkce k upravení informací specifického uživatele
@@ -97,7 +100,7 @@ exports.getUser = async (req, res) => {
  * URL: `http://localhost:3000/user/:id`
  */
 exports.updateUser = async (req, res) => {
-  try{
+  try {
     const data = {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
@@ -118,22 +121,22 @@ exports.updateUser = async (req, res) => {
       iban: req.body.iban,
       swift: req.body.swift,
       invoiceLogo: req.body.invoiceLogo,
-    }
-    
+    };
+
     const result = await User.findByIdAndUpdate(req.params.id, data);
-    if(result){
+    if (result) {
       return res.status(200).send({
         message: "User updated",
         payload: result,
-      })
+      });
     }
     res.status(400).send({
       message: "Wrong input!",
-    })
-  } catch(err){
-    res.status(500).json({error: err.message})
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-}
+};
 
 /**
  * Funkce k ověření správnosti hesla
@@ -141,17 +144,18 @@ exports.updateUser = async (req, res) => {
  * URL: `http://localhost:3000/user/verifyPassword`
  */
 exports.verifyPassword = async (req, res) => {
-  try{
+  try {
     const { password } = req.body;
     const user = await User.findById(req.user.userId);
 
-    if(!user || !(await bcrypt.compare(password, user.password))) return res.status(401).json({ message: "Špatné heslo."});
+    if (!user || !(await bcrypt.compare(password, user.password)))
+      return res.status(401).json({ message: "Špatné heslo." });
 
-    res.status(200).json({message: "Heslo je správné."});
-  } catch(err){
+    res.status(200).json({ message: "Heslo je správné." });
+  } catch (err) {
     res.status(500).json({ error: err.message });
   }
-}
+};
 
 /**
  * Funkce ke smazání uživatele
@@ -159,7 +163,7 @@ exports.verifyPassword = async (req, res) => {
  * URL: `http://localhost:3000/user/:id`
  */
 exports.deleteUser = async (req, res) => {
-  try{
+  try {
     const data = {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
@@ -178,18 +182,18 @@ exports.deleteUser = async (req, res) => {
       dic: req.body.dic,
       invoiceLogo: req.body.invoiceLogo,
       signature: req.body.signature,
-    }
+    };
     const result = await User.findByIdAndDelete(req.params.id, data);
-    if(result){
+    if (result) {
       return res.status(200).send({
         message: "User deleted",
         payload: result,
-      })
+      });
     }
     res.status(400).send({
       message: "Wrong input!",
-    })
-  } catch(err){
-    res.status(500).json({error: err.message})
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-}
+};

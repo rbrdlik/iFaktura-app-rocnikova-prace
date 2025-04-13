@@ -4,27 +4,27 @@
  * Pokud token existuje, pošle request na server.
  */
 export const getAllInvoices = async () => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    if (!token) return null;
+  if (!token) return null;
 
-    const req = await fetch("http://localhost:3000/invoice", {
-        headers: {
-            Authorization: `Bearer ${token}`, 
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        method: "GET"
-    })
+  const req = await fetch("http://localhost:3000/invoice", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  });
 
-    const data = await req.json();
+  const data = await req.json();
 
-    return {
-        status: req.status,
-        message: data.message,
-        payload: data.payload
-    };
-}
+  return {
+    status: req.status,
+    message: data.message,
+    payload: data.payload,
+  };
+};
 
 /**
  * Získá specifickou fakturu vytvořenou aktuálně přihlášeným uživatelem
@@ -33,27 +33,27 @@ export const getAllInvoices = async () => {
  * @param {Object} id - ID faktury
  */
 export const getInvoiceById = async (id) => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    if (!token) return null;
+  if (!token) return null;
 
-    const req = await fetch(`http://localhost:3000/invoice/${id}`, {
-        headers: {
-            Authorization: `Bearer ${token}`, 
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        method: "GET"
-    })
+  const req = await fetch(`http://localhost:3000/invoice/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  });
 
-    const data = await req.json();
+  const data = await req.json();
 
-    return {
-        status: req.status,
-        message: data.message,
-        payload: data.payload
-    };
-}
+  return {
+    status: req.status,
+    message: data.message,
+    payload: data.payload,
+  };
+};
 
 /**
  * Vytvoří novou fakturu
@@ -62,28 +62,28 @@ export const getInvoiceById = async (id) => {
  * @param {Object} formData - Data faktury
  */
 export const createInvoice = async (formData) => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    if (!token) return null;
+  if (!token) return null;
 
-    const req = await fetch("http://localhost:3000/invoice", {
-        headers: {
-            Authorization: `Bearer ${token}`, 
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        method: "POST",
-        body: JSON.stringify(formData)  
-    })
+  const req = await fetch("http://localhost:3000/invoice", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify(formData),
+  });
 
-    const data = await req.json();
+  const data = await req.json();
 
-    return {
-        status: req.status,
-        message: data.message,
-        payload: data.payload
-    };
-}
+  return {
+    status: req.status,
+    message: data.message,
+    payload: data.payload,
+  };
+};
 
 /**
  * Upraví specifickou fakturu vytvořenou aktuálně přihlášeným uživatelem
@@ -93,28 +93,28 @@ export const createInvoice = async (formData) => {
  * @param {Object} formData - Data faktury
  */
 export const updateInvoice = async (id, formData) => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    if (!token) return null;
+  if (!token) return null;
 
-    const req = await fetch(`http://localhost:3000/invoice/${id}`, {
-        headers: {
-            Authorization: `Bearer ${token}`, 
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        method: "PUT",
-        body: JSON.stringify(formData)  
-    })
+  const req = await fetch(`http://localhost:3000/invoice/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
+    body: JSON.stringify(formData),
+  });
 
-    const data = await req.json();
+  const data = await req.json();
 
-    return {
-        status: req.status,
-        message: data.message,
-        payload: data.payload
-    };
-}
+  return {
+    status: req.status,
+    message: data.message,
+    payload: data.payload,
+  };
+};
 
 /**
  * Smaže specifickou fakturu vytvořenou aktuálně přihlášeným uživatelem
@@ -123,24 +123,24 @@ export const updateInvoice = async (id, formData) => {
  * @param {Object} id - ID faktury
  */
 export const deleteInvoice = async (id) => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    if (!token) return null;
+  if (!token) return null;
 
-    const req = await fetch(`http://localhost:3000/invoice/${id}`, {
-        headers: {
-            Authorization: `Bearer ${token}`, 
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        method: "DELETE"
-    })
+  const req = await fetch(`http://localhost:3000/invoice/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "DELETE",
+  });
 
-    const data = await req.json();
+  const data = await req.json();
 
-    return {
-        status: req.status,
-        message: data.message,
-        payload: data.payload
-    };
-}
+  return {
+    status: req.status,
+    message: data.message,
+    payload: data.payload,
+  };
+};

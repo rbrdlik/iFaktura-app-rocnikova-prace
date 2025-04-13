@@ -9,20 +9,19 @@ const invoiceSchema = mongoose.Schema({
     dateOfIssuing: { type: Date, required: true},
     dueDate: { type: Date, required: true},
     duzp: { type: Date, default: null},
-    paymentMethod: {type: String, enum: ["Bankovni prevod", "PayPal"], required: true},
+    paymentMethod: {type: String, enum: ["Bankovní převod", "PayPal", "Dobírkou"], required: true},
     paid: {type: Boolean, required: true},
-    statementSymbol: {type: Number, default: null},
     dateCreated: {type: Date, default: Date.now},
     products: [
         {
             amount: { type: Number, required: true},
-            unit: { type: String, enum: ["ks", "hod", "den", "litr", "kg", "g", "m", "km", "m2", "m3", "baleni"], required: true},
+            unit: { type: String, enum: ["ks", "hod.", "den", "litr", "kg", "g", "m", "km", "m²", "m³", "balení"], required: true},
             productName: { type: String, required: true},
             price: { type: Number, required: true},
             dph: { type: String, default: null},
             dphType: { type: String, enum: ["S DPH", "Bez DPH"], default: null },
             discount: { type: Number, default: null},
-            discountType: { type: String, enum: ["Kc", "%"], default: null}
+            discountType: { type: String, enum: ["Kč", "%"], default: null}
         }
     ]
 });

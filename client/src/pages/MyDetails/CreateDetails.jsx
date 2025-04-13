@@ -19,17 +19,13 @@ import "../../scss/styles.scss";
 import { mixinAlert } from "../../utils/sweetAlerts";
 
 export default function CreateDetails() {
+  const { user, fetchUser } = useAuth();
   const [image, setImage] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
   const [selectOption, setSelectOption] = useState("Neplátce DPH");
-  const { user, fetchUser } = useAuth();
-
   const [formData, setFormData] = useState();
   const navigate = useNavigate();
 
-  /**
-   * Odešleme upravená formData a po úspěšném uložení přesměrujeme uživatele na `/dashboard`
-   */
   const sendData = async () => {
     const res = await updateUser(user._id, formData);
     if (res.status === 200) {
@@ -64,9 +60,6 @@ export default function CreateDetails() {
     }));
   };
 
-  /**
-   * Aktualizuje `formData` při změně inputu
-   */
   const handleInput = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -74,9 +67,6 @@ export default function CreateDetails() {
     }));
   };
 
-  /**
-   * Po kliknutí na button zavoláme funkci `sendData()`
-   */
   const handleButton = (e) => {
     e.preventDefault();
 
@@ -181,12 +171,10 @@ export default function CreateDetails() {
               </select>
             </div>
           </Input>
-          {selectOption === "Plátce DPH" ? (
+          {selectOption === "Plátce DPH" && (
             <Input text="DIČ" required={true}>
               <input type="text" name="dic" required onChange={handleInput}/>
             </Input>
-          ) : (
-            ""
           )}
         </div>
 

@@ -14,8 +14,9 @@ import NumberInput from "../../components/NumberInput";
 // Import styles
 import "../../scss/styles.scss";
 
-// Import alert
+// Import utils
 import { mixinAlert } from "../../utils/sweetAlerts";
+import { calculateTotals } from "../../utils/calculateTotals";
 
 export default function CreateItem() {
   const { user } = useAuth();
@@ -23,13 +24,13 @@ export default function CreateItem() {
   const [amountNumber, setAmountNumber] = useState(1);
   const navigate = useNavigate();
 
+  const totals = calculateTotals(formData, amountNumber, user);
+  const platceDph = user.dph === "Plátce DPH";
+
   useEffect(() => {
     document.title = "Vytvořit položku • iFaktura";
   }, []);
 
-  /**
-   * Tato funkce odesílá `formData` na server, který vytvoří novou položku.
-   */
   const sendData = async () => {
     const res = await createProduct(formData);
     if(res.status === 201){
@@ -41,9 +42,6 @@ export default function CreateItem() {
     }
   }
 
-  /**
-   * Upravujeme formData po upravení nějakého inputu
-   */
   const handleInput = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -72,43 +70,6 @@ export default function CreateItem() {
 
     sendData();
   };
-
-  /**
-   * Tato funkce slouží k výpočtu celkových cenových částek, včetně a bez DPH, s ohledem na množství, cenu za jednotku, slevu a typ DPH (včetně nebo bez DPH). 
-   * Funkce vrací objekt, který obsahuje cenu bez DPH, částku DPH, částku slevy a celkovou cenu s DPH.
-   */
-  const calculateTotals = () => {
-    const quantity = parseFloat(amountNumber) || 1;
-    const pricePerUnit = parseFloat(formData?.price) || 0;
-    const dphRate = formData?.dph ? parseFloat(formData.dph) / 100 : 0;
-    const isDphIncluded = formData?.dphType === "S DPH";
-    const discount = parseFloat(formData?.discount) || 0;
-    const discountIsPercentage = formData?.discountType === "%";
-  
-    let priceWithoutDph = isDphIncluded ? pricePerUnit / (1 + dphRate) : pricePerUnit;
-    let totalPriceWithoutDph = priceWithoutDph * quantity;
-    let dphAmount = formData?.dph ? totalPriceWithoutDph * dphRate : 0;
-    let discountAmount = formData?.discount
-      ? discountIsPercentage
-        ? (totalPriceWithoutDph * discount) / 100
-        : discount
-      : 0;
-  
-    let totalWithDph = totalPriceWithoutDph + dphAmount - discountAmount;
-  
-    if (totalWithDph < 0) totalWithDph = 0;
-  
-    return {
-      priceWithoutDph: totalPriceWithoutDph.toFixed(2),
-      dphAmount: dphAmount > 0 ? dphAmount.toFixed(2) : null,
-      discountAmount: discountAmount > 0 ? discountAmount.toFixed(2) : null,
-      totalWithDph: totalWithDph.toFixed(2),
-    };
-  };
-  
-  const totals = calculateTotals();
-  
-  const platceDph = user.dph === "Plátce DPH" ? true : false; // Zjištujeme zda má uživatel nastaveno že je plátcem DPH
 
   return (
     <>

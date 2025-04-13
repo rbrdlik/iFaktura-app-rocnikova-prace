@@ -12,7 +12,6 @@ import LoadingPage from "../../components/LoadingPage";
 // Import assets
 import trashcan from "../../assets/icons/TrashCan.svg";
 import fileedit from "../../assets/icons/FileEdit.svg";
-import sendicon from "../../assets/icons/PaperPlane.svg";
 import pdficon from "../../assets/icons/Pdf.svg";
 
 // Import styles
@@ -25,6 +24,7 @@ import { getContactById } from "../../models/contact";
 // Import utils
 import { mixinAlert } from "../../utils/sweetAlerts";
 import { generatePDF } from "../../utils/pdfGenerator";
+import { calculateInvoiceTotal } from "../../utils/calculateTotals";
 
 export default function ViewAllInvoices() {
   const { user } = useAuth();
@@ -36,10 +36,6 @@ export default function ViewAllInvoices() {
   const [contactNames, setContactNames] = useState();
 
   useEffect(() => {
-    /**
-     * Načteme všechny faktury, pokud žádný neexistují, nastavíme `setIsLoading` na null, tím uživatele přesměrujeme na `NotFound` stránku.
-     * Pokud ano, uložíme je do `invoices`
-     */
     const load = async () => {
       const res = await getAllInvoices();
       if (res.status === 500 || res.status === 404) return setIsLoading(null);
@@ -100,36 +96,10 @@ export default function ViewAllInvoices() {
   };
 
   /**
-   * Tato funkce počítá celkovou částku všech produktů podle toho i zda má nějaký produkt nastavenou slevu, dph, atd..
-   * @param {*} products - Pole všech produktů
-   * @returns - Celkovou částku všech produktů
-   */
-  const calculateInvoiceTotal = (products) => {
-    const total = products.reduce((sum, product) => {
-      const pricePerUnit = parseFloat(product.price);
-      const dphRate = product.dph ? parseFloat(product.dph) / 100 : 0;
-      const discount = parseFloat(product.discount);
-
-      let priceWithoutDph = product.dphType === "S DPH" ? pricePerUnit / (1 + dphRate) : pricePerUnit;
-      let totalPriceWithoutDph = priceWithoutDph * parseFloat(product.amount);
-      let dphAmount = product.dph ? totalPriceWithoutDph * dphRate : 0;
-      let discountAmount = product.discount ? product.discountType === "%" ? (totalPriceWithoutDph * discount) / 100 : discount : 0;
-      let totalWithDph = totalPriceWithoutDph + dphAmount - discountAmount
-      if (totalWithDph < 0) totalWithDph = 0;
-
-      return user.dph === "Plátce DPH" ? sum + totalWithDph : sum + totalPriceWithoutDph - discountAmount;
-    }, 0);
-
-    return `${total.toFixed(2)} Kč`;
-  };
-
-  /**
    * Tento kód provádí filtrování produktů podle hledaného výrazu (`searchValue`).
    * Použije se metoda `.filter()`, která prochází pole invoices a vybere jen ty kontakty, které odpovídají hledání.
    */
-  const filteredInvoices = searchValue
-    ? invoices.filter((invoice) => invoice.invoice_id.includes(searchValue))
-    : invoices;
+  const filteredInvoices = searchValue ? invoices.filter((invoice) => invoice.invoice_id.includes(searchValue)) : invoices;
 
   if (isLoading === null) {
     return <NotFound />;
@@ -183,10 +153,9 @@ export default function ViewAllInvoices() {
                 </td>
                 <td>{convertDate(invoice.dateOfIssuing)}</td>
                 <td>{convertDate(invoice.dueDate)}</td>
-                <td>{calculateInvoiceTotal(invoice.products)}</td>
+                <td>{calculateInvoiceTotal(invoice.products, user)}</td>
                 <td id="edit-btn">
-                  <img src={pdficon} alt="" id="img" title="Stáhnout v PDF" onClick={async () => generatePDF(user, await getContactById(invoice.contact_id), invoice, calculateInvoiceTotal(invoice.products))} />
-                  <img src={sendicon} alt="" id="img" title="Odeslat emailem" />
+                  <img src={pdficon} alt="" id="img" title="Stáhnout v PDF" onClick={async () => generatePDF(user, await getContactById(invoice.contact_id), invoice, calculateInvoiceTotal(invoice.products, user))} />
                   <Link to={`/updateInvoice/${invoice._id}`}>
                     <img src={fileedit} alt="" id="img" title="Upravit" />
                   </Link>

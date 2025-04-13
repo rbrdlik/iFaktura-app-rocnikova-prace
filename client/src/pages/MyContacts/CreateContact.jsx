@@ -25,9 +25,6 @@ export default function CreateContact() {
     document.title = "Vytvořit kontakt • iFaktura";
   }, []);
 
-  /**
-   * Tato funkce odesílá `formData` na server, který vytvoří nový kontakt.
-   */
   const sendData = async () => {
     const res = await createContact(formData);
     if (res.status === 201) {
@@ -39,9 +36,6 @@ export default function CreateContact() {
     }
   };
 
-  /**
-   * Upravujeme formData po upravení nějakého inputu
-   */
   const handleInput = (e) => {
     setFormData((prev) => ({
       ...prev,

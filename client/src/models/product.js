@@ -4,27 +4,27 @@
  * Pokud token existuje, pošle request na server.
  */
 export const getAllProducts = async () => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    if (!token) return null;
+  if (!token) return null;
 
-    const req = await fetch("http://localhost:3000/product", {
-        headers: {
-            Authorization: `Bearer ${token}`, 
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        method: "GET"
-    })
+  const req = await fetch("http://localhost:3000/product", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  });
 
-    const data = await req.json();
+  const data = await req.json();
 
-    return {
-        status: req.status,
-        message: data.message,
-        payload: data.payload
-    };
-}
+  return {
+    status: req.status,
+    message: data.message,
+    payload: data.payload,
+  };
+};
 
 /**
  * Získá specifický produkt vytvořený aktuálně přihlášeným uživatelem
@@ -33,27 +33,27 @@ export const getAllProducts = async () => {
  * @param {Object} id - ID produktu
  */
 export const getProductById = async (id) => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    if (!token) return null;
+  if (!token) return null;
 
-    const req = await fetch(`http://localhost:3000/product/${id}`, {
-        headers: {
-            Authorization: `Bearer ${token}`, 
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        method: "GET"
-    })
+  const req = await fetch(`http://localhost:3000/product/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  });
 
-    const data = await req.json();
+  const data = await req.json();
 
-    return {
-        status: req.status,
-        message: data.message,
-        payload: data.payload
-    };
-}
+  return {
+    status: req.status,
+    message: data.message,
+    payload: data.payload,
+  };
+};
 
 /**
  * Vytvoří nový produkt
@@ -62,28 +62,28 @@ export const getProductById = async (id) => {
  * @param {Object} formData - Data produktu
  */
 export const createProduct = async (formData) => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    if (!token) return null;
+  if (!token) return null;
 
-    const req = await fetch("http://localhost:3000/product", {
-        headers: {
-            Authorization: `Bearer ${token}`, 
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        method: "POST",
-        body: JSON.stringify(formData)  
-    })
+  const req = await fetch("http://localhost:3000/product", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify(formData),
+  });
 
-    const data = await req.json();
+  const data = await req.json();
 
-    return {
-        status: req.status,
-        message: data.message,
-        payload: data.payload
-    };
-}
+  return {
+    status: req.status,
+    message: data.message,
+    payload: data.payload,
+  };
+};
 
 /**
  * Upraví specifický produkt vytvořený aktuálně přihlášeným uživatelem
@@ -93,28 +93,28 @@ export const createProduct = async (formData) => {
  * @param {Object} formData - Data produktu
  */
 export const updateProduct = async (id, formData) => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    if (!token) return null;
+  if (!token) return null;
 
-    const req = await fetch(`http://localhost:3000/product/${id}`, {
-        headers: {
-            Authorization: `Bearer ${token}`, 
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        method: "PUT",
-        body: JSON.stringify(formData)  
-    })
+  const req = await fetch(`http://localhost:3000/product/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
+    body: JSON.stringify(formData),
+  });
 
-    const data = await req.json();
+  const data = await req.json();
 
-    return {
-        status: req.status,
-        message: data.message,
-        payload: data.payload
-    };
-}
+  return {
+    status: req.status,
+    message: data.message,
+    payload: data.payload,
+  };
+};
 
 /**
  * Smaže specifický produkt vytvořený aktuálně přihlášeným uživatelem
@@ -123,24 +123,24 @@ export const updateProduct = async (id, formData) => {
  * @param {Object} id - ID produktu
  */
 export const deleteProduct = async (id) => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    if (!token) return null;
+  if (!token) return null;
 
-    const req = await fetch(`http://localhost:3000/product/${id}`, {
-        headers: {
-            Authorization: `Bearer ${token}`, 
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        method: "DELETE"
-    })
+  const req = await fetch(`http://localhost:3000/product/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "DELETE",
+  });
 
-    const data = await req.json();
+  const data = await req.json();
 
-    return {
-        status: req.status,
-        message: data.message,
-        payload: data.payload
-    };
-}
+  return {
+    status: req.status,
+    message: data.message,
+    payload: data.payload,
+  };
+};

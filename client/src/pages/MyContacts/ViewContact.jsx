@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
-import { useAuth } from "../../context/AuthProvider";
 import Swal from "sweetalert2";
 
 // Import assets
@@ -26,16 +25,11 @@ import { mixinAlert } from "../../utils/sweetAlerts";
 
 export default function ViewContact() {
   const { id } = useParams();
-  const { user } = useAuth();
   const [contact, setContact] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    /**
-     * Načteme specifický kontakt, pokud neexistuje, nastavíme `setIsLoading` na null, tím uživatele přesměrujeme na `NotFound` stránku.
-     * Pokud ano, uložíme jeho data do proměnné
-     */
     const load = async () => {
       const data = await getContactById(id);
       if (data.status === 500 || data.status === 404) return setIsLoading(null);

@@ -2,20 +2,18 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthProvider";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import { generatePDF } from "../../utils/pdfGenerator";
 
 // Import assets
 import trashcan from "../../assets/icons/TrashCan.svg";
 import fileedit from "../../assets/icons/FileEdit.svg";
-import sendicon from "../../assets/icons/PaperPlane.svg";
 import pdficon from "../../assets/icons/Pdf.svg";
 
 // Import components
 import Content from "../../components/Content";
 import Input from "../../components/Input";
-import Buttons from "../../components/Buttons";
 import LoadingPage from "../../components/LoadingPage";
 import NotFound from "../../components/NotFound";
-import Table from "../../components/Table";
 
 // Import styles
 import "../../scss/styles.scss";
@@ -25,8 +23,9 @@ import "../../scss/Table.scss";
 import { getInvoiceById, deleteInvoice } from "../../models/invoice";
 import { getContactById } from "../../models/contact";
 
-// Import alert
+// Import utils
 import { mixinAlert } from "../../utils/sweetAlerts";
+import { calculateInvoiceTotal, calculateTotals } from "../../utils/calculateTotals";
 
 export default function ViewInvoice() {
   const { id } = useParams();
@@ -61,38 +60,6 @@ export default function ViewInvoice() {
     load();
     document.title = `Faktura • iFaktura`;
   }, []);
-
-  /**
-   * Tato funkce slouží k výpočtu celkových cenových částek, včetně a bez DPH, s ohledem na množství, cenu za jednotku, slevu a typ DPH (včetně nebo bez DPH).
-   * Funkce vrací objekt, který obsahuje cenu bez DPH, částku DPH, částku slevy a celkovou cenu s DPH.
-   */
-  const calculateTotals = (product) => {
-    const quantity = parseFloat(product.amount) || 1;
-    const pricePerUnit = parseFloat(product.price) || 0;
-    const dphRate = product.dph ? parseFloat(product.dph) / 100 : 0;
-    const isDphIncluded = product.dphType === "S DPH";
-    const discount = parseFloat(product.discount) || 0;
-    const discountIsPercentage = product.discountType === "%";
-
-    let priceWithoutDph = isDphIncluded
-      ? pricePerUnit / (1 + dphRate)
-      : pricePerUnit;
-    let totalPriceWithoutDph = priceWithoutDph * quantity;
-    let dphAmount = product.dph ? totalPriceWithoutDph * dphRate : 0;
-    let discountAmount = product.discount
-      ? discountIsPercentage
-        ? (totalPriceWithoutDph * discount) / 100
-        : discount
-      : 0;
-
-    let totalWithDph = totalPriceWithoutDph + dphAmount - discountAmount;
-
-    if (totalWithDph < 0) totalWithDph = 0;
-
-    return {
-      totalWithDph: totalWithDph.toFixed(2),
-    };
-  };
 
   /**
    * Tato funkce odešle modal, kde se zeptáme uživatele zda chce smazat fakturu, pokud odsouhlasí, zavoláme funkci `deleteInvoice()`
@@ -153,8 +120,7 @@ export default function ViewInvoice() {
             className="table-navbar-icons"
             style={{ width: "100%", marginTop: "1px", marginBottom: "-8px" }}
           >
-            <img src={pdficon} alt="" title="Faktura do PDF" />
-            <img src={sendicon} alt="" title="Odeslat fakturu" />
+            <img src={pdficon} alt="" title="Faktura do PDF" onClick={async () => generatePDF(user, await getContactById(invoice.contact_id), invoice, calculateInvoiceTotal(invoice.products, user))}/>
             <img
               src={fileedit}
               alt=""
@@ -185,9 +151,6 @@ export default function ViewInvoice() {
           <Input text="Popis" required={true}>
             <b>{invoice.description}</b>
           </Input>
-          <Input text="Konstantní symbol" required={false}>
-            <b>{invoice.statementSymbol}</b>
-          </Input>
         </div>
 
         <h1 className="input-header-text">Datum</h1>
@@ -199,7 +162,7 @@ export default function ViewInvoice() {
             <b>{convertDate(invoice.dueDate)}</b>
           </Input>
           <Input text="Datum zdaněného plnění (DUZP)" required={true}>
-            <b>{convertDate(invoice.dozp)}</b>
+            <b>{convertDate(invoice.duzp)}</b>
           </Input>
         </div>
 
@@ -269,7 +232,7 @@ export default function ViewInvoice() {
               </tr>
 
               {invoiceProducts.map((product) => {  
-                const totals = calculateTotals(product);
+                const totals = calculateTotals(product, undefined, user);
                 return(
                   <tr key={product._id}>
                     <td style={{ width: "9%", textAlign: "center" }}>{product.amount}</td>

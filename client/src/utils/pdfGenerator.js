@@ -7,6 +7,9 @@ import "../assets/font/DejaVuSans-normal"
 import "../assets/font/DejaVuSans-Bold-normal"
 import "../assets/font/DejaVuSans-ExtraLight-normal"
 
+// Import utils 
+import { calculateTotals } from "./calculateTotals";
+
 export const generatePDF = (user, contact, invoice, totalPrice) => {
     const doc = new jsPDF();
 
@@ -17,37 +20,6 @@ export const generatePDF = (user, contact, invoice, totalPrice) => {
     const convertDate = (dateInput) => {
         const date = new Date(dateInput);
         return date.toLocaleDateString("cs-CZ");
-    };
-
-    const calculateTotals = (product) => {
-        const quantity = parseFloat(product.amount) || 1;
-        const pricePerUnit = parseFloat(product.price) || 0;
-        const dphRate = product.dph ? parseFloat(product.dph) / 100 : 0;
-        const isDphIncluded = product.dphType === "S DPH";
-        const discount = parseFloat(product.discount) || 0;
-        const discountIsPercentage = product.discountType === "%";
-    
-        let priceWithoutDph = isDphIncluded
-          ? pricePerUnit / (1 + dphRate)
-          : pricePerUnit;
-        let totalPriceWithoutDph = priceWithoutDph * quantity;
-        let dphAmount = product.dph ? totalPriceWithoutDph * dphRate : 0;
-        let discountAmount = product.discount
-          ? discountIsPercentage
-            ? (totalPriceWithoutDph * discount) / 100
-            : discount
-          : 0;
-    
-        let totalWithDph = totalPriceWithoutDph + dphAmount;
-    
-        if (totalWithDph < 0) totalWithDph = 0;
-    
-        return {
-          priceWithoutDph: totalPriceWithoutDph.toFixed(2),
-          dphAmount: dphAmount > 0 ? dphAmount.toFixed(2) : null,
-          discountAmount: discountAmount > 0 ? discountAmount.toFixed(2) : null,
-          totalWithDph: totalWithDph.toFixed(2),
-        };
     };
 
     // ŠABLONY TEXTU
@@ -154,8 +126,6 @@ export const generatePDF = (user, contact, invoice, totalPrice) => {
 
     textSize8(doc, "Variabilní:", 90, 112, "normal")
     textSize8(doc, invoiceData.invoice_id, 108, 112, "bold")
-    textSize8(doc, invoiceData.statementSymbol ? "Konstantní:" : "", 90, 116, "normal")
-    textSize8(doc, invoiceData.statementSymbol ? `${invoiceData.statementSymbol}` : "", 108, 116, "bold")
 
     // Datumy
     textSize8(doc, "Datum vystavení:", 150, 109, "normal")

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { useAuth } from "../../context/AuthProvider";
 
 // Import components
 import Content from "../../components/Content";
@@ -20,17 +19,12 @@ import { mixinAlert } from "../../utils/sweetAlerts";
 
 export default function UpdateContact() {
   const { id } = useParams();
-  const { user } = useAuth();
   const [contact, setContact] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [formData, setFormData] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
-    /**
-     * Načteme specifický kontakt, pokud neexistuje, nastavíme `setIsLoading` na null, tím uživatele přesměrujeme na `NotFound` stránku.
-     * Pokud ano, uložíme jeho data do proměnných
-     */
     const load = async () => {
       const data = await getContactById(id);
       if (data.status === 500 || data.status === 404) return setIsLoading(null);
@@ -46,9 +40,6 @@ export default function UpdateContact() {
     document.title = "Upravit kontakt • iFaktura";
   }, []);
 
-  /**
-   * Tato funkce odesílá upravená data na server
-   */
   const sendData = async () => {
     const res = await updateContact(id, formData);
     if (res.status === 200) {
@@ -60,9 +51,6 @@ export default function UpdateContact() {
     }
   };
 
-  /**
-   * Upravujeme formData po upravení nějakého inputu
-   */
   const handleInput = (e) => {
     setFormData((prev) => ({
       ...prev,

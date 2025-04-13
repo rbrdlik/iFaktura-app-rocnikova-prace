@@ -31,10 +31,6 @@ export default function ViewAllItems() {
   const [indexOfLastItem, setIndexOfLastItem] = useState();
   
   useEffect(() => {
-    /**
-     * Načteme všechny položky, pokud žádný neexistují, nastavíme `setIsLoading` na null, tím uživatele přesměrujeme na `NotFound` stránku. 
-     * Pokud ano, uložíme je do `products`
-     */
     const load = async () => {
       const res = await getAllProducts();
       if(res.status === 500 || res.status === 404) return setIsLoading(null);

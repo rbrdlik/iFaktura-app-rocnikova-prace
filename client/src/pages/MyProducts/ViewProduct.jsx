@@ -21,8 +21,9 @@ import "../../scss/Table.scss";
 // Import model
 import { getProductById, deleteProduct } from "../../models/product";
 
-// Import alert
+// Import utils
 import { mixinAlert } from "../../utils/sweetAlerts";
+import { calculateTotals } from "../../utils/calculateTotals";
 
 export default function ViewItem() {
   const { id } = useParams();
@@ -31,11 +32,10 @@ export default function ViewItem() {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
+  const totals = calculateTotals(product, undefined, user);
+  const platceDph = user.dph === "Plátce DPH";
+
   useEffect(() => {
-    /**
-     * Načteme specifickou položku, pokud neexistuje, nastavíme `setIsLoading` na null, tím uživatele přesměrujeme na `NotFound` stránku.
-     * Pokud ano, uložíme její data do proměnné
-     */
     const load = async () => {
       const data = await getProductById(id);
       if (data.status === 500 || data.status === 404) return setIsLoading(null);
@@ -47,41 +47,6 @@ export default function ViewItem() {
     load();
     document.title = `Položka • iFaktura`;
   }, []);
-
-  /**
-   * Tato funkce slouží k výpočtu celkových cenových částek, včetně a bez DPH, s ohledem na množství, cenu za jednotku, slevu a typ DPH (včetně nebo bez DPH).
-   * Funkce vrací objekt, který obsahuje cenu bez DPH, částku DPH, částku slevy a celkovou cenu s DPH.
-   */
-  const calculateTotals = () => {
-    const quantity = parseFloat(product.amount) || 1;
-    const pricePerUnit = parseFloat(product.price) || 0;
-    const dphRate = product.dph ? parseFloat(product.dph) / 100 : 0;
-    const isDphIncluded = product.dphType === "S DPH";
-    const discount = parseFloat(product.discount) || 0;
-    const discountIsPercentage = product.discountType === "%";
-
-    let priceWithoutDph = isDphIncluded
-      ? pricePerUnit / (1 + dphRate)
-      : pricePerUnit;
-    let totalPriceWithoutDph = priceWithoutDph * quantity;
-    let dphAmount = product.dph ? totalPriceWithoutDph * dphRate : 0;
-    let discountAmount = product.discount
-      ? discountIsPercentage
-        ? (totalPriceWithoutDph * discount) / 100
-        : discount
-      : 0;
-
-    let totalWithDph = totalPriceWithoutDph + dphAmount - discountAmount;
-
-    if (totalWithDph < 0) totalWithDph = 0;
-
-    return {
-      priceWithoutDph: totalPriceWithoutDph.toFixed(2),
-      dphAmount: dphAmount > 0 ? dphAmount.toFixed(2) : null,
-      discountAmount: discountAmount > 0 ? discountAmount.toFixed(2) : null,
-      totalWithDph: totalWithDph.toFixed(2),
-    };
-  };
 
   /**
    * Tato funkce odešle modal, kde se zeptáme uživatele zda chce smazat položku, pokud odsouhlasí, zavoláme funkci `deleteProduct()`
@@ -114,10 +79,6 @@ export default function ViewItem() {
       }
     });
   };
-
-  const totals = calculateTotals();
-
-  const platceDph = user.dph === "Plátce DPH" ? true : false;
 
   if (isLoading === null) {
     return <NotFound />;
