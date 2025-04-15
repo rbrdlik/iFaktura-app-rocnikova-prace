@@ -1,6 +1,9 @@
 const User = require("../models/user");
+const path = require("path");
+const fs = require("fs");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const user = require("../models/user");
 
 /**
  * Funkce pro přihlášení uživatele.
@@ -101,12 +104,26 @@ exports.getUser = async (req, res) => {
  */
 exports.updateUser = async (req, res) => {
   try {
+    const userId = req.params.id;
+    const user = await User.findById(userId);
+    if(!user) return res.status(404).json({ message: "User not found!"});
+
+    // Při nahrávání nového souboru, smažeme starý uložený soubor (pokud nějaký existuje), abychom neměli složku /uploads přehlcenou zbytečnými nepoužívanými soubory
+    if (req.files?.["profilePicture"]?.[0] && user.profilePicture) {
+      const oldPath = path.join(__dirname, "../uploads", user.profilePicture);
+      if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+    }
+    if (req.files?.["invoiceLogo"]?.[0] && user.invoiceLogo) {
+      const oldPath = path.join(__dirname, "../uploads", user.invoiceLogo);
+      if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+    }
+
     const data = {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       email: req.body.email,
       password: req.body.password,
-      profilePicture: req.body.profilePicture,
+      profilePicture: req.files?.["profilePicture"]?.[0]?.filename || user.profilePicture, // Pokud client pošle request na změnu souboru, změníme soubor na to co client poslal, v opačném případě necháváme nastaven aktuální uložený soubor
       detailsName: req.body.detailsName,
       ico: req.body.ico,
       hasIco: req.body.hasIco,
@@ -120,7 +137,7 @@ exports.updateUser = async (req, res) => {
       accountNumber: req.body.accountNumber,
       iban: req.body.iban,
       swift: req.body.swift,
-      invoiceLogo: req.body.invoiceLogo,
+      invoiceLogo: req.files?.["invoiceLogo"]?.[0]?.filename || user.invoiceLogo,
     };
 
     const result = await User.findByIdAndUpdate(req.params.id, data);
