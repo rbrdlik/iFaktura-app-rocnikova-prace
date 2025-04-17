@@ -94,14 +94,18 @@ export const updateUser = async (id, formData) => {
 
   if (!token) return null;
 
+  const form = new FormData();
+  for(const key in formData){
+    if(formData[key] !== undefined && formData[key] !== null) form.append(key, formData[key]);
+  }
+
   const req = await fetch(`http://localhost:3000/user/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: "application/json"
     },
     method: "PUT",
-    body: JSON.stringify(formData),
+    body: form,
   });
   const data = await req.json();
 

@@ -10,8 +10,33 @@ import "../assets/font/DejaVuSans-ExtraLight-normal"
 // Import utils 
 import { calculateTotals } from "./calculateTotals";
 
-export const generatePDF = (user, contact, invoice, totalPrice) => {
+/**
+ * Tato funkce převádí url adresu obrázku na Base64 formát aby se mohl obrázek zobrazit na pdf formátu faktury
+ * @param {*} url - url adresa obrázku
+ */
+const getImageBase64FromUrl = async (url) => {
+    const res = await fetch(url);
+    const blob = await res.blob();
+  
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result); // Base64
+      reader.readAsDataURL(blob);
+    });
+  };
+
+export const generatePDF = async (user, contact, invoice, totalPrice, image) => {
     const doc = new jsPDF();
+    
+    let convertedImage = null;
+
+    if(image){
+        try{
+            convertedImage = await getImageBase64FromUrl(`http://localhost:3000/uploads/${image}`);
+        } catch(err){
+            console.log(err.message)
+        }
+    }
 
     const userData = user;
     const contactData = contact.payload;
@@ -60,7 +85,9 @@ export const generatePDF = (user, contact, invoice, totalPrice) => {
     }
 
     // Logo
-    doc.addImage(logo, 'PNG', 12, 6, 37, 11);
+    if (convertedImage) {
+        doc.addImage(convertedImage, 'PNG', 12, 6, 37, 11);
+    }
 
     // Číslo faktury
     textSize8(doc, `Faktura č. ${invoiceData.invoice_id}`, 162, 13.5, "bold")
@@ -95,7 +122,7 @@ export const generatePDF = (user, contact, invoice, totalPrice) => {
     // Odběratel
     textSize10(doc, "Odběratel", 115, 24.5, "bold")
 
-    textSize11(doc, contactData ? contactData.detailsName : "| Chyba při načítání odběratele... |", 115, 30, "bold")
+    textSize11(doc, contactData ? contactData.detailsName : "Chyba při načítání odběratele...", 115, 30, "bold")
     
     textSize9(doc, contactData ? contactData.street : "", 115, 34.5, "normal")
     textSize9(doc, contactData ? `${contactData.zipCode} ${contactData.city}` : "", 115, 38.5, "normal")
@@ -130,11 +157,11 @@ export const generatePDF = (user, contact, invoice, totalPrice) => {
     // Datumy
     textSize8(doc, "Datum vystavení:", 150, 109, "normal")
     textSize8(doc, "Datum splatnosti:", 150, 113, "normal")
-    textSize8(doc, invoiceData.duzp && "DUZP:", 150, 117, "normal")
+    textSize8(doc, invoiceData.duzp ? "DUZP:" : "", 150, 117, "normal")
 
     textSize8(doc, convertDate(invoiceData.dateOfIssuing), 178, 109, "bold")
     textSize8(doc, convertDate(invoiceData.dueDate), 178, 113, "bold")
-    textSize8(doc, invoiceData.duzp && convertDate(invoiceData.duzp), 178, 117, "bold")
+    textSize8(doc, invoiceData.duzp ? convertDate(invoiceData.duzp) : "", 178, 117, "bold")
 
     // Tabulka
     let head = [];

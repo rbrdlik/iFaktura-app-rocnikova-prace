@@ -118,12 +118,37 @@ exports.updateUser = async (req, res) => {
       if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
     }
 
+    /**
+     * V případě že se odešle "null", smažeme obrázek.
+     */
+    let newInvoiceLogo;
+    if (req.body.invoiceLogo === "null") {
+      if (user.invoiceLogo) {
+        const oldPath = path.join(__dirname, "../uploads", user.invoiceLogo);
+        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+      }
+      newInvoiceLogo = null;
+    } else {
+      newInvoiceLogo = req.files?.["invoiceLogo"]?.[0]?.filename || user.invoiceLogo;
+    }
+    
+    let newProfilePicture;
+    if (req.body.profilePicture === "null") {
+      if (user.profilePicture) {
+        const oldPath = path.join(__dirname, "../uploads", user.profilePicture);
+        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+      }
+      newProfilePicture = null;
+    } else {
+      newProfilePicture = req.files?.["profilePicture"]?.[0]?.filename || user.profilePicture;
+    }
+
     const data = {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       email: req.body.email,
       password: req.body.password,
-      profilePicture: req.files?.["profilePicture"]?.[0]?.filename || user.profilePicture, // Pokud client pošle request na změnu souboru, změníme soubor na to co client poslal, v opačném případě necháváme nastaven aktuální uložený soubor
+      profilePicture: newProfilePicture,
       detailsName: req.body.detailsName,
       ico: req.body.ico,
       hasIco: req.body.hasIco,
@@ -137,7 +162,7 @@ exports.updateUser = async (req, res) => {
       accountNumber: req.body.accountNumber,
       iban: req.body.iban,
       swift: req.body.swift,
-      invoiceLogo: req.files?.["invoiceLogo"]?.[0]?.filename || user.invoiceLogo,
+      invoiceLogo: newInvoiceLogo,
     };
 
     const result = await User.findByIdAndUpdate(req.params.id, data);

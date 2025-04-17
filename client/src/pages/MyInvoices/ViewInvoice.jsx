@@ -120,7 +120,7 @@ export default function ViewInvoice() {
             className="table-navbar-icons"
             style={{ width: "100%", marginTop: "1px", marginBottom: "-8px" }}
           >
-            <img src={pdficon} alt="" title="Faktura do PDF" onClick={async () => generatePDF(user, await getContactById(invoice.contact_id), invoice, calculateInvoiceTotal(invoice.products, user))}/>
+            <img src={pdficon} alt="" title="Faktura do PDF" onClick={async () => generatePDF(user, await getContactById(invoice.contact_id), invoice, calculateInvoiceTotal(invoice.products, user), user.invoiceLogo)}/>
             <img
               src={fileedit}
               alt=""

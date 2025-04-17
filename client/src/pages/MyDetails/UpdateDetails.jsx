@@ -25,7 +25,15 @@ export default function UpdateDetails() {
 
   const [formData, setFormData] = useState();
 
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      invoiceLogo: image,
+    }));
+  }, [image]);
+
   const sendData = async () => {
+    console.log(formData)
     const res = await updateUser(user._id, formData);
     if (res.status === 200) {
       await fetchUser();
@@ -224,7 +232,7 @@ export default function UpdateDetails() {
         <div className="input-img-content-box">
           <ImageUpload
             header={"Logo na faktuře"}
-            imgSize={"200x200"}
+            imgSize={"450x130"}
             imgId={"1"}
             setImage={setImage}
           />

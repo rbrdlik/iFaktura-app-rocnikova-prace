@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthProvider";
 
 // Import assets
 import uploadIcon from "../../assets/icons/Upload.svg";
@@ -9,9 +10,12 @@ import "../../scss/ImageUpload.scss";
 // Import alert
 import { mixinAlert } from "../../utils/sweetAlerts";
 
+
 export default function ImageUpload({ header, imgSize, imgId, setImage }) {
+  const { user } = useAuth();
   const [imageUrl, setImageUrl] = useState("");
   const [isDragging, setIsDragging] = useState(false);
+  const [savedImage, setSavedImage] = useState(user.invoiceLogo);
 
   /**
    * Touto funkcí nejprve ověříme zda nahraný soubor je opravdu obrázek
@@ -19,12 +23,13 @@ export default function ImageUpload({ header, imgSize, imgId, setImage }) {
    * Vytvoří URL adresu obrázku pro zobrazení náhledu
    */
   const handleFile = (file) => {
-    if (file && file.type.startsWith("image/")) {
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (file && allowedTypes.includes(file.type)) {
       setImage(file);
       const imgUrl = URL.createObjectURL(file);
       setImageUrl(imgUrl);
     } else {
-      mixinAlert("error", "Nahrajte prosím obrázek.")
+      mixinAlert("error", "Nepovolený formát souboru.");
     }
   };
 
@@ -57,21 +62,36 @@ export default function ImageUpload({ header, imgSize, imgId, setImage }) {
     setIsDragging(false);
   };
 
+  const handleRemoveImage = (e) => {
+    e.preventDefault();
+    setSavedImage(null);
+    setImageUrl("");
+    setImage("null")
+  }
+
   return (
     <>
       <div className="input-content">
         <h1 className="input-header-text">{header}</h1>
-        <p className="input-text">Doporučená velikost obrázku {imgSize}</p>
-        {" "}
+        <p className="input-text">
+          Povolené formáty: JPEG, JPG & PNG
+          <br />
+          Doporučená velikost loga {imgSize}
+        </p>{" "}
         {/* Pomocí isDragging přidávám styl divu aby při přetahování souboru změnil svojí barvu*/}
         <div
-          className={`input-img-content ${isDragging ? "dragging" : ""}`} 
+          className={`input-img-content ${isDragging ? "dragging" : ""}`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
           {imageUrl ? (
             <img src={imageUrl} alt="Nahraný obrázek" />
+          ) : savedImage ? (
+            <img
+              src={`/uploads/${savedImage}`}
+              alt="Nahraný obrázek"
+            />
           ) : (
             <p>
               Přetáhněte sem obrázek <br />
@@ -79,16 +99,25 @@ export default function ImageUpload({ header, imgSize, imgId, setImage }) {
             </p>
           )}
         </div>
-        <div className="upload-btn-box">
-          <label htmlFor={`file-upload-${imgId}`} id="file-upload-text">
-            <img src={uploadIcon} alt="" /> Nahrát
-          </label>
-          <input
-            type="file"
-            id={`file-upload-${imgId}`}
-            className="file-upload"
-            onChange={previewImage}
-          />
+        <div id="flex">
+          <div className="upload-btn-box">
+            <label htmlFor={`file-upload-${imgId}`} id="file-upload-text">
+              <img src={uploadIcon} alt="" /> Nahrát
+            </label>
+            <input
+              type="file"
+              id={`file-upload-${imgId}`}
+              className="file-upload"
+              onChange={previewImage}
+            />
+          </div>
+          {savedImage || imageUrl ? (
+            <div className="upload-btn-box">
+              <button id="deleteImage" onClick={handleRemoveImage}>
+                Smazat obrázek
+              </button>
+            </div>
+          ) : ""}
         </div>
       </div>
     </>

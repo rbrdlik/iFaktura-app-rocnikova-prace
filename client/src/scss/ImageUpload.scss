@@ -68,7 +68,7 @@
 .upload-btn-box {
   display: grid;
   justify-content: center;
-  margin: 25px;
+  margin: 25px 5px;
 
   button {
     @include button-style;
@@ -77,4 +77,9 @@
 
 .file-upload {
   display: none;
+}
+
+#deleteImage{
+  border: none;
+  color: variables.$red-color;
 }
