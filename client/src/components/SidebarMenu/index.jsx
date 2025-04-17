@@ -154,7 +154,7 @@ export default function SidebarMenu({ active_page }) {
         </nav>
         <div className="sidebar-user">
           <div className="sidebar-user-content">
-            <img src={UserPfpImg} alt="" id="su-img" />
+            <img src={user.profilePicture ? `/uploads/${user.profilePicture}` : UserPfpImg} alt="" id="su-img" />
             <div className="sidebar-user-text">
               <p>
                 <b>

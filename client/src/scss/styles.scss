@@ -162,6 +162,7 @@ input:checked + .slider:before {
 
     #img {
       width: 100px;
+      height: 100px;
       border-radius: 50%;
       border: 2px solid variables.$black;
       position: absolute;
@@ -246,6 +247,37 @@ input:checked + .slider:before {
   border: 2px solid variables.$red-color;
   background-color: transparent;
   color: variables.$red-color;
+}
+.pfpAction{
+  display: block;
+  position: absolute;
+  top: 207px;
+  left: 98px;
+  cursor: pointer;
+  transition: .2s ease;
+  user-select: none;
+  text-align: center;
+  line-height: 20px;
+
+  p{
+    font-size: 1rem;
+    text-decoration: underline;
+  }
+  p#g{
+    color: variables.$green;
+  }
+  p#r{
+    color: variables.$red-color;
+  }
+
+  & p:hover{
+    transform: scale(1.05);
+    transition: .2s ease;
+  }
+  & p:active{
+    transform: scale(1);
+    transition: .2s ease;
+  }
 }
 
 // INVOICE PAGES

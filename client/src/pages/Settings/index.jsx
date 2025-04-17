@@ -1,5 +1,5 @@
 import { useAuth } from "../../context/AuthProvider";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import bcrypt from "bcryptjs";
 
@@ -21,6 +21,9 @@ import { mixinAlert } from "../../utils/sweetAlerts";
 
 export default function Settings() {
   const { user, fetchUser, logout } = useAuth();
+  const [imageUrl, setImageUrl] = useState("");
+  const [image, setImage] = useState();
+  const [savedImage, setSavedImage] = useState(user.profilePicture);
 
   const sendData = async (updatedData) => {
     const res = await updateUser(user._id, updatedData);
@@ -55,13 +58,13 @@ export default function Settings() {
       preConfirm: () => {
         const inputText = document.getElementById("swal-input1").value;
 
-        if(!inputText){
+        if (!inputText) {
           Swal.showValidationMessage("Vyplňte prosím toto pole.");
           return false;
         }
 
-        return { inputText }
-      }
+        return { inputText };
+      },
     });
     if (value) {
       const updatedData = { [e.target.name]: value.inputText };
@@ -97,10 +100,13 @@ export default function Settings() {
         const email = document.getElementById("swal-input1").value;
         const password = document.getElementById("swal-input2").value;
 
-        const emailRegex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        const emailRegex =
+          /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
-        if(email === user.email){
-          Swal.showValidationMessage("Zadaný email je stejný jako váš současný.");
+        if (email === user.email) {
+          Swal.showValidationMessage(
+            "Zadaný email je stejný jako váš současný."
+          );
           return false;
         }
 
@@ -211,44 +217,45 @@ export default function Settings() {
       cancelButtonColor: "#dc3545",
       reverseButtons: true,
     }).then(async (result) => {
-        if(result.isConfirmed){
-          const { value } = await Swal.fire({
-            title: "Ověření identity",
-            html: `
+      if (result.isConfirmed) {
+        const { value } = await Swal.fire({
+          title: "Ověření identity",
+          html: `
                 <div>
                   <p style="margin-left: -310px; margin-bottom: -15px; margin-top: 20px">Zadejte své heslo</p>
                   <input type="password" id="swal-input1" class="swal2-input" style="width: 440px; margin-left: 2px">
                 </div>
               `,
-            confirmButtonText: "Potvrdit",
-            confirmButtonColor: "#28a745",
-            showCancelButton: true,
-            color: "black",
-            cancelButtonText: "Zrušit",
-            cancelButtonColor: "#dc3545",
-            reverseButtons: true,
-            preConfirm: () => {
-              const password = document.getElementById("swal-input1").value;
-      
-              if (!password) {
-                Swal.showValidationMessage("Zadejte prosím své heslo.");
-                return false;
-              }
-      
-              return { password };
-            },
-          });
+          confirmButtonText: "Potvrdit",
+          confirmButtonColor: "#28a745",
+          showCancelButton: true,
+          color: "black",
+          cancelButtonText: "Zrušit",
+          cancelButtonColor: "#dc3545",
+          reverseButtons: true,
+          preConfirm: () => {
+            const password = document.getElementById("swal-input1").value;
 
-          if (value) {
-            const res = await verifyUserPassword(value.password);
-            if(res.status !== 200) return mixinAlert("error", "Zadané heslo není správné!");
-            mixinAlert("info", "Váš účet byl smazán")
-            await deleteUser(user._id);
-            await logout();
-          }
+            if (!password) {
+              Swal.showValidationMessage("Zadejte prosím své heslo.");
+              return false;
+            }
+
+            return { password };
+          },
+        });
+
+        if (value) {
+          const res = await verifyUserPassword(value.password);
+          if (res.status !== 200)
+            return mixinAlert("error", "Zadané heslo není správné!");
+          mixinAlert("info", "Váš účet byl smazán");
+          await deleteUser(user._id);
+          await logout();
         }
+      }
     });
-  }
+  };
 
   /**
    * Tato funkce bere informace o tom kdy si uživatel založil účet. V databázi je to uloženo ve formátu `2025-03-14T21:23:44.405Z`
@@ -257,6 +264,44 @@ export default function Settings() {
   const convertDate = () => {
     const date = new Date(user.createdAt);
     return date.toLocaleString("cs-CZ");
+  };
+
+  const handleFileInput = () => {
+    document.getElementById("imgProfile").click();
+  };
+
+  /**
+   * Touto funkcí nejprve ověříme zda nahraný soubor je opravdu obrázek
+   * Vytvoří URL adresu obrázku pro zobrazení náhledu
+   */
+  const handleFile = (file) => {
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    if (file && allowedTypes.includes(file.type)) {
+      setImage(file);
+      const imgUrl = URL.createObjectURL(file);
+      setImageUrl(imgUrl);
+    } else {
+      mixinAlert("error", "Nepovolený formát souboru.");
+    }
+  };
+
+  const handleSaveButton = async () => {
+    await sendData({ profilePicture: image});
+  }
+
+  const handleRemoveImage = async (e) => {
+    e.preventDefault();
+    setSavedImage(null);
+    setImageUrl("");
+    await sendData({ profilePicture: "null"})
+  }
+
+  /**
+   * Zpracuje obrázek nahraný přes input a zavolá funkci handleFile
+   */
+  const previewImage = (e) => {
+    const file = e.target.files[0];
+    handleFile(file);
   };
 
   useEffect(() => {
@@ -268,9 +313,23 @@ export default function Settings() {
       <div className="myAccount">
         <h1>Můj účet</h1>
         <div className="myAccountBox">
-          <div className="myAccountImageBox" title="Nahrát profilový obrázek">
-            <img src={userImg} alt="" id="img" />
+          <div
+            className="myAccountImageBox"
+            title="Nahrát profilový obrázek"
+            onClick={handleFileInput}
+          >
+            <img src={imageUrl ? imageUrl : savedImage ? `/uploads/${savedImage}` : userImg} alt="" id="img" />
             <img src={Camera} alt="" id="circleSmallImage" />
+          </div>
+          <input
+            type="file"
+            style={{ display: "none" }}
+            id="imgProfile"
+            onChange={previewImage}
+          />
+          <div className="pfpAction">
+            {image ? <p id="g" onClick={handleSaveButton} style={{marginLeft: "8px"}}>Uložit </p> : ""}
+            {savedImage ? <p id="r" onClick={handleRemoveImage}>Odebrat </p> : ""}
           </div>
           <div className="myAccountBoxText">
             <h2>
