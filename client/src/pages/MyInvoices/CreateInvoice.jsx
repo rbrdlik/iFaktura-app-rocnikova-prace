@@ -18,13 +18,22 @@ import { mixinAlert } from "../../utils/sweetAlerts";
 
 // Import models
 import { getAllProducts } from "../../models/product";
-import { getAllContacts } from "../../models/contact"
+import { getAllContacts } from "../../models/contact";
 import { createInvoice } from "../../models/invoice";
 
 // Import utils
 import { calculateTotals } from "../../utils/calculateTotals";
 
-const defaultItem = {amount: "", unit: "", productName: "", price: "", dph: null, dphType: null, discount: null, discountType: null};
+const defaultItem = {
+  amount: "",
+  unit: "",
+  productName: "",
+  price: "",
+  dph: null,
+  dphType: null,
+  discount: null,
+  discountType: null,
+};
 
 export default function CreateInvoice() {
   const { user } = useAuth();
@@ -33,16 +42,19 @@ export default function CreateInvoice() {
   const [formData, setFormData] = useState({});
   const [items, setItems] = useState([defaultItem]);
   const navigate = useNavigate();
-  
+
   const platceDph = user.dph === "Plátce DPH";
 
   useEffect(() => {
     const loadData = async () => {
-      const [productRes, contactRes] = await Promise.all([getAllProducts(), getAllContacts()]);
+      const [productRes, contactRes] = await Promise.all([
+        getAllProducts(),
+        getAllContacts(),
+      ]);
       if (productRes.status === 200) setProducts(productRes.payload);
       if (contactRes.status === 200) setContacts(contactRes.payload);
     };
-    
+
     loadData();
     document.title = "Vydat fakturu • iFaktura";
   }, []);
@@ -55,15 +67,19 @@ export default function CreateInvoice() {
   }, [items]);
 
   const sendData = async () => {
-    const res = await createInvoice(formData);
-    if(res.status === 201){
-      mixinAlert("success", "Faktura byla vystavena")
-      return navigate("/invoices")
+    if(formData.paymentMethod === "Bankovní převod" && [user.accountNumber, user.iban, user.swift].some(val => !val)){
+      mixinAlert("error", "Pro platbu bankovním převodem musíte mít nastavené bankovní údaje.")
+    } else{
+      const res = await createInvoice(formData);
+      if (res.status === 201) {
+        mixinAlert("success", "Faktura byla vystavena");
+        return navigate("/invoices");
+      }
+      if (res.status === 500) {
+        mixinAlert("error", `${res.message}.`);
+      }
     }
-    if(res.status === 500){
-      mixinAlert("error", `${res.message}.`)
-    }
-  }
+  };
 
   /**
    * Tato funkce upravuje `items` po upravení hodnoty jakéhokoliv item inputu.
@@ -77,22 +93,19 @@ export default function CreateInvoice() {
   };
 
   /**
-  * Funkce pro přidání nové položky do seznamu položek `items`.
-  * Vytvoří novou prázdnou položku a přidá ji na konec seznamu.
-  */
+   * Funkce pro přidání nové položky do seznamu položek `items`.
+   * Vytvoří novou prázdnou položku a přidá ji na konec seznamu.
+   */
   const addItem = () => {
-    setItems([
-      ...items,
-      { ...defaultItem }
-    ]);
+    setItems([...items, { ...defaultItem }]);
   };
 
   /**
-  * Funkce pro odstranění položky z pole `items` pomocí indexu.
-  * Upraví stav `items` odstraněním položky na zadaném indexu.
-  * 
-  * @param index - indx položky.
-  */
+   * Funkce pro odstranění položky z pole `items` pomocí indexu.
+   * Upraví stav `items` odstraněním položky na zadaném indexu.
+   *
+   * @param index - indx položky.
+   */
   const removeItem = (index) => {
     const updated = [...items];
     updated.splice(index, 1);
@@ -100,47 +113,53 @@ export default function CreateInvoice() {
   };
 
   /**
-  * Funkce pro výběr položky ze seznamu produktů a přidání do seznamu položek na faktuře.
-  * Při výběru položky se nastaví její informace do nové položky a přidá se na konec seznamu všech položek na faktuře.
-  */
+   * Funkce pro výběr položky ze seznamu produktů a přidání do seznamu položek na faktuře.
+   * Při výběru položky se nastaví její informace do nové položky a přidá se na konec seznamu všech položek na faktuře.
+   */
   const handleSelectItem = (e) => {
-    const selectedItem = products.find((product) => product.productName === e.target.value)
+    const selectedItem = products.find(
+      (product) => product.productName === e.target.value
+    );
 
     const newItem = {
       amount: selectedItem.amount,
-      unit:  selectedItem.unit,
-      productName:  selectedItem.productName,
-      price:  selectedItem.price,
-      dph:  selectedItem.dph ? selectedItem.dph : null,
-      dphType:  selectedItem.dphType ? selectedItem.dphType : null,
-      discount:  selectedItem.discount ? selectedItem.discount : null,
-      discountType:  selectedItem.discountType ? selectedItem.discountType : null,
-    }
+      unit: selectedItem.unit,
+      productName: selectedItem.productName,
+      price: selectedItem.price,
+      dph: selectedItem.dph ? selectedItem.dph : null,
+      dphType: selectedItem.dphType ? selectedItem.dphType : null,
+      discount: selectedItem.discount ? selectedItem.discount : null,
+      discountType: selectedItem.discountType
+        ? selectedItem.discountType
+        : null,
+    };
 
     setItems([...items, newItem]);
 
     e.target.selectedIndex = 0;
-  }
+  };
 
   /**
    * Funkce pro výběr kontaktu a aktualizaci `formData` s Id vybraného kontaktu.
    */
   const handleSelectContact = (e) => {
-    const selectedContact = contacts.find((contact) => contact.detailsName === e.target.value)
+    const selectedContact = contacts.find(
+      (contact) => contact.detailsName === e.target.value
+    );
     setFormData((prev) => ({
       ...prev,
-      contact_id: selectedContact._id
-    }))
-  }
+      contact_id: selectedContact._id,
+    }));
+  };
 
   const handleInput = (e) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
       products: items,
-      user_id: user._id
+      user_id: user._id,
     }));
-  }
+  };
 
   /**
    * Aktualizuje stav podle checkboxu
@@ -155,7 +174,9 @@ export default function CreateInvoice() {
   const handleButton = (e) => {
     e.preventDefault();
 
-    const requiredInputs = document.querySelectorAll("input[required], select[required]");
+    const requiredInputs = document.querySelectorAll(
+      "input[required], select[required]"
+    );
     const emptyFields = Array.from(requiredInputs).filter(
       (input) => !input.value.trim()
     );
@@ -166,7 +187,7 @@ export default function CreateInvoice() {
     }
 
     sendData();
-  }
+  };
 
   return (
     <>
@@ -180,7 +201,9 @@ export default function CreateInvoice() {
                   Vybrat...
                 </option>
                 {contacts.map((contact) => (
-                  <option key={contact._id} value={contact.detailsName}>{contact.detailsName}</option>
+                  <option key={contact._id} value={contact.detailsName}>
+                    {contact.detailsName}
+                  </option>
                 ))}
               </select>
             </div>
@@ -189,24 +212,39 @@ export default function CreateInvoice() {
 
         <div className="inputs">
           <Input text="Číslo objednávky" required={true}>
-            <input type="text" name="orderNumber" onChange={handleInput} required/>
+            <input
+              type="text"
+              name="orderNumber"
+              onChange={handleInput}
+              required
+            />
           </Input>
           <Input text="Popis" required={true}>
-            <input type="text" name="description" onChange={handleInput} required/>
+            <input
+              type="text"
+              name="description"
+              onChange={handleInput}
+              required
+            />
           </Input>
         </div>
 
         <h1 className="input-header-text">Datum</h1>
         <div className="inputs">
           <Input text="Datum vystavení" required={true}>
-            <input type="date" name="dateOfIssuing" onChange={handleInput} required/>
+            <input
+              type="date"
+              name="dateOfIssuing"
+              onChange={handleInput}
+              required
+            />
           </Input>
           <Input text="Datum splatnosti" required={true}>
-            <input type="date" name="dueDate" onChange={handleInput} required/>
+            <input type="date" name="dueDate" onChange={handleInput} required />
           </Input>
           {platceDph && (
             <Input text="Datum zdaněného plnění (DUZP)" required={true}>
-              <input type="date" name="duzp" onChange={handleInput} required/>
+              <input type="date" name="duzp" onChange={handleInput} required />
             </Input>
           )}
         </div>
@@ -226,26 +264,32 @@ export default function CreateInvoice() {
             </div>
             <div className="switch-text">
               <label class="switch">
-                <input type="checkbox" onChange={handleCheckboxChange}/>
+                <input type="checkbox" onChange={handleCheckboxChange} />
                 <span class="slider round"></span>
               </label>
               <p>Uhrazeno</p>
             </div>
           </Input>
-          <Input text="Bankovní účet" required={false}>
-            <div className="bankText">
-              <p>
-                <b>Číslo účtu:</b> {user.accountNumber}
-              </p>
-              <p>
-                <b>IBAN:</b> {user.iban}
-              </p>
-              <p>
-                <b>SWIFT:</b> {user.swift}
-              </p>
-              <Link to={"/details"}>Upravit bankovní údaje</Link>
-            </div>
-          </Input>
+          {formData.paymentMethod === "Bankovní převod" ? (
+            <>
+              <Input text="Bankovní účet" required={false}>
+                <div className="bankText">
+                  <p>
+                    <b>Číslo účtu:</b> {user.accountNumber}
+                  </p>
+                  <p>
+                    <b>IBAN:</b> {user.iban}
+                  </p>
+                  <p>
+                    <b>SWIFT:</b> {user.swift}
+                  </p>
+                  <Link to={"/details"}>Upravit bankovní údaje</Link>
+                </div>
+              </Input>
+            </>
+          ) : (
+            ""
+          )}
         </div>
 
         <h1 className="input-header-text" style={{ marginBottom: "5px" }}>
@@ -376,7 +420,13 @@ export default function CreateInvoice() {
                     </div>
                   </td>
                   <td style={{ width: "20%" }}>
-                    <p>{calculateTotals(item, undefined, user).totalWithDph === "NaN" ? "0.00" : calculateTotals(item, undefined, user).totalWithDph}Kč</p>
+                    <p>
+                      {calculateTotals(item, undefined, user).totalWithDph ===
+                      "NaN"
+                        ? "0.00"
+                        : calculateTotals(item, undefined, user).totalWithDph}
+                      Kč
+                    </p>
                   </td>
                   <td style={{ width: "10%" }}>
                     {items.length > 1 && (
@@ -404,7 +454,9 @@ export default function CreateInvoice() {
                   Vybrat položku ze seznamu...
                 </option>
                 {products.map((product) => (
-                  <option key={product._id} value={product.productName}>{product.productName}</option>
+                  <option key={product._id} value={product.productName}>
+                    {product.productName}
+                  </option>
                 ))}
               </select>
             </div>
@@ -413,8 +465,12 @@ export default function CreateInvoice() {
 
         <div style={{ marginTop: "50px" }}>
           <Buttons>
-            <button id="empty" onClick={() => navigate("/invoices")}>Zrušit</button>
-            <button id="fill" onClick={handleButton}>Vydat</button>
+            <button id="empty" onClick={() => navigate("/invoices")}>
+              Zrušit
+            </button>
+            <button id="fill" onClick={handleButton}>
+              Vydat
+            </button>
           </Buttons>
         </div>
       </Content>
