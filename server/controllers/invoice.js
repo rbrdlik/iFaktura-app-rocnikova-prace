@@ -11,11 +11,48 @@ exports.getAllUserInvoice = async (req, res) => {
     const invoices = await Invoice.find({ user_id: userId });
 
     if (!invoices)
-      return res.status(404).json({ message: "Kontakty nenalezeny" });
+      return res.status(404).json({ message: "Faktury nenalezeny" });
 
     res.status(200).send({
       message: "Invoices found!",
       payload: invoices,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+/**
+ * Funkce k získání všech uhrazených, neuhrazených faktur, a faktur po splatnosti
+ * Method: `GET`
+ * URL: `http://localhost:3000/invoice/stats/:period`
+ */
+exports.getAllUserInvoiceStats = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const period = req.params.period;
+
+    let startDate;
+    let endDate;
+
+    if (period === "month") {
+      startDate = new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), 1));
+      endDate = new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth() + 1, 0, 23, 59, 59, 999));
+    } else if (period === "quarter") {
+      startDate = new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth() - 2, 1)); 
+      endDate = new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate(), 23, 59, 59, 999));
+    } else if (period === "year") {
+      startDate = new Date(Date.UTC(new Date().getFullYear(), 0, 1));
+      endDate = new Date(Date.UTC(new Date().getFullYear(), 11, 31, 23, 59, 59, 999));
+    }
+
+    const paidInvoices = await Invoice.find({ user_id: userId, paid: true, dateCreated: { $gte: startDate, $lte: endDate } });
+    const unpaidInvoices = await Invoice.find({ user_id: userId, paid: false, dueDate: {$gt: new Date()}, dateCreated: { $gte: startDate, $lte: endDate } });
+    const overdueInvoices = await Invoice.find({ user_id: userId, paid: false, dueDate: {$lt: new Date()}, dateCreated: { $gte: startDate, $lte: endDate } });
+
+    res.status(200).send({
+      message: "Invoices stats found!",
+      payload: {paidInvoices, unpaidInvoices, overdueInvoices},
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -32,9 +69,9 @@ exports.getUserInvoiceById = async (req, res) => {
     const invoice = await Invoice.findById(req.params.id);
 
     if (!invoice)
-      return res.status(404).json({ message: "Kontakt nebyl nalezen" });
+      return res.status(404).json({ message: "Faktura nebyla nalezena" });
     if (invoice.user_id.toString() !== req.user.userId)
-      return res.status(404).json({ message: "Kontakt nebyl nalezen" });
+      return res.status(404).json({ message: "Faktura nebyla nalezena" });
 
     res.status(200).send({
       message: "Invoice found!",
@@ -103,7 +140,7 @@ exports.updateInvoice = async (req, res) => {
     const invoice = await Invoice.findById(req.params.id);
 
     if (invoice.user_id.toString() !== req.user.userId)
-      return res.status(404).send({ message: "Kontakt nenalezen." });
+      return res.status(404).send({ message: "Faktura nenalezena." });
 
     const data = {
       user_id: req.body.user_id,
@@ -143,7 +180,7 @@ exports.deleteInvoice = async (req, res) => {
     const invoice = await Invoice.findById(req.params.id);
 
     if (invoice.user_id.toString() !== req.user.userId)
-      return res.status(404).send({ message: "Kontakt nenalezen." });
+      return res.status(404).send({ message: "Faktura nenalezena." });
 
     const data = {
       user_id: req.body.user_id,

@@ -27,6 +27,34 @@ export const getAllInvoices = async () => {
 };
 
 /**
+ * Získá všechny uhrazené, neuhrazené faktury a faktury po splatnosti v určitém období `period`
+ * Získá token z `localStorage`, pokud token neexistuje, vrátí `null`.
+ * Pokud token existuje, pošle request na server.
+ */
+export const getAllInvoicesStats = async (period) => {
+  const token = localStorage.getItem("token");
+
+  if (!token) return null;
+
+  const req = await fetch(`http://localhost:3000/invoice/stats/${period}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  });
+
+  const data = await req.json();
+
+  return {
+    status: req.status,
+    message: data.message,
+    payload: data.payload,
+  };
+};
+
+/**
  * Získá specifickou fakturu vytvořenou aktuálně přihlášeným uživatelem
  * Získá token z `localStorage`, pokud token neexistuje, vrátí `null`.
  * Pokud token existuje, pošle request na server.

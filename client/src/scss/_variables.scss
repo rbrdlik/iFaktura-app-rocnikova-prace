@@ -14,7 +14,7 @@ $input-background: #f5f5f5;
 $red-color: #fc7474;
 $button-color: #4cbb7d;
 $blue-color: #007bff;
-$table-backround-color: #E4E4E4;
+$table-backround-color: #e4e4e4;
 
 $transparent: #00000000;
 
@@ -28,5 +28,13 @@ $grey-filter: invert(85%) sepia(11%) saturate(16%) hue-rotate(324deg)
   brightness(82%) contrast(89%);
 $white-filter: invert(89%) sepia(70%) saturate(2%) hue-rotate(112deg)
   brightness(109%) contrast(101%);
-$green-filter: invert(44%) sepia(77%) saturate(1012%) hue-rotate(112deg) 
+$green-filter: invert(44%) sepia(77%) saturate(1012%) hue-rotate(112deg)
   brightness(99%) contrast(104%);
+$paid-filter: invert(63%) sepia(86%) saturate(2407%) hue-rotate(100deg)
+  brightness(104%) contrast(73%);
+$unpaid-filter: invert(48%) sepia(39%) saturate(7465%) hue-rotate(337deg)
+  brightness(97%) contrast(89%);
+$overdue-filter: invert(79%) sepia(86%) saturate(698%) hue-rotate(332deg)
+  brightness(89%) contrast(89%);
+$all-filter: invert(34%) sepia(8%) saturate(13%) hue-rotate(38deg)
+  brightness(101%) contrast(86%);

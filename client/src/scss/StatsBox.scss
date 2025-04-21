@@ -1,0 +1,44 @@
+@use "./variables";
+@use "./global";
+@use "./font";
+
+.stats-box{
+    background-color: variables.$input-background;
+    border-radius: 10px;
+    padding: 18px;
+    width: 25%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: grid;
+    line-height: 20px;
+
+    .stats-box-img{
+        justify-content: center;
+        display: grid;
+    }
+
+    img{
+        width: 40px;
+        display: grid;
+        user-select: none;
+        justify-content: center;
+        &#p{
+            filter: variables.$paid-filter
+        }
+        &#u{
+            filter: variables.$unpaid-filter
+        }
+        &#o{
+            filter: variables.$overdue-filter
+        }
+        &#a{
+            filter: variables.$all-filter
+        }
+    }
+
+    h1{
+        margin-top: 1.5rem;
+        font-size: 1.65rem;
+    }
+}
