@@ -1,5 +1,8 @@
 export const calculateTotals = (product, numberAmount, user) => {
-  const quantity = numberAmount === undefined ? parseFloat(product?.amount) : parseFloat(numberAmount) || 1;
+  const quantity =
+    numberAmount === undefined
+      ? parseFloat(product?.amount)
+      : parseFloat(numberAmount) || 1;
   const pricePerUnit = parseFloat(product?.price) || 0;
   const dphRate = product?.dph ? parseFloat(product?.dph) / 100 : 0;
   const isDphIncluded = product?.dphType === "S DPH";
@@ -23,7 +26,8 @@ export const calculateTotals = (product, numberAmount, user) => {
   if (totalWithDph < 0) totalWithDph = 0;
   if (totalWithoutDph < 0) totalWithoutDph = 0;
 
-  const finalTotal = user?.dph === "Plátce DPH" ? totalWithDph : totalWithoutDph;
+  const finalTotal =
+    user?.dph === "Plátce DPH" ? totalWithDph : totalWithoutDph;
 
   return {
     priceWithoutDph: totalPriceWithoutDph.toFixed(2),
@@ -56,5 +60,31 @@ export const calculateInvoiceTotal = (products, user) => {
       : sum + totalPriceWithoutDph - discountAmount;
   }, 0);
 
-  return `${total.toFixed(2)} Kč`;
+  return total.toFixed(2);
+};
+
+export const calculateInvoiceTotalWithoutDph = (products) => {
+  const total = products.reduce((sum, product) => {
+    const pricePerUnit = parseFloat(product.price);
+    const dphRate = product.dph ? parseFloat(product.dph) / 100 : 0;
+    const discount = parseFloat(product.discount);
+
+    let priceWithoutDph =
+      product.dphType === "S DPH" ? pricePerUnit / (1 + dphRate) : pricePerUnit;
+
+    let totalPriceWithoutDph = priceWithoutDph * parseFloat(product.amount);
+
+    let discountAmount = product.discount
+      ? product.discountType === "%"
+        ? (totalPriceWithoutDph * discount) / 100
+        : discount
+      : 0;
+
+    let finalPrice = totalPriceWithoutDph - discountAmount;
+    if (finalPrice < 0) finalPrice = 0;
+
+    return sum + finalPrice;
+  }, 0);
+
+  return total.toFixed(2);
 };

@@ -247,7 +247,7 @@ export const generatePDF = async (user, contact, invoice, totalPrice, image) => 
     doc.setFillColor(200, 200, 200);
     doc.rect(110, endY+7, 85, 12, 'F');
     
-    textSize11(doc, `Celkem k úhradě:  ${totalPrice}`, 115, endY+14.5, "bold")
+    textSize11(doc, `Celkem k úhradě:  ${totalPrice} Kč`, 115, endY+14.5, "bold")
 
     const pdfUrl = doc.output("bloburl");
     window.open(pdfUrl, "_blank");

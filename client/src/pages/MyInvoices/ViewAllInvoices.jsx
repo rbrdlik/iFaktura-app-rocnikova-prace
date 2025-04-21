@@ -153,7 +153,7 @@ export default function ViewAllInvoices() {
                 </td>
                 <td>{convertDate(invoice.dateOfIssuing)}</td>
                 <td>{convertDate(invoice.dueDate)}</td>
-                <td>{calculateInvoiceTotal(invoice.products, user)}</td>
+                <td>{calculateInvoiceTotal(invoice.products, user)} Kč</td>
                 <td id="edit-btn">
                   <img src={pdficon} alt="" id="img" title="Stáhnout v PDF" onClick={async () => generatePDF(user, await getContactById(invoice.contact_id), invoice, calculateInvoiceTotal(invoice.products, user), user.invoiceLogo)} />
                   <Link to={`/updateInvoice/${invoice._id}`}>

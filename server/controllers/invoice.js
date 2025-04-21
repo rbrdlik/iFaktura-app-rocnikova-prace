@@ -46,13 +46,41 @@ exports.getAllUserInvoiceStats = async (req, res) => {
       endDate = new Date(Date.UTC(new Date().getFullYear(), 11, 31, 23, 59, 59, 999));
     }
 
-    const paidInvoices = await Invoice.find({ user_id: userId, paid: true, dateCreated: { $gte: startDate, $lte: endDate } });
-    const unpaidInvoices = await Invoice.find({ user_id: userId, paid: false, dueDate: {$gt: new Date()}, dateCreated: { $gte: startDate, $lte: endDate } });
-    const overdueInvoices = await Invoice.find({ user_id: userId, paid: false, dueDate: {$lt: new Date()}, dateCreated: { $gte: startDate, $lte: endDate } });
+    const paidInvoices = await Invoice.find({ user_id: userId, paid: true, dateOfIssuing: { $gte: startDate, $lte: endDate } });
+    const unpaidInvoices = await Invoice.find({ user_id: userId, paid: false, dueDate: {$gt: new Date()}, dateOfIssuing: { $gte: startDate, $lte: endDate } });
+    const overdueInvoices = await Invoice.find({ user_id: userId, paid: false, dueDate: {$lt: new Date()}, dateOfIssuing: { $gte: startDate, $lte: endDate } });
 
     res.status(200).send({
       message: "Invoices stats found!",
       payload: {paidInvoices, unpaidInvoices, overdueInvoices},
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+/**
+ * Funkce k získání všech faktur vydaných v každém měsíci v aktuálním roce
+ * Method: `GET`
+ * URL: `http://localhost:3000/invoice/annual`
+ */
+exports.getAllUserInvoiceAnnual = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    const monthlyInvoices = {};
+
+    for (let month = 0; month < 12; month++) {
+      const startDate = new Date(new Date().getFullYear(), month, 1);
+      const endDate = new Date(new Date().getFullYear(), month + 1, 0, 23, 59, 59, 999);
+
+      const invoices = await Invoice.find({ user_id: userId, dateOfIssuing: { $gte: startDate, $lte: endDate } });
+      monthlyInvoices[startDate.toLocaleString("cs-CZ", { month: "long" })] = invoices;
+    }
+
+    res.status(200).send({
+      message: "Invoices found!",
+      payload: monthlyInvoices,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
