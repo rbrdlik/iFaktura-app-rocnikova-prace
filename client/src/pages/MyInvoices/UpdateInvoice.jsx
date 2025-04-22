@@ -252,7 +252,7 @@ export default function UpdateInvoice() {
           </Input>
           {platceDph && (
             <Input text="Datum zdaněného plnění (DUZP)" required={true}>
-              <input type="date" name="duzp" onChange={handleInput} defaultValue={formData.duzp.slice(0, 10)} required />
+              <input type="date" name="duzp" onChange={handleInput} defaultValue={formData.duzp?.slice(0, 10)} required />
             </Input>
           )}
         </div>

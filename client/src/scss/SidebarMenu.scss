@@ -34,6 +34,7 @@
 }
 .sidebar-navbar {
   padding: 25px;
+  overflow: auto;
 
   ul {
     display: block;
@@ -73,6 +74,20 @@
       filter: variables.$green-filter;
       transform: scale(0.95);
     }
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: variables.$main-sidebar;
+    border-radius: 25px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: variables.$sidebar-scrollbar;
+    border-radius: 25px;
   }
 }
 
@@ -166,4 +181,23 @@
 
 .active-settings{
   filter: variables.$green-filter;
+}
+
+
+@media screen and (max-height: 790px) {
+  .sidebar-navbar{
+    height: 80vh;
+  }
+}
+
+@media screen and (max-height: 645px) {
+  .sidebar-navbar{
+    height: 75vh;
+  }
+}
+
+@media screen and (max-height: 495px) {
+  .sidebar-navbar{
+    height: 70vh;
+  }
 }

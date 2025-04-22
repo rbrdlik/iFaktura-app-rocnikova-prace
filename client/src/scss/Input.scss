@@ -137,14 +137,20 @@
   }
 }
 
+@media screen and (min-width: 1920px) {
+  .input-box {
+    width: 500px;
+  }
+}
+
 @media screen and (min-width: 1770px) {
   .input-box {
     width: 450px;
   }
 }
 
-@media screen and (min-width: 1920px) {
+@media screen and (max-width: 1630px) {
   .input-box {
-    width: 500px;
+    width: 400px;
   }
 }
