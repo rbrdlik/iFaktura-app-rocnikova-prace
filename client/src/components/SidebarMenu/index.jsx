@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 // Import assets
 import logoWhite from "../../assets/logo/iFakturaLogoWhite.png";
@@ -12,8 +13,12 @@ import SettingsIcon from "../../assets/icons/Settings.svg";
 import UserIcon from "../../assets/icons/User.svg";
 import UserGroupIcon from "../../assets/icons/UserGroup.svg";
 import HouseIcon from "../../assets/icons/House.svg";
+import Bars from "../../assets/icons/Bars.svg";
+import XMark from "../../assets/icons/XMark.svg";
 
 import UserPfpImg from "../../assets/images/user.png";
+
+import logo from "../../assets/logo/IFakturaLogoWhite.png"
 
 // Import alert
 import { mixinAlert } from "../../utils/sweetAlerts";
@@ -22,8 +27,10 @@ import { mixinAlert } from "../../utils/sweetAlerts";
 import "../../scss/SidebarMenu.scss";
 import "../../scss/styles.scss";
 
+
 export default function SidebarMenu({ active_page }) {
   const { user, logout } = useAuth();
+  const [sidebarActive, setSidebarActive] = useState(false);
   const navigate = useNavigate();
 
   /**
@@ -52,11 +59,20 @@ export default function SidebarMenu({ active_page }) {
     });
   };
 
+  const showSidebar = () => {
+    if(!sidebarActive){
+      setSidebarActive(true);
+    } else{
+      setSidebarActive(false);
+    }
+  }
+
   return (
     <>
-      <section className="sidebar">
+      <section className="sidebar" style={sidebarActive ? {left: "0"} : {left: "-100%"}}>
         <div className="sidebar-logo">
-          <img src={logoWhite} alt="" />
+          <img src={logoWhite} alt="" id="logo"/>
+          <img src={XMark} alt="" id="x" onClick={showSidebar}/>
         </div>
         <nav className="sidebar-navbar">
           <ul id="topBtn">
@@ -185,6 +201,16 @@ export default function SidebarMenu({ active_page }) {
                 />
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+      <section className="responsive-sidebar">
+        <div className="bg">
+        <div className="logo">
+            <img src={logo} alt="" />
+          </div>
+          <div className="menu">
+            {!sidebarActive ? <img src={Bars} alt="" onClick={showSidebar} id="bars"/> : ""}
           </div>
         </div>
       </section>

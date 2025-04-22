@@ -47,3 +47,9 @@
     color: variables.$white;
   }
 }
+
+@media screen and (max-width: 930px){
+  .action-buttons{
+    bottom: 60px;
+  }
+}

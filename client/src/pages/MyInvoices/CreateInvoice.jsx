@@ -251,7 +251,7 @@ export default function CreateInvoice() {
 
         <h1 className="input-header-text">Platební údaje</h1>
         <div className="inputs">
-          <Input text="Způsob úhrady" required={true}>
+          <Input text="Způsob úhrady" required={true} mwidth={540}>
             <div className="select-container">
               <select name="paymentMethod" required onChange={handleInput}>
                 <option value="" disabled selected>

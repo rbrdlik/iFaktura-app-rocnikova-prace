@@ -10,7 +10,7 @@ export default function Content({children, headtext, page, box_width, sidebarMen
   }
   return (
     <>
-      <section>
+      <section className="section">
       {sidebarMenu ? <SidebarMenu active_page={page}/> : ""}
         <section className="box">
           <span className="header-text-box" style={width}>

@@ -158,9 +158,9 @@ section {
   }
   .side-bar{
     width: 100%;
-    background-image: url("../assets/images/LoginRegisterImage.png");
     background-repeat: no-repeat;
     background-size: cover;
+    background-color: variables.$background-green;
   }
   .form{
     background-color: variables.$white;

@@ -83,3 +83,8 @@
   border: none;
   color: variables.$red-color;
 }
+@media screen and (max-width: 415px) {
+  .input-img-content{
+    width: 260px;
+  }
+}

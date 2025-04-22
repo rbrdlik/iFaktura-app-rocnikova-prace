@@ -219,3 +219,25 @@
 #disabledButton{
   opacity: 0.5;
 }
+
+@media screen and (max-width: 580px) {
+  .table-action{
+    display: block;
+
+    #table-action-left{
+      width: 100%;
+      justify-content: center;
+    }
+    #table-action-middle{
+      width: 100%;
+      justify-content: center;
+    }
+    #table-action-right{
+      width: 100%;
+      justify-content: center;
+    }
+  }
+  .searchBar-box{
+    width: 80%;
+  }
+}

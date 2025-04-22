@@ -13,6 +13,7 @@
   box-shadow: 6px 0px 4px 0px rgba(0, 0, 0, 0.25);
   display: block;
   user-select: none;
+  transition: .4s ease-in-out;
 }
 
 .sidebar-logo {
@@ -183,6 +184,52 @@
   filter: variables.$green-filter;
 }
 
+.responsive-sidebar{
+  display: none;
+  .bg{
+    width: 100%;
+    background-color: variables.$main-sidebar;
+    position: absolute;
+    height: 60px;
+    z-index: 999;
+    display: flex;
+    padding: 10px 30px;
+    align-items: center;
+    width: 100%;
+    -webkit-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.3);
+    box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.3);
+  }
+  .menu{
+    display: grid;
+    justify-content: right;
+    width: 50%;
+    img{
+      width: 20px;
+      filter: variables.$white-filter
+    }
+  }
+  .logo{
+    display: grid;
+    justify-content: left;
+    width: 50%;
+    img{
+      width: 140px;
+    }
+  }
+}
+
+#x{
+  display: none;
+  width: 20px;
+  filter: variables.$white-filter;
+  cursor: pointer;
+}
+#bars{
+  cursor: pointer;
+  transition: .3s ease-in-out;
+}
+
 
 @media screen and (max-height: 790px) {
   .sidebar-navbar{
@@ -199,5 +246,27 @@
 @media screen and (max-height: 495px) {
   .sidebar-navbar{
     height: 70vh;
+  }
+}
+
+@media screen and (max-width: 930px) {
+  .sidebar{
+    position: absolute;
+    z-index: 1000;
+    left: -100%;
+  }
+  .responsive-sidebar{
+    display: grid;
+  }
+  .sidebar-logo img#logo{
+    display: none;
+  }
+  .sidebar-logo{
+    display: grid;
+    justify-content: right;
+    padding: 30px 30px 3px 0;
+  }
+  #x{
+    display: grid;
   }
 }

@@ -488,3 +488,99 @@ input:checked + .slider:before {
   height: 440px;
   display: grid;
 }
+
+@media screen and (max-width: 1300px) {
+  .graph{
+    width: 750px;
+  }
+}
+@media screen and (max-width: 1170px) {
+  .graph{
+    width: 600px;
+  }
+}
+@media screen and (max-width: 1020px) {
+  .graph{
+    width: 500px;
+  }
+}
+@media screen and (max-width: 930px) {
+  .graph{
+    width: 100%;
+  }
+}
+@media screen and (max-width: 665px) {
+  .flex{
+    display: block;
+
+    .stats-box{
+      width: 100%;
+      margin-bottom: 15px;
+    }
+  }
+}
+@media screen and (max-width: 490px) {
+  .btns{
+    display: block;
+
+    button{
+      margin-bottom: 10px;
+    }
+  }
+  .myAccount .myAccountBoxText{
+    position: relative;
+    left: 0;
+    line-height: 40px;
+    top: 120px;
+  }
+  .myAccountBox{
+    height: 280px;
+  }
+  .myAccount .myAccountImageBox #circleSmallImage{
+    bottom: 120px;
+  }
+  .pfpAction{
+    left: 70px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .header{
+    display: block;
+
+    .part{
+      width: 100%;
+
+      &#l{
+        text-align: center;
+        justify-content: center;
+      }
+
+      &#r{
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+    }
+  }
+  .dashboardH1{
+    text-align: center;
+  }
+}
+@media screen and (max-width: 390px) {
+  .accSettings .accSettingsBox .accSetting {
+    display: block;
+  }
+  .myAccount .myAccountBox{
+    min-width: 0;
+  }
+  .accSettings .accSettingsBox{
+  min-width: 0;
+  }
+  .myAccount .myAccountBoxText p{
+    font-size: .9rem;
+  }
+  .accSettings .accSettingsBox .accSetting .rightSide{
+    justify-content: left;
+    width: 100%;
+  }
+}

@@ -154,3 +154,23 @@
     width: 400px;
   }
 }
+
+@media screen and (max-width: 1240px) {
+  .input-box {
+    width: 320px;
+  }
+}
+
+@media screen and (max-width: 1080px) {
+  .input-box {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 415px) {
+  .email-input {
+    display: block;
+  }
+  .email-input button{
+    margin-left: 0;
+  }
+}

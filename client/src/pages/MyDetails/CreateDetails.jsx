@@ -172,7 +172,7 @@ export default function CreateDetails() {
 
         <h1 className="input-header-text">Daňové údaje</h1>
         <div className="inputs">
-          <Input text="DPH" required={true}>
+          <Input text="DPH" required={true} mwidth={540}>
             <div className="select-container">
               <select onChange={handleSelectChange}>
                 <option>Neplátce DPH</option>

@@ -1,12 +1,18 @@
 // Import styles
 import "../../scss/Input.scss";
 
-export default function Input({ children, text, required, width }) {
+export default function Input({ children, text, required, width, mwidth }) {
   let wStyle;
 
   if (width) {
     wStyle = {
       width: `${width}px`,
+    };
+  }
+
+  if (mwidth) {
+    wStyle = {
+      maxWidth: `${mwidth}px`,
     };
   }
 
