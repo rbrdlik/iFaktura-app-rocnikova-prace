@@ -1,3 +1,4 @@
+![Logo](https://raw.githubusercontent.com/rbrdlik/iFaktura-app-rocnikova-prace/refs/heads/main/client/src/assets/logo/IFakturaLogoWhite.png?token=GHSAT0AAAAAADBRHCW3WY3NQLYZBE24NCZQ2AIXWQA)
 
 ## Co je iFaktura?
 
@@ -27,10 +28,18 @@ Uživatel si může vytvořit šablony čašto používaných položek pro snadn
 1. **Klonování repozitáře**
 ```bash
 git clone https://github.com/rbrdlik/iFaktura-app-rocnikova-prace.git
-cd ifaktura
+cd iFaktura-app-rocnikova-prace
 ```
 
-2. **Backend (server)**
+2. **Otevření ve Visual Studio Code**
+- Spusťe VS Code ve složce projektu:
+
+```bash
+code .
+```
+- V rámci VS Code si otevři dvě terminálová okna (např. dva GitBash panely) – jeden pro backend a druhý pro frontend.
+
+3. **Backend (server)**
 ```bash
 cd server
 npm install
@@ -44,25 +53,27 @@ MONGODB_URL=""  # URL MongoDB clusteru
 TOKEN_KEY=""    # Libovolný tajný klíč pro JWT
 ```
 
-3. **Frontend (client)**
+4. **Frontend (client)**
 
 ```bash
 cd ../client
 npm install
 ```
 
-4. **Spuštění aplikace**
+5. **Spuštění aplikace**
 
 - Spuštění backendu:
 ```bash
-cd ../server
+cd server
 npm start
 ```
 
 - Spustění frontendu:
 ```bash
-cd ../client
+cd client
 npm run dev
 ```
-- A otevřít na http://localhost:5173
+
+- Otevření aplikace: 
+http://localhost:5173
 
