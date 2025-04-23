@@ -519,6 +519,16 @@ input:checked + .slider:before {
     }
   }
 }
+@media screen and (max-width: 560px) {
+  .info-box{
+    width: 100%;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .info-box .text-right{
+    margin-left: 80px;
+  }
+}
 @media screen and (max-width: 490px) {
   .btns{
     display: block;
@@ -541,6 +551,11 @@ input:checked + .slider:before {
   }
   .pfpAction{
     left: 70px;
+  }
+}
+@media screen and (max-width: 420px) {
+  .info-box .text-left{
+    margin-left: 0;
   }
 }
 @media screen and (max-width: 400px) {
@@ -582,5 +597,11 @@ input:checked + .slider:before {
   .accSettings .accSettingsBox .accSetting .rightSide{
     justify-content: left;
     width: 100%;
+  }
+  .info-box .text-left p, .info-box .text-right p{
+    font-size: 1rem;
+  }
+  .info-box .text-left h1, .info-box .text-right h1{
+    font-size: 1.2rem;
   }
 }
