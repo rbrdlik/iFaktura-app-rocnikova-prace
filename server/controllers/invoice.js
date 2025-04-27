@@ -210,20 +210,7 @@ exports.deleteInvoice = async (req, res) => {
     if (invoice.user_id.toString() !== req.user.userId)
       return res.status(404).send({ message: "Faktura nenalezena." });
 
-    const data = {
-      user_id: req.body.user_id,
-      orderNumber: req.body.orderNumber,
-      description: req.body.description,
-      dateOfIssuing: req.body.dateOfIssuing,
-      dueDate: req.body.dueDate,
-      duzp: req.body.duzp,
-      paymentMethod: req.body.paymentMethod,
-      paid: req.body.paid,
-      statementSymbol: req.body.statementSymbol,
-      products: req.body.products
-    };
-
-    const result = await Invoice.findByIdAndDelete(req.params.id, data);
+    const result = await Invoice.findByIdAndDelete(req.params.id);
     if (result) {
       return res.status(200).send({
         message: "Invoice deleted!",

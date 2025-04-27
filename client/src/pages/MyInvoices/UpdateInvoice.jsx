@@ -20,13 +20,22 @@ import { mixinAlert } from "../../utils/sweetAlerts";
 
 // Import models
 import { getAllProducts } from "../../models/product";
-import { getAllContacts } from "../../models/contact"
+import { getAllContacts } from "../../models/contact";
 import { updateInvoice, getInvoiceById } from "../../models/invoice";
 
 // Import utils
 import { calculateTotals } from "../../utils/calculateTotals";
 
-const defaultItem = {amount: "", unit: "", productName: "", price: "", dph: null, dphType: null, discount: null, discountType: null};
+const defaultItem = {
+  amount: "",
+  unit: "",
+  productName: "",
+  price: "",
+  dph: null,
+  dphType: null,
+  discount: null,
+  discountType: null,
+};
 
 export default function UpdateInvoice() {
   const { id } = useParams();
@@ -47,17 +56,17 @@ export default function UpdateInvoice() {
     };
     const loadContacts = async () => {
       const res = await getAllContacts();
-      if (res.status === 200) setContacts(res.payload)
-    }
+      if (res.status === 200) setContacts(res.payload);
+    };
     const loadInvoice = async () => {
-      const res = await getInvoiceById(id)
-      if(res.status === 500 || res.status === 404) return setIsLoading(null);
-      if(res.status === 200){
+      const res = await getInvoiceById(id);
+      if (res.status === 500 || res.status === 404) return setIsLoading(null);
+      if (res.status === 200) {
         setFormData(res.payload);
         setItems(res.payload.products);
         setIsLoading(false);
       }
-    }
+    };
 
     loadProducts();
     loadContacts();
@@ -74,14 +83,14 @@ export default function UpdateInvoice() {
 
   const sendData = async () => {
     const res = await updateInvoice(id, formData);
-    if(res.status === 200){
-      mixinAlert("success", "Faktura byla upravena.")
-      return navigate("/invoices")
+    if (res.status === 200) {
+      mixinAlert("success", "Faktura byla upravena.");
+      return navigate("/invoices");
     }
-    if(res.status === 500){
-      mixinAlert("error", `${res.message}.`)
+    if (res.status === 500) {
+      mixinAlert("error", `${res.message}.`);
     }
-  }
+  };
 
   /**
    * Tato funkce upravuje `items` po upravení hodnoty jakéhokoliv item inputu.
@@ -95,22 +104,19 @@ export default function UpdateInvoice() {
   };
 
   /**
-  * Funkce pro přidání nové položky do seznamu položek `items`.
-  * Vytvoří novou prázdnou položku a přidá ji na konec seznamu.
-  */
+   * Funkce pro přidání nové položky do seznamu položek `items`.
+   * Vytvoří novou prázdnou položku a přidá ji na konec seznamu.
+   */
   const addItem = () => {
-    setItems([
-      ...items,
-      { ...defaultItem }
-    ]);
+    setItems([...items, { ...defaultItem }]);
   };
 
   /**
-  * Funkce pro odstranění položky z pole `items` pomocí indexu.
-  * Upraví stav `items` odstraněním položky na zadaném indexu.
-  * 
-  * @param index - index položky.
-  */
+   * Funkce pro odstranění položky z pole `items` pomocí indexu.
+   * Upraví stav `items` odstraněním položky na zadaném indexu.
+   *
+   * @param index - index položky.
+   */
   const removeItem = (index) => {
     const updated = [...items];
     updated.splice(index, 1);
@@ -118,47 +124,53 @@ export default function UpdateInvoice() {
   };
 
   /**
-  * Funkce pro výběr položky ze seznamu produktů a přidání do seznamu položek na faktuře.
-  * Při výběru položky se nastaví její informace do nové položky a přidá se na konec seznamu všech položek na faktuře.
-  */
+   * Funkce pro výběr položky ze seznamu produktů a přidání do seznamu položek na faktuře.
+   * Při výběru položky se nastaví její informace do nové položky a přidá se na konec seznamu všech položek na faktuře.
+   */
   const handleSelectItem = (e) => {
-    const selectedItem = products.find((product) => product.productName === e.target.value)
+    const selectedItem = products.find(
+      (product) => product.productName === e.target.value
+    );
 
     const newItem = {
       amount: selectedItem.amount,
-      unit:  selectedItem.unit,
-      productName:  selectedItem.productName,
-      price:  selectedItem.price,
-      dph:  selectedItem.dph ? selectedItem.dph : null,
-      dphType:  selectedItem.dphType ? selectedItem.dphType : null,
-      discount:  selectedItem.discount ? selectedItem.discount : null,
-      discountType:  selectedItem.discountType ? selectedItem.discountType : null,
-    }
+      unit: selectedItem.unit,
+      productName: selectedItem.productName,
+      price: selectedItem.price,
+      dph: selectedItem.dph ? selectedItem.dph : null,
+      dphType: selectedItem.dphType ? selectedItem.dphType : null,
+      discount: selectedItem.discount ? selectedItem.discount : null,
+      discountType: selectedItem.discountType
+        ? selectedItem.discountType
+        : null,
+    };
 
     setItems([...items, newItem]);
 
     e.target.selectedIndex = 0;
-  }
+  };
 
   /**
    * Funkce pro výběr kontaktu a aktualizaci `formData` s Id vybraného kontaktu.
    */
   const handleSelectContact = (e) => {
-    const selectedContact = contacts.find((contact) => contact.detailsName === e.target.value)
+    const selectedContact = contacts.find(
+      (contact) => contact.detailsName === e.target.value
+    );
     setFormData((prev) => ({
       ...prev,
-      contact_id: selectedContact._id
-    }))
-  }
+      contact_id: selectedContact._id,
+    }));
+  };
 
   const handleInput = (e) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
       products: items,
-      user_id: user._id
+      user_id: user._id,
     }));
-  }
+  };
 
   /**
    * Aktualizuje stav podle checkboxu
@@ -173,7 +185,9 @@ export default function UpdateInvoice() {
   const handleButton = (e) => {
     e.preventDefault();
 
-    const requiredInputs = document.querySelectorAll("input[required], select[required]");
+    const requiredInputs = document.querySelectorAll(
+      "input[required], select[required]"
+    );
     const emptyFields = Array.from(requiredInputs).filter(
       (input) => !input.value.trim()
     );
@@ -184,14 +198,14 @@ export default function UpdateInvoice() {
     }
 
     sendData();
+  };
+
+  if (isLoading === null) {
+    return <NotFound />;
   }
 
-  if(isLoading === null){
-    return <NotFound />
-  }
-  
-  if(isLoading){
-    return <LoadingPage />
+  if (isLoading) {
+    return <LoadingPage />;
   }
 
   return (
@@ -201,7 +215,15 @@ export default function UpdateInvoice() {
         <div className="inputs">
           <Input text="Odběratel" required={true} width={450}>
             <div className="select-container">
-              <select name="unit" required onChange={handleSelectContact} defaultValue={contacts.find((c) => c._id === formData.contact_id)?.detailsName || ""}>
+              <select
+                name="unit"
+                required
+                onChange={handleSelectContact}
+                defaultValue={
+                  contacts.find((c) => c._id === formData.contact_id)
+                    ?.detailsName || ""
+                }
+              >
                 <option value="" disabled selected>
                   Vybrat...
                 </option>
@@ -248,11 +270,23 @@ export default function UpdateInvoice() {
             />
           </Input>
           <Input text="Datum splatnosti" required={true}>
-            <input type="date" name="dueDate" onChange={handleInput} defaultValue={formData.dueDate.slice(0, 10)} required />
+            <input
+              type="date"
+              name="dueDate"
+              onChange={handleInput}
+              defaultValue={formData.dueDate.slice(0, 10)}
+              required
+            />
           </Input>
           {platceDph && (
             <Input text="Datum zdaněného plnění (DUZP)" required={true}>
-              <input type="date" name="duzp" onChange={handleInput} defaultValue={formData.duzp?.slice(0, 10)} required />
+              <input
+                type="date"
+                name="duzp"
+                onChange={handleInput}
+                defaultValue={formData.duzp?.slice(0, 10)}
+                required
+              />
             </Input>
           )}
         </div>
@@ -261,7 +295,12 @@ export default function UpdateInvoice() {
         <div className="inputs">
           <Input text="Způsob úhrady" required={true} mwidth={540}>
             <div className="select-container">
-              <select name="paymentMethod" required onChange={handleInput} defaultValue={formData.paymentMethod}>
+              <select
+                name="paymentMethod"
+                required
+                onChange={handleInput}
+                defaultValue={formData.paymentMethod}
+              >
                 <option value="" disabled selected>
                   Vybrat...
                 </option>
@@ -273,7 +312,11 @@ export default function UpdateInvoice() {
             <div className="switch-text">
               <label class="switch">
                 {formData.paid ? (
-                  <input type="checkbox" onChange={handleCheckboxChange} defaultChecked/>
+                  <input
+                    type="checkbox"
+                    onChange={handleCheckboxChange}
+                    defaultChecked
+                  />
                 ) : (
                   <input type="checkbox" onChange={handleCheckboxChange} />
                 )}
@@ -284,15 +327,21 @@ export default function UpdateInvoice() {
           </Input>
           <Input text="Bankovní účet" required={false}>
             <div className="bankText">
-              <p>
-                <b>Číslo účtu:</b> {user.accountNumber}
-              </p>
-              <p>
-                <b>IBAN:</b> {user.iban}
-              </p>
-              <p>
-                <b>SWIFT:</b> {user.swift}
-              </p>
+              {user.accountNumber ? (
+                <>
+                  <p>
+                    <b>Číslo účtu:</b> {user.accountNumber}
+                  </p>
+                  <p>
+                    <b>IBAN:</b> {user.iban}
+                  </p>
+                  <p>
+                    <b>SWIFT:</b> {user.swift}
+                  </p>
+                </>
+              ) : (
+                <p style={{ color: "red" }}>Bankovní údaje nejsou nastaveny</p>
+              )}
               <Link to={"/details"}>Upravit bankovní údaje</Link>
             </div>
           </Input>
@@ -426,7 +475,9 @@ export default function UpdateInvoice() {
                     </div>
                   </td>
                   <td style={{ width: "20%" }}>
-                    <p>{calculateTotals(item, undefined, user).totalWithDph}Kč</p>
+                    <p>
+                      {calculateTotals(item, undefined, user).totalWithDph}Kč
+                    </p>
                   </td>
                   <td style={{ width: "10%" }}>
                     {items.length > 1 && (

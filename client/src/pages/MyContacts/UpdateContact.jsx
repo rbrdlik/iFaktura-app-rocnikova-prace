@@ -47,7 +47,7 @@ export default function UpdateContact() {
       return navigate(`/contact/${res.payload._id}`);
     }
     if (res.status === 500) {
-      mixinAlert("error", "Někde nastala chyba.");
+      mixinAlert("error", "Neplatný formát emailu.");
     }
   };
 

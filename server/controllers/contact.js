@@ -131,20 +131,7 @@ exports.deleteContact = async (req, res) => {
     if (contact.user_id.toString() !== req.user.userId)
       return res.status(404).send({ message: "Kontakt nenalezen." });
 
-    const data = {
-      user_id: req.body.user_id,
-      detailsName: req.body.detailsName,
-      ico: req.body.ico,
-      street: req.body.street,
-      city: req.body.city,
-      zipCode: req.body.zipCode,
-      phone: req.body.phone,
-      website: req.body.website,
-      email: req.body.email,
-      dic: req.body.dic,
-    };
-
-    const result = await Contact.findByIdAndDelete(req.params.id, data);
+    const result = await Contact.findByIdAndDelete(req.params.id);
     if (result) {
       return res.status(200).send({
         message: "Contact deleted!",

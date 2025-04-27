@@ -38,7 +38,7 @@ export default function CreateItem() {
       return navigate("/products");
     } 
     if(res.status === 500){
-      mixinAlert("error", "Někde nastala chyba.")
+      mixinAlert("error", `${res.message}`)
     }
   }
 

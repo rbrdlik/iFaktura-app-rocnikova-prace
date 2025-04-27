@@ -206,26 +206,7 @@ exports.verifyPassword = async (req, res) => {
  */
 exports.deleteUser = async (req, res) => {
   try {
-    const data = {
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      email: req.body.email,
-      password: req.body.password,
-      profilePicture: req.body.profilePicture,
-      detailsName: req.body.detailsName,
-      ico: req.body.ico,
-      hasIco: req.body.hasIco,
-      street: req.body.street,
-      city: req.body.city,
-      zipCode: req.body.zipCode,
-      phone: req.body.phone,
-      website: req.body.website,
-      dph: req.body.dph,
-      dic: req.body.dic,
-      invoiceLogo: req.body.invoiceLogo,
-      signature: req.body.signature,
-    };
-    const result = await User.findByIdAndDelete(req.params.id, data);
+    const result = await User.findByIdAndDelete(req.params.id);
     if (result) {
       return res.status(200).send({
         message: "User deleted",

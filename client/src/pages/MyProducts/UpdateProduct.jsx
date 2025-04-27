@@ -63,7 +63,7 @@ export default function UpdateItem() {
       return navigate(`/product/${res.payload._id}`);
     }
     if(res.status === 500){
-      mixinAlert("error", "Někde nastala chyba.")
+      mixinAlert("error", `${res.message}`)
     }
   }
 

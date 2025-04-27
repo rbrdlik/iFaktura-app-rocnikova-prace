@@ -163,7 +163,7 @@ export default function ViewInvoice() {
           </Input>
           {platceDph && (
             <Input text="Datum zdaněného plnění (DUZP)" required={true}>
-              <b>{convertDate(invoice.duzp)}</b>
+              <b>{invoice.duzp ? convertDate(invoice.duzp) : "Nenastaveno"}</b>
             </Input>
           )}
         </div>

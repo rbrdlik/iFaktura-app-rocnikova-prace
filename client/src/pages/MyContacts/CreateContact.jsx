@@ -32,7 +32,7 @@ export default function CreateContact() {
       return navigate("/contacts");
     }
     if(res.status === 500){
-      mixinAlert("error", "Někde nastala chyba.")
+      mixinAlert("error", "Neplatný formát emailu.")
     }
   };
 

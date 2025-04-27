@@ -39,7 +39,7 @@ export default function CreateInvoice() {
   const { user } = useAuth();
   const [products, setProducts] = useState([]);
   const [contacts, setContacts] = useState([]);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({ paid: false });
   const [items, setItems] = useState([defaultItem]);
   const navigate = useNavigate();
 
@@ -67,9 +67,16 @@ export default function CreateInvoice() {
   }, [items]);
 
   const sendData = async () => {
-    if(formData.paymentMethod === "Bankovní převod" && [user.accountNumber, user.iban, user.swift].some(val => !val)){
-      mixinAlert("error", "Pro platbu bankovním převodem musíte mít nastavené bankovní údaje.")
-    } else{
+    console.log(formData);
+    if (
+      formData.paymentMethod === "Bankovní převod" &&
+      [user.accountNumber, user.iban, user.swift].some((val) => !val)
+    ) {
+      mixinAlert(
+        "error",
+        "Pro platbu bankovním převodem musíte mít nastavené bankovní údaje."
+      );
+    } else {
       const res = await createInvoice(formData);
       if (res.status === 201) {
         mixinAlert("success", "Faktura byla vystavena");
@@ -200,11 +207,17 @@ export default function CreateInvoice() {
                 <option value="" disabled selected>
                   Vybrat...
                 </option>
-                {contacts.map((contact) => (
-                  <option key={contact._id} value={contact.detailsName}>
-                    {contact.detailsName}
+                {contacts.length > 0 ? (
+                  contacts.map((contact) => (
+                    <option key={contact._id} value={contact.detailsName}>
+                      {contact.detailsName}
+                    </option>
+                  ))
+                ) : (
+                  <option value="" disabled>
+                    Nejsou vytvořeny žádné kontakty
                   </option>
-                ))}
+                )}
               </select>
             </div>
           </Input>
@@ -274,15 +287,23 @@ export default function CreateInvoice() {
             <>
               <Input text="Bankovní účet" required={false}>
                 <div className="bankText">
-                  <p>
-                    <b>Číslo účtu:</b> {user.accountNumber}
-                  </p>
-                  <p>
-                    <b>IBAN:</b> {user.iban}
-                  </p>
-                  <p>
-                    <b>SWIFT:</b> {user.swift}
-                  </p>
+                  {user.accountNumber ? (
+                    <>
+                      <p>
+                        <b>Číslo účtu:</b> {user.accountNumber}
+                      </p>
+                      <p>
+                        <b>IBAN:</b> {user.iban}
+                      </p>
+                      <p>
+                        <b>SWIFT:</b> {user.swift}
+                      </p>
+                    </>
+                  ) : (
+                    <p style={{ color: "red" }}>
+                      Bankovní údaje nejsou nastaveny
+                    </p>
+                  )}
                   <Link to={"/details"}>Upravit bankovní údaje</Link>
                 </div>
               </Input>
@@ -453,11 +474,17 @@ export default function CreateInvoice() {
                 <option value="" disabled selected>
                   Vybrat položku ze seznamu...
                 </option>
-                {products.map((product) => (
-                  <option key={product._id} value={product.productName}>
-                    {product.productName}
+                {products.length > 0 ? (
+                  products.map((product) => (
+                    <option key={product._id} value={product.productName}>
+                      {product.productName}
+                    </option>
+                  ))
+                ) : (
+                  <option value="" disabled style={{ color: "grey" }}>
+                    Nejsou vytvořeny žádné položky
                   </option>
-                ))}
+                )}
               </select>
             </div>
           </div>

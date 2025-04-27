@@ -129,19 +129,7 @@ exports.deleteProduct = async (req, res) => {
     if (product.user_id.toString() !== req.user.userId)
       return res.status(404).send({ message: "Produkt nenalezen." });
 
-    const data = {
-      user_id: req.body.user_id,
-      amount: req.body.amount,
-      unit: req.body.unit,
-      productName: req.body.productName,
-      price: req.body.price,
-      dph: req.body.dph,
-      dphType: req.body.dphType,
-      discount: req.body.discount,
-      discountType: req.body.discountType,
-    };
-
-    const result = await Product.findByIdAndDelete(req.params.id, data);
+    const result = await Product.findByIdAndDelete(req.params.id);
     if (result) {
       return res.status(200).send({
         message: "Product deleted!",
