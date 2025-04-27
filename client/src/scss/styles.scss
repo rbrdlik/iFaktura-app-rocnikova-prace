@@ -604,4 +604,10 @@ input:checked + .slider:before {
     justify-content: left;
     width: 100%;
   }
+  .info-box .text-left p, .info-box .text-right p{
+    font-size: 1rem;
+  }
+  .info-box .text-left h1, .info-box .text-right h1{
+    font-size: 1.2rem;
+  }
 }
