@@ -17,7 +17,7 @@ import { calculateTotals } from "./calculateTotals";
 const getImageBase64FromUrl = async (url) => {
     const res = await fetch(url);
     const blob = await res.blob();
-  
+   
     return new Promise((resolve) => {
       const reader = new FileReader();
       reader.onloadend = () => resolve(reader.result); // Base64
@@ -103,7 +103,7 @@ export const generatePDF = async (user, contact, invoice, totalPrice, image) => 
     textSize9(doc, userData.street, 12, 34.5, "normal")
     textSize9(doc, `${userData.zipCode} ${userData.city}`, 12, 38.5, "normal")
     textSize9(doc, userData.hasIco ? `IČO: ${userData.ico}` : "", 12, 42.5, "normal")
-    textSize9(doc, userData.dic ? `DIČ: ${userData.dic}` : "Neplátce DPH", 12, 46.5, "normal")
+    textSize9(doc, userData.dph === "Plátce DPH" ? `DIČ: ${userData.dic}` : "Neplátce DPH", 12, 46.5, "normal")
 
     // Kontaktní údaje
     textSize10(doc, "Kontaktní údaje", 12, 60, "bold")
