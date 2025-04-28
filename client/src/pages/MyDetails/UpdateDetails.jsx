@@ -33,7 +33,6 @@ export default function UpdateDetails() {
   }, [image]);
 
   const sendData = async () => {
-    console.log(formData)
     const res = await updateUser(user._id, formData);
     if (res.status === 200) {
       await fetchUser();

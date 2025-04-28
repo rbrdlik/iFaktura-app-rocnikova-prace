@@ -18,16 +18,22 @@ export default function ImageUpload({ header, imgSize, imgId, setImage }) {
   const [savedImage, setSavedImage] = useState(user.invoiceLogo);
 
   /**
-   * Touto funkcí nejprve ověříme zda nahraný soubor je opravdu obrázek
+   * Touto funkcí nejprve ověříme zda nahraný soubor je opravdu obrázek a jeho velikost je menší než 5MB
    * Poté uloží obrázek pomocí setImage do proměnné v CreateDetails.jsx
    * Vytvoří URL adresu obrázku pro zobrazení náhledu
    */
   const handleFile = (file) => {
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    const maxSize = 5 * 1024 * 1024;
+
     if (file && allowedTypes.includes(file.type)) {
-      setImage(file);
-      const imgUrl = URL.createObjectURL(file);
-      setImageUrl(imgUrl);
+      if(file.size > maxSize){
+        mixinAlert("error", "Soubor je příliš velký. (Max. 5MB)")
+      } else{
+        setImage(file);
+        const imgUrl = URL.createObjectURL(file);
+        setImageUrl(imgUrl);
+      }
     } else {
       mixinAlert("error", "Nepovolený formát souboru.");
     }
